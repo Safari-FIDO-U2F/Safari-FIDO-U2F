@@ -20,7 +20,6 @@ let U2F_NODEVICE_RETRY_COUNT = 10
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
     func _sendResponse(page: SFSafariPage, error: U2FError?, result: String?) {
-        NSLog("Sending response: \(error)")
         var userinfo: [String: Any] = [:]
         if let error = error {
             switch error {
@@ -42,7 +41,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
         // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
         page.getPropertiesWithCompletionHandler { properties in
-            NSLog("The extension received a message (\(messageName)) from a script injected into (\(properties?.url)) with userInfo (\(userInfo))")
             
             // userInfo must contains following keys:
             //   appId: string
@@ -64,7 +62,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 return
             }
             let origin = properties!.url.scheme! + "://" + properties!.url.host!
-            NSLog("Origin: \(origin)")
             
             var ret: u2fh_rc
             var devs: OpaquePointer?
@@ -112,7 +109,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 }
                 
                 let response_s = String.init(cString: response!)
-                NSLog("Response: \(response_s)")
                 self._sendResponse(page: page, error: nil, result: response_s)
                 
             } catch let error as U2FError {
@@ -126,20 +122,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
             }
             u2fh_global_done()
         }
-    }
-    
-    override func toolbarItemClicked(in window: SFSafariWindow) {
-        // This method will be called when your toolbar item is clicked.
-        NSLog("The extension's toolbar item was clicked")
-    }
-    
-    override func validateToolbarItem(in window: SFSafariWindow, validationHandler: @escaping ((Bool, String) -> Void)) {
-        // This is called when Safari's state changed in some way that would require the extension's toolbar item to be validated again.
-        validationHandler(true, "")
-    }
-    
-    override func popoverViewController() -> SFSafariExtensionViewController {
-        return SafariExtensionViewController.shared
     }
 
 }

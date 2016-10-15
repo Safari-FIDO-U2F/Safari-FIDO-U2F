@@ -28,11 +28,10 @@
         var registerRequests = arguments[arguments_offset];
         var callback = arguments[arguments_offset + 2];
 
-        console.log("Bridge: register: ", appId);
-        console.log("Bridge: register: ", registerRequests);
+        console.log("FIDO U2F Safari Extension: registering ", appId);
 
         if (u2f._pending) {
-            console.log("Pending... exit");
+            console.log("FIDO U2F Safari Extension: Pending action exists, exit");
             return;
         }
 
@@ -91,12 +90,10 @@
         var registeredKeys = arguments[arguments_offset];
         var callback = arguments[arguments_offset + 1];
 
-        console.log("Bridge: sign: ", appId);
-        console.log("Bridge: sign: ", challenge);
-        console.log("Bridge: sign: ", registeredKeys);
+        console.log("FIDO U2F Safari Extension: signing ", appId);
 
         if (u2f._pending) {
-            console.log("Pending... exit");
+            console.log("FIDO U2F Safari Extension: Pending action exists, exit");
             return;
         }
 
@@ -140,9 +137,7 @@
             return;
         data = data.message;
 
-        console.log("Bridge: message: ", data._id);
-        console.log("Bridge: message: ", data.error);
-        console.log("Bridge: message: ", data.result);
+        console.log("FIDO U2F Safari Extension: got response, error = ", data.error);
 
         var pending = u2f._pending;
         if (!pending)
@@ -175,5 +170,5 @@
     });
 
     window.u2f = u2f;
-    console.log("FIDO U2F Safari Extension loaded");
+    console.log("FIDO U2F Safari Extension: loaded");
 })();
