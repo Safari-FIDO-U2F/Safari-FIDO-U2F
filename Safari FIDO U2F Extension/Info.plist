@@ -44,6 +44,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2016 Yikai Zhao. All rights reserved.</string>
 	<key>NSHumanReadableDescription</key>
-	<string>This is a Safari Extension. You should tell us what your extension does here.</string>
+	<string>This Safari Extension adds FIDO U2F support to Safari.</string>
 </dict>
 </plist>
