@@ -15,6 +15,7 @@ enum U2FError: Error {
 }
 
 let U2F_V2 = "U2F_V2"
+let U2F_NODEVICE_RETRY_COUNT = 10
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
@@ -45,17 +46,15 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
             
             // userInfo must contains following keys:
             //   appId: string
-            //   timeoutSeconds: int // not used yet
             //   challenge: string
             // if messageName == "sign":
             //   keyHandle: string
             
             let appId = userInfo?["appId"] as? String
-            let timeout = userInfo?["timeoutSeconds"] as? Int
             let challenge = userInfo?["challenge"] as? String
             let keyHandle = userInfo?["keyHandle"] as? String
             
-            guard appId != nil && timeout != nil && challenge != nil && (messageName != "sign" || keyHandle != nil) else {
+            guard appId != nil && challenge != nil && (messageName != "sign" || keyHandle != nil) else {
                 self._sendResponse(page: page, error: U2FError.badrequest(), result: nil)
                 return
             }
@@ -83,7 +82,13 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                     throw U2FError.unknown(in: "Device Init")
                 }
                 
-                ret = u2fh_devs_discover(devs!, nil)
+                for _ in 0..<U2F_NODEVICE_RETRY_COUNT {
+                    ret = u2fh_devs_discover(devs!, nil)
+                    if ret == U2FH_OK {
+                        break
+                    }
+                    Thread.sleep(forTimeInterval: 1.0)
+                }
                 guard ret == U2FH_OK else {
                     throw U2FError.error(ret, in: "Device Discover")
                 }

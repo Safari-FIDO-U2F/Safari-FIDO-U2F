@@ -14,14 +14,22 @@
      * @param {Array<u2f.RegisteredKey>} registeredKeys
      * @param {function((u2f.Error|u2f.RegisterResponse))} callback
      * @param {number=} opt_timeoutSeconds
+     *
+     * Also support legacy function signature
      */
-    u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
-        opt_timeoutSeconds = opt_timeoutSeconds || 0;
+    u2f.register = function() {
+        var arguments_offset = 0;
+        var appId = null;
+        if (typeof(arguments[0]) == "string") {
+            appId = arguments[0];
+            arguments_offset += 1;
+        }
+
+        var registerRequests = arguments[arguments_offset];
+        var callback = arguments[arguments_offset + 2];
 
         console.log("Bridge: register: ", appId);
         console.log("Bridge: register: ", registerRequests);
-        console.log("Bridge: register: ", registeredKeys);
-        console.log("Bridge: register: ", opt_timeoutSeconds);
 
         if (u2f._pending) {
             console.log("Pending... exit");
@@ -32,10 +40,12 @@
         for (var i = 0 ; i < registerRequests.length ; i += 1) {
             if (registerRequests[i].version == "U2F_V2") {
                 challenge = registerRequests[i].challenge;
+                if (!appId)
+                    appId = registerRequests[i].appId;
                 break;
             }
         }
-        if (!challenge) {
+        if (!challenge || !appId) {
             callback({errorCode: 1});
             return;
         }
@@ -50,7 +60,6 @@
             name: "register",
             message: {
                 appId: appId,
-                timeoutSeconds: opt_timeoutSeconds,
                 challenge: challenge,
             }
         }), window.location.origin);
@@ -66,14 +75,25 @@
      * @param {Array<u2f.RegisteredKey>} registeredKeys
      * @param {function((u2f.Error|u2f.SignResponse))} callback
      * @param {number=} opt_timeoutSeconds
+     *
+     * Also support legacy function signature
      */
-    u2f.sign = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
-        opt_timeoutSeconds = opt_timeoutSeconds || 0;
+    u2f.sign = function() {
+        var arguments_offset = 0;
+        var appId = null;
+        var challenge = null;
+        if (typeof(arguments[0]) == "string") {
+            appId = arguments[0];
+            challenge = arguments[1];
+            arguments_offset += 2;
+        }
+
+        var registeredKeys = arguments[arguments_offset];
+        var callback = arguments[arguments_offset + 1];
 
         console.log("Bridge: sign: ", appId);
         console.log("Bridge: sign: ", challenge);
         console.log("Bridge: sign: ", registeredKeys);
-        console.log("Bridge: sign: ", opt_timeoutSeconds);
 
         if (u2f._pending) {
             console.log("Pending... exit");
@@ -84,17 +104,20 @@
         for (var i = 0 ; i < registeredKeys.length ; i += 1) {
             if (registeredKeys[i].version == "U2F_V2") {
                 keyHandle = registeredKeys[i].keyHandle;
+                if (!appId || !challenge) {
+                    appId = registeredKeys[i].appId;
+                    challenge = registeredKeys[i].challenge;
+                }
                 break;
             }
         }
-        if (!keyHandle) {
+        if (!keyHandle || !appId || !challenge) {
             callback({errorCode: 1});
             return;
         }
 
         u2f._pending = {
             type: "sign",
-            keyHandle: keyHandle,
             callback: callback,
         };
 
@@ -103,7 +126,6 @@
             name: "sign",
             message: {
                 appId: appId,
-                timeoutSeconds: opt_timeoutSeconds,
                 challenge: challenge,
                 keyHandle: keyHandle,
             }
@@ -145,7 +167,7 @@
         } else if (pending.type == "sign") {
             pending.callback({
                 version: "U2F_V2",
-                keyHandle: pending.keyHandle,
+                keyHandle: result.keyHandle,
                 signatureData: result.signatureData,
                 clientData: result.clientData,
             });
