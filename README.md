@@ -34,6 +34,7 @@ The following websites is working properly according to my test (Using macOS 10.
 - [Google's U2F DEMO](https://crxjs-dot-u2fdemo.appspot.com)
 - :warning: Github Account Two-factor authentication
 - :warning: Dropbox Account Security
+- Fastmail
 
 **:warning:: You need to [change Safari's User-Agent to chrome](http://www.howtogeek.com/211961/how-to-change-safaris-user-agent-in-os-x/) to make these sites working**
 
