@@ -169,6 +169,11 @@
         }
     });
 
-    window.u2f = u2f;
+    if (window.u2f)
+        window.u2f = u2f;
+    Object.defineProperty(window, "u2f", {
+        get: function() { return u2f; },
+        set: undefined,  // prevent furthur change
+    });
     console.log("FIDO U2F Safari Extension: loaded");
 })();
