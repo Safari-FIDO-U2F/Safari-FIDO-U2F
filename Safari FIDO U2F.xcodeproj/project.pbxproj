@@ -46,7 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		224716C11E2A674400A20A65 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libjson-c.a"; path = "../../../../../../usr/local/Cellar/json-c/0.12/lib/libjson-c.a"; sourceTree = "<group>"; };
+		224716C11E2A674400A20A65 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libjson-c.a"; path = "libjson-c.a"; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA07336D1DAF84A200088DAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,9 +60,9 @@
 		DA07338C1DAF851400088DAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA07338D1DAF851400088DAF /* bridge.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
 		DA0733981DAFB99200088DAF /* Safari FIDO U2F Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Safari FIDO U2F Extension-Bridging-Header.h"; sourceTree = "<group>"; };
-		DA07339B1DAFBA0B00088DAF /* u2f-host-types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "u2f-host-types.h"; path = "../Cellar/libu2f-host/1.1.3/include/u2f-host/u2f-host-types.h"; sourceTree = "<group>"; };
-		DA07339C1DAFBA0B00088DAF /* u2f-host-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "u2f-host-version.h"; path = "../Cellar/libu2f-host/1.1.3/include/u2f-host/u2f-host-version.h"; sourceTree = "<group>"; };
-		DA07339D1DAFBA0B00088DAF /* u2f-host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "u2f-host.h"; path = "../Cellar/libu2f-host/1.1.3/include/u2f-host/u2f-host.h"; sourceTree = "<group>"; };
+		DA07339B1DAFBA0B00088DAF /* u2f-host-types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "u2f-host-types.h"; sourceTree = "<group>"; };
+		DA07339C1DAFBA0B00088DAF /* u2f-host-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "u2f-host-version.h"; sourceTree = "<group>"; };
+		DA07339D1DAFBA0B00088DAF /* u2f-host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "u2f-host.h"; sourceTree = "<group>"; };
 		DA07339F1DAFBB8900088DAF /* libu2f-host.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libu2f-host.a"; sourceTree = "<group>"; };
 		DA0733A11DAFBB8F00088DAF /* libhidapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libhidapi.a; sourceTree = "<group>"; };
 		DA0733A31DAFDFEF00088DAF /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libjson-c.a"; sourceTree = "<group>"; };
@@ -98,7 +98,8 @@
 				DA07339C1DAFBA0B00088DAF /* u2f-host-version.h */,
 				DA07339D1DAFBA0B00088DAF /* u2f-host.h */,
 			);
-			path = include;
+			name = include;
+			path = "u2f-host";
 			sourceTree = "<group>";
 		};
 		224716BC1E2A637900A20A65 /* lib */ = {
@@ -180,8 +181,8 @@
 				224716BB1E2A636600A20A65 /* include */,
 			);
 			name = "u2f-host";
-			path = ../../../../../../usr/local;
-			sourceTree = "<group>";
+			path = /usr/local;
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
