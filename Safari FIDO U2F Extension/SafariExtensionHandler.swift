@@ -57,11 +57,11 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 return
             }
             
-            guard properties?.url.scheme != nil && properties?.url.host != nil else {
+            guard properties?.url?.scheme != nil && properties?.url?.host != nil else {
                 self._sendResponse(page: page, error: U2FError.unknown(in: "get_origin"), result: nil)
                 return
             }
-            let origin = properties!.url.scheme! + "://" + properties!.url.host!
+            let origin = properties!.url!.scheme! + "://" + properties!.url!.host!
             
             var ret: u2fh_rc
             var devs: OpaquePointer?
