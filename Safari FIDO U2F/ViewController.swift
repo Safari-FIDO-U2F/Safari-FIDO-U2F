@@ -39,7 +39,7 @@ class ViewController: NSViewController {
         SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: EXT_ID) { (state, error) in
             NSLog("extension: \(state), \(error)")
             if error != nil {
-                print("Error determining the state of extension: %@", error);
+                print("Error determining the state of extension: \(error)");
                 return;
             }
             
