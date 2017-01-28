@@ -132,6 +132,10 @@
     window.addEventListener("message", function(e) {
         if (e.origin != window.location.origin)
             return;
+
+        if (!e.data.includes("u2f_safari2window")) // if the data includes our tag, it's safe to parse it as JSON
+            return;
+
         var data = JSON.parse(e.data);
         if (data._meta != "u2f_safari2window" || data.name != "response")
             return;

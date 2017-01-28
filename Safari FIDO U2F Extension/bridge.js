@@ -1,12 +1,14 @@
 // act as bridge between u2f.js and app extension
 
 window.addEventListener("message", function(e) {
-    if (e.origin != window.location.origin)
-        return;
-    var data = JSON.parse(e.data);
-    if (data._meta != "u2f_window2safari")
-        return;
-    safari.extension.dispatchMessage(data.name, data.message);
+    if (e.origin == window.location.origin) {
+        if (e.data.includes("u2f_window2safari")) { // if the data includes our tag, it's safe to parse it as JSON
+            var data = JSON.parse(e.data);
+            if (data._meta == "u2f_window2safari") {
+                safari.extension.dispatchMessage(data.name, data.message);
+            }
+        }
+    }
 });
 
 safari.self.addEventListener("message", function(e) {
