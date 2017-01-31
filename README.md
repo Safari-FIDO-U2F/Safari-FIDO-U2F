@@ -6,7 +6,7 @@
 
 - Download [release](https://github.com/blahgeek/Safari-FIDO-U2F/releases)
 - Open it
-- Enable `Safari FIDO U2F Extension` in Safari Preference
+- Enable the `Safari FIDO U2F Extension` in Safari Preferences
 
 This extension requires *macOS 10.12* and later or macOS 10.11.5 when Safari 10 is installed.
 
@@ -33,7 +33,7 @@ The following sites working according to my latest tests (Using macOS 10.12 with
 
 - [Yubico U2F DEMO](https://demo.yubico.com/u2f)
 - [Google's U2F DEMO](https://crxjs-dot-u2fdemo.appspot.com)
-- Github Account Two-factor authentication
+- [Github Account Two-factor authentication](https://help.github.com/articles/configuring-two-factor-authentication-via-fido-u2f/)
 - :warning: Dropbox Account Security
 - Fastmail
 
