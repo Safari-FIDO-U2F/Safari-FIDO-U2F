@@ -14,8 +14,77 @@ enum U2FError: Error {
     case error(u2fh_rc, in: String)
 }
 
+let U2FSignMessage = "U2FSign"
+let U2FRegisterMessage = "U2FRegister"
+let U2FResponseMessage = "U2FResponse"
+
 let U2F_V2 = "U2F_V2"
 let U2F_NODEVICE_RETRY_COUNT = 10
+
+class U2FDevice {
+    let device : OpaquePointer
+
+    init() throws {
+        var ret = u2fh_global_init(U2FH_DEBUG)
+        guard ret == U2FH_OK else {
+            throw U2FError.error(ret, in: "Global Init")
+        }
+
+        var returnedDevice: OpaquePointer?
+        ret = u2fh_devs_init(&returnedDevice)
+        guard ret == U2FH_OK else {
+            throw U2FError.error(ret, in: "Device Init")
+        }
+
+        guard let device = returnedDevice else {
+            throw U2FError.unknown(in: "Device Init")
+        }
+
+        for _ in 0..<U2F_NODEVICE_RETRY_COUNT {
+            ret = u2fh_devs_discover(device, nil)
+            if ret == U2FH_OK {
+                break
+            }
+            Thread.sleep(forTimeInterval: 1.0)
+        }
+
+        guard ret == U2FH_OK else {
+            throw U2FError.error(ret, in: "Device Discover")
+        }
+
+        self.device = device
+    }
+
+    deinit {
+        u2fh_devs_done(self.device)
+        u2fh_global_done()
+    }
+
+    func ProcessResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>) throws -> String {
+        guard result == U2FH_OK else {
+            throw U2FError.error(result, in: "Bad response.")
+        }
+
+        guard let _ = response else {
+            throw U2FError.unknown(in: "Bad response.")
+        }
+
+        return String.init(cString: response!)
+    }
+
+    func Register(challenge : String, origin : String) throws -> String {
+        var response: UnsafeMutablePointer<Int8>? = nil
+        let ret = u2fh_register(self.device, challenge, origin, &response, U2FH_REQUEST_USER_PRESENCE)
+        return ProcessResponse(ret, response)
+    }
+
+    func Sign(challenge : String, origin : String) throws -> String {
+        var response: UnsafeMutablePointer<Int8>? = nil
+        let ret = u2fh_authenticate(devs!, chal, origin, &response, U2FH_REQUEST_USER_PRESENCE)
+        return ProcessResponse(ret, response)
+    }
+}
+
 
 class U2FRequest {
     let appId : String
@@ -39,10 +108,10 @@ class U2FRequest {
             let origin = scheme + "://" + host
             if let info = info {
                 switch name {
-                case "U2FSign":
+                case U2FSignMessage:
                     request = U2FSignRequest(info:info, origin:origin)
 
-                case "U2FRegister":
+                case U2FRegisterMessage:
                     request = U2FRegisterRequest(info:info, origin:origin)
                 }
             }
@@ -65,11 +134,19 @@ class U2FRequest {
         let dict = self.ChallengeDictionary()
         let bytes = try JSONSerialization.data(withJSONObject:dict)
         let challenge = String.init(data:bytes, encoding: .utf8)!
-        return
+        return challenge
+    }
+
+    func Perform(device : U2FDevice) -> String {
+
     }
 }
 
 class U2FRegisterRequest : U2FRequest {
+    override func Perform(device : U2FDevice) {
+        let challenge = self.Challenge()
+        device.Register(challenge, self.origin)
+    }
 }
 
 class U2FSignRequest : U2FRequest {
@@ -89,108 +166,57 @@ class U2FSignRequest : U2FRequest {
         return dict
     }
 
+    override func Perform(device : U2FDevice) {
+        let challenge = self.Challenge()
+        device.Sign(challenge, self.origin)
+    }
+
 }
 
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
-    func _sendResponse(page: SFSafariPage, error: U2FError?, result: String?) {
+    func sendResponse(page: SFSafariPage, response: String) {
+        var userinfo = [ "result" : response]
+        page.dispatchMessageToScript(withName: U2FResponseMessage, userInfo: userinfo)
+    }
+
+    func sendError(page: SFSafariPage, error: U2FError) {
         var userinfo: [String: Any] = [:]
-        if let error = error {
-            switch error {
-            case U2FError.unknown(let pos):
-                userinfo["error"] = "Unknown Error in \(pos)"
-            case U2FError.error(let errcode, let pos):
-                let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
-                userinfo["error"] = "Error in \(pos): \(errmsg)"
-            case U2FError.badrequest():
-                userinfo["error"] = "Bad Request"
-            }
+        switch error {
+        case U2FError.unknown(let pos):
+            userinfo["error"] = "Unknown Error in \(pos)"
+        case U2FError.error(let errcode, let pos):
+            let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
+            userinfo["error"] = "Error in \(pos): \(errmsg)"
+        case U2FError.badrequest():
+            userinfo["error"] = "Bad Request"
         }
-        if let result = result {
-            userinfo["result"] = result
-        }
-        page.dispatchMessageToScript(withName: "U2FResponse", userInfo: userinfo)
+        page.dispatchMessageToScript(withName: U2FResponseMessage, userInfo: userinfo)
     }
-    
-    func processRequest(request : U2FRequest, from page: SFSafariPage) {
-            
-            var ret: u2fh_rc
-            var devs: OpaquePointer?
-            do {
-                ret = u2fh_global_init(U2FH_DEBUG)
-                guard ret == U2FH_OK else {
-                    throw U2FError.error(ret, in: "Global Init")
-                }
-                
-                ret = u2fh_devs_init(&devs)
-                guard ret == U2FH_OK else {
-                    throw U2FError.error(ret, in: "Device Init")
-                }
-                guard let _ = devs else {
-                    throw U2FError.unknown(in: "Device Init")
-                }
-                
-                for _ in 0..<U2F_NODEVICE_RETRY_COUNT {
-                    ret = u2fh_devs_discover(devs!, nil)
-                    if ret == U2FH_OK {
-                        break
-                    }
-                    Thread.sleep(forTimeInterval: 1.0)
-                }
-                guard ret == U2FH_OK else {
-                    throw U2FError.error(ret, in: "Device Discover")
-                }
-                
-                var response: UnsafeMutablePointer<Int8>? = nil
-            if messageName == "U2FRegister" {
-                    let chal_bytes = try JSONSerialization.data(withJSONObject: ["challenge": challenge!, "version": U2F_V2, "appId": appId!])
-                    let chal = String.init(data: chal_bytes, encoding: .utf8)!
-                    ret = u2fh_register(devs!, chal, origin, &response, U2FH_REQUEST_USER_PRESENCE)
-            } else if messageName == "U2FSign" {
-                    let chal_bytes = try JSONSerialization.data(withJSONObject: ["challenge": challenge!, "version": U2F_V2, "appId": appId!, "keyHandle": keyHandle!])
-                    let chal = String.init(data: chal_bytes, encoding: .utf8)!
-                    ret = u2fh_authenticate(devs!, chal, origin, &response, U2FH_REQUEST_USER_PRESENCE)
-                }
-                
-                guard ret == U2FH_OK else {
-                    throw U2FError.error(ret, in: messageName)
-                }
-                guard let _ = response else {
-                    throw U2FError.unknown(in: messageName)
-                }
-                
-                let response_s = String.init(cString: response!)
-                self._sendResponse(page: page, error: nil, result: response_s)
-                
-            } catch let error as U2FError {
-                self._sendResponse(page: page, error: error, result: nil)
-            } catch {
-                self._sendResponse(page: page, error: U2FError.unknown(in: "unknown"), result: nil)
-            }
-            
-            if let devs = devs {
-                u2fh_devs_done(devs)
-            }
-            u2fh_global_done()
-    }
+
+
+    /**
+     Process a message from the content script.
+     
+     We construct a request based on the name of the message.
+     We then make a new device
+     We attempt to construct
+     */
 
     override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
         // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
 
         page.getPropertiesWithCompletionHandler { properties in
             do {
-
                 let request = U2FSignRequest.ParseRequest(name: messageName, info:userInfo, properties:properties)
-                processRequest(request: request, from:page)
-
+                let device = U2FDevice()
+                let response = request.Perform(device: device)
+                self._sendResponse(page: page, error: nil, result: response_s)
             } catch let error as U2FError {
-
-                self._sendResponse(page: page, error: error, result: nil)
-
+                self.sendError(page: page, error: error)
             } catch {
-
-                self._sendResponse(page: page, error: U2FError.unknown(in: "unknown"), result: nil)
+                self.sendError(page: page, error: U2FError.unknown(in: "messageReceived"))
             }
         }
     }
