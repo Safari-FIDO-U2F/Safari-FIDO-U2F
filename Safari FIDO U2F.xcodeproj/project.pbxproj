@@ -10,6 +10,9 @@
 		224716C31E2A67A600A20A65 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A31DAFDFEF00088DAF /* libjson-c.a */; };
 		224716C41E2A67A600A20A65 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A11DAFBB8F00088DAF /* libhidapi.a */; };
 		224716C51E2A67A600A20A65 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA07339F1DAFBB8900088DAF /* libu2f-host.a */; };
+		22814ADB1E4790160020473B /* U2FError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADA1E4790160020473B /* U2FError.swift */; };
+		22814ADD1E4790300020473B /* U2FDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADC1E4790300020473B /* U2FDevice.swift */; };
+		22814ADF1E47908D0020473B /* U2FRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADE1E47908D0020473B /* U2FRequest.swift */; };
 		DA07336C1DAF84A200088DAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336B1DAF84A200088DAF /* AppDelegate.swift */; };
 		DA07336E1DAF84A200088DAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336D1DAF84A200088DAF /* ViewController.swift */; };
 		DA0733701DAF84A200088DAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA07336F1DAF84A200088DAF /* Assets.xcassets */; };
@@ -46,7 +49,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		224716C11E2A674400A20A65 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libjson-c.a"; path = "libjson-c.a"; sourceTree = "<group>"; };
+		224716C11E2A674400A20A65 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libjson-c.a"; sourceTree = "<group>"; };
+		22814ADA1E4790160020473B /* U2FError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FError.swift; sourceTree = "<group>"; };
+		22814ADC1E4790300020473B /* U2FDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FDevice.swift; sourceTree = "<group>"; };
+		22814ADE1E47908D0020473B /* U2FRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRequest.swift; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA07336D1DAF84A200088DAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +163,9 @@
 			isa = PBXGroup;
 			children = (
 				DA0733851DAF851400088DAF /* SafariExtensionHandler.swift */,
+				22814ADE1E47908D0020473B /* U2FRequest.swift */,
+				22814ADC1E4790300020473B /* U2FDevice.swift */,
+				22814ADA1E4790160020473B /* U2FError.swift */,
 				DA07338C1DAF851400088DAF /* Info.plist */,
 				DA07338D1DAF851400088DAF /* bridge.js */,
 				DA0733831DAF851400088DAF /* Supporting Files */,
@@ -300,7 +309,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22814ADB1E4790160020473B /* U2FError.swift in Sources */,
+				22814ADF1E47908D0020473B /* U2FRequest.swift in Sources */,
 				DA0733861DAF851400088DAF /* SafariExtensionHandler.swift in Sources */,
+				22814ADD1E4790300020473B /* U2FDevice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
