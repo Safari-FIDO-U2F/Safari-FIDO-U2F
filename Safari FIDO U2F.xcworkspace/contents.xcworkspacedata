@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Safari FIDO U2F.xcodeproj">
+      location = "container:Safari FIDO U2F.xcodeproj">
    </FileRef>
 </Workspace>

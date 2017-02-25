@@ -21,7 +21,7 @@ let U2F_NODEVICE_RETRY_COUNT = 10
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
     func sendResponse(page: SFSafariPage, response: String) {
-        var userinfo = [ "result" : response]
+        let userinfo = [ "result" : response]
         page.dispatchMessageToScript(withName: U2FResponseMessage, userInfo: userinfo)
     }
 
@@ -33,7 +33,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         case U2FError.error(let errcode, let pos):
             let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
             userinfo["error"] = "Error in \(pos): \(errmsg)"
-        case U2FError.badrequest():
+        case U2FError.badRequest():
             userinfo["error"] = "Bad Request"
         }
         page.dispatchMessageToScript(withName: U2FResponseMessage, userInfo: userinfo)
@@ -53,10 +53,10 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
         page.getPropertiesWithCompletionHandler { properties in
             do {
-                let request = U2FSignRequest.ParseRequest(name: messageName, info:userInfo, properties:properties)
-                let device = U2FDevice()
-                let response = request.Perform(device: device)
-                self._sendResponse(page: page, error: nil, result: response_s)
+                let request = try U2FSignRequest.ParseRequest(name: messageName, info:userInfo, properties:properties)
+                let device = try U2FDevice()
+                let response = try request.Perform(device: device)
+                self.sendResponse(page: page, response: response)
             } catch let error as U2FError {
                 self.sendError(page: page, error: error)
             } catch {

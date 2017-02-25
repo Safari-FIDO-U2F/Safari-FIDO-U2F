@@ -3,7 +3,8 @@
 //  Safari FIDO U2F
 //
 //  Created by Sam Deane on 05/02/2017.
-//  Copyright © 2017 Yikai Zhao. All rights reserved.
+//  Copyright © 2017 Sam Deane. All rights reserved.
+//  Based on origin code Copyright © 2017 Yikai Zhao. All rights reserved.
 //
 
 import Foundation
@@ -47,12 +48,12 @@ class U2FDevice {
         u2fh_global_done()
     }
 
-    func ProcessResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>) throws -> String {
+    func ProcessResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> String {
         guard result == U2FH_OK else {
             throw U2FError.error(result, in: "Bad response.")
         }
 
-        guard let _ = response else {
+        guard response != nil else {
             throw U2FError.unknown(in: "Bad response.")
         }
 
@@ -62,13 +63,15 @@ class U2FDevice {
     func Register(challenge : String, origin : String) throws -> String {
         var response: UnsafeMutablePointer<Int8>? = nil
         let ret = u2fh_register(self.device, challenge, origin, &response, U2FH_REQUEST_USER_PRESENCE)
-        return ProcessResponse(ret, response)
+
+        return try ProcessResponse(result: ret, response: response)
     }
 
     func Sign(challenge : String, origin : String) throws -> String {
         var response: UnsafeMutablePointer<Int8>? = nil
-        let ret = u2fh_authenticate(devs!, chal, origin, &response, U2FH_REQUEST_USER_PRESENCE)
-        return ProcessResponse(ret, response)
+        let ret = u2fh_authenticate(device, challenge, origin, &response, U2FH_REQUEST_USER_PRESENCE)
+
+        return try ProcessResponse(result: ret, response: response)
     }
 }
 
