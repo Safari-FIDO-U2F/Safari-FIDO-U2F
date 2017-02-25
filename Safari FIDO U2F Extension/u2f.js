@@ -56,7 +56,7 @@
 
         window.postMessage(JSON.stringify({
             _meta: "u2f_window2safari",
-            name: "register",
+            name: "U2FRegister",
             message: {
                 appId: appId,
                 challenge: challenge,
@@ -120,7 +120,7 @@
 
         window.postMessage(JSON.stringify({
             _meta: "u2f_window2safari",
-            name: "sign",
+            name: "U2FSign",
             message: {
                 appId: appId,
                 challenge: challenge,
@@ -137,7 +137,7 @@
             return;
 
         var data = JSON.parse(e.data);
-        if (data._meta != "u2f_safari2window" || data.name != "response")
+        if (data._meta != "u2f_safari2window" || data.name != "U2FResponse")
             return;
         data = data.message;
 
