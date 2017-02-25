@@ -3,7 +3,8 @@
 //  Safari FIDO U2F
 //
 //  Created by Sam Deane on 05/02/2017.
-//  Copyright © 2017 Yikai Zhao. All rights reserved.
+//  Copyright © 2017 Sam Deane. All rights reserved.
+//  Based on origin code Copyright © 2017 Yikai Zhao. All rights reserved.
 //
 
 import Foundation
@@ -36,14 +37,18 @@ class U2FRequest {
 
                 case U2FRegisterMessage:
                     request = U2FRegisterRequest(info:info, origin:origin)
+
+                default:
+                    break
                 }
+
             }
         } else {
             throw U2FError.unknown(in: "bad origin")
         }
 
         guard request != nil else {
-            throw U2FError.badrequest()
+            throw U2FError.badRequest()
         }
 
         return request!
@@ -61,14 +66,14 @@ class U2FRequest {
     }
 
     func Perform(device : U2FDevice) throws -> String {
-
+        throw U2FError.unknown(in: "abstract method should have been implemented")
     }
 }
 
 class U2FRegisterRequest : U2FRequest {
     override func Perform(device : U2FDevice) throws -> String {
-        let challenge = self.Challenge()
-        return device.Register(challenge, self.origin)
+        let challenge = try self.Challenge()
+        return try device.Register(challenge: challenge, origin: self.origin)
     }
 }
 
@@ -78,6 +83,7 @@ class U2FSignRequest : U2FRequest {
     override init?(info : [String : Any], origin: String) {
         if let keyHandle = info["keyHandle"] as? String {
             self.keyHandle = keyHandle
+            super.init(info: info, origin: origin)
         } else {
             return nil
         }
@@ -90,8 +96,8 @@ class U2FSignRequest : U2FRequest {
     }
 
     override func Perform(device : U2FDevice) throws -> String {
-        let challenge = self.Challenge()
-        return device.Sign(challenge, self.origin)
+        let challenge = try self.Challenge()
+        return try device.Sign(challenge: challenge, origin: self.origin)
     }
     
 }
