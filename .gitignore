@@ -1,54 +1,80 @@
-# A template for git ignore
 
-# Mac OS X Finder and whatnot
-.DS_Store
+# Created by https://www.gitignore.io/api/xcode,swift
 
+### Swift ###
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-# Sparkle distribution Private Key (Don't check me in!)
-dsa_priv.pem
+## Build generated
+build/
+DerivedData/
 
-
-# XCode (and ancestors) per-user config (very noisy, and not relevant)
-*.mode1
+## Various settings
+*.pbxuser
+!default.pbxuser
 *.mode1v3
 !default.mode1v3
 *.mode2v3
 !default.mode2v3
-*.perspective
 *.perspectivev3
 !default.perspectivev3
-*.pbxuser
-!default.pbxuser
-*xcuserdata*
-*.xcuserdatad
+xcuserdata/
+
+## Other
+*.moved-aside
 *.xccheckout
 *.xcscmblueprint
 
-# Generated files
-VersionX-revision.h
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
 
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
 
-# build products
-build/
-*.o
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+.build/
 
-# Other source repository archive directories (protects when importing)
-.hg
-.svn
-CVS
+# CocoaPods
+#
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+#
+# Pods/
 
-# automatic backup files
-*~.nib
-*.swp
-*~
-*~.rtf
-*.orig
-*(Autosaved).rtfd/
-Backup[ ]of[ ]*.pages/
-Backup[ ]of[ ]*.key/
-Backup[ ]of[ ]*.numbers/
+# Carthage
+#
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
 
+Carthage/Build
 
-# compiled python
-*.pyc
-test-build
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+### Xcode ###
+build
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+
+# End of https://www.gitignore.io/api/xcode,swift
