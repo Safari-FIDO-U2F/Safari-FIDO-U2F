@@ -45,7 +45,10 @@ The following websites do not work (yet):
 
 ## Build
 
-Just clone this project and build it with Xcode. You will need `libu2f-host.a`, `libhidapi.a` and `libjson-c.a`. I recommend installing them from homebrew. Note that hidapi stable version contains some bugs, HEAD version should be used.
+- Clone this project
+- Install the build tools that required to build dependencies: `brew install autoconf automake libtool pkg-config`
+- Open Xcode project and select and build target libu2f-host
+- Change target to Safari FIDO U2F and build it
 
 Apple Developer ID may be needed (not tested).
 
