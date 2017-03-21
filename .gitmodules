@@ -1,0 +1,9 @@
+[submodule "hidapi"]
+	path = hidapi
+	url = https://github.com/signal11/hidapi.git
+[submodule "json-c"]
+	path = json-c
+	url = https://github.com/json-c/json-c.git
+[submodule "libu2f-host"]
+	path = libu2f-host
+	url = https://github.com/Yubico/libu2f-host.git
