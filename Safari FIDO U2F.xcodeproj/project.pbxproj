@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		224716C31E2A67A600A20A65 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A31DAFDFEF00088DAF /* libjson-c.a */; };
+		224716C41E2A67A600A20A65 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A11DAFBB8F00088DAF /* libhidapi.a */; };
+		224716C51E2A67A600A20A65 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA07339F1DAFBB8900088DAF /* libu2f-host.a */; };
 		DA07336C1DAF84A200088DAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336B1DAF84A200088DAF /* AppDelegate.swift */; };
 		DA07336E1DAF84A200088DAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336D1DAF84A200088DAF /* ViewController.swift */; };
 		DA0733701DAF84A200088DAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA07336F1DAF84A200088DAF /* Assets.xcassets */; };
@@ -15,9 +18,6 @@
 		DA0733861DAF851400088DAF /* SafariExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0733851DAF851400088DAF /* SafariExtensionHandler.swift */; };
 		DA07338E1DAF851400088DAF /* bridge.js in Resources */ = {isa = PBXBuildFile; fileRef = DA07338D1DAF851400088DAF /* bridge.js */; };
 		DA0733931DAF851400088DAF /* Safari FIDO U2F Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DA07337E1DAF851400088DAF /* Safari FIDO U2F Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		DA0733A01DAFBB8900088DAF /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA07339F1DAFBB8900088DAF /* libu2f-host.a */; };
-		DA0733A21DAFBB8F00088DAF /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A11DAFBB8F00088DAF /* libhidapi.a */; };
-		DA0733A41DAFDFEF00088DAF /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A31DAFDFEF00088DAF /* libjson-c.a */; };
 		DA0733A61DB2197A00088DAF /* u2f.js in Resources */ = {isa = PBXBuildFile; fileRef = DA0733A51DB2197A00088DAF /* u2f.js */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		224716C11E2A674400A20A65 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libjson-c.a"; path = "libjson-c.a"; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA07336D1DAF84A200088DAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -81,15 +82,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA0733811DAF851400088DAF /* Cocoa.framework in Frameworks */,
-				DA0733A01DAFBB8900088DAF /* libu2f-host.a in Frameworks */,
-				DA0733A21DAFBB8F00088DAF /* libhidapi.a in Frameworks */,
-				DA0733A41DAFDFEF00088DAF /* libjson-c.a in Frameworks */,
+				224716C31E2A67A600A20A65 /* libjson-c.a in Frameworks */,
+				224716C41E2A67A600A20A65 /* libhidapi.a in Frameworks */,
+				224716C51E2A67A600A20A65 /* libu2f-host.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		224716BB1E2A636600A20A65 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				DA07339B1DAFBA0B00088DAF /* u2f-host-types.h */,
+				DA07339C1DAFBA0B00088DAF /* u2f-host-version.h */,
+				DA07339D1DAFBA0B00088DAF /* u2f-host.h */,
+			);
+			name = include;
+			path = "u2f-host";
+			sourceTree = "<group>";
+		};
+		224716BC1E2A637900A20A65 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				DA0733A31DAFDFEF00088DAF /* libjson-c.a */,
+				DA0733A11DAFBB8F00088DAF /* libhidapi.a */,
+				DA07339F1DAFBB8900088DAF /* libu2f-host.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		DA07335F1DAF84A100088DAF = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +147,7 @@
 		DA07337F1DAF851400088DAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				224716C11E2A674400A20A65 /* libjson-c.a */,
 				DA0733801DAF851400088DAF /* Cocoa.framework */,
 			);
 			name = Frameworks;
@@ -154,15 +177,12 @@
 		DA07339E1DAFBA2100088DAF /* u2f-host */ = {
 			isa = PBXGroup;
 			children = (
-				DA0733A31DAFDFEF00088DAF /* libjson-c.a */,
-				DA0733A11DAFBB8F00088DAF /* libhidapi.a */,
-				DA07339F1DAFBB8900088DAF /* libu2f-host.a */,
-				DA07339B1DAFBA0B00088DAF /* u2f-host-types.h */,
-				DA07339C1DAFBA0B00088DAF /* u2f-host-version.h */,
-				DA07339D1DAFBA0B00088DAF /* u2f-host.h */,
+				224716BC1E2A637900A20A65 /* lib */,
+				224716BB1E2A636600A20A65 /* include */,
 			);
 			name = "u2f-host";
-			sourceTree = "<group>";
+			path = /usr/local;
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -437,11 +457,12 @@
 				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = X4NP494ZNW;
+				HEADER_SEARCH_PATHS = "/usr/local/include/u2f-host";
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					/usr/local/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.blahgeek.Safari-FIDO-U2F.Safari-FIDO-U2F-Extension";
@@ -460,11 +481,12 @@
 				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = X4NP494ZNW;
+				HEADER_SEARCH_PATHS = "/usr/local/include/u2f-host";
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					/usr/local/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.blahgeek.Safari-FIDO-U2F.Safari-FIDO-U2F-Extension";
