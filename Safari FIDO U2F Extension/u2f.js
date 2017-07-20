@@ -1,5 +1,5 @@
 (function() {
-    var u2f = {};
+    var u2f = u2f || {};
 
     u2f._pending = null;
 
