@@ -32,23 +32,21 @@ cross-browser support of U2F. This extension provides a JavaScript API that is c
 
 However, there are still websites that do not work properly.
 
-The following sites working according to my latest tests (Using macOS 10.12 with Yubikey 4):
+The following sites should work out of the box:
 
 - [Yubico U2F DEMO](https://demo.yubico.com/u2f)
 - [Google's U2F DEMO](https://crxjs-dot-u2fdemo.appspot.com)
 - [Github Account Two-factor authentication](https://help.github.com/articles/configuring-two-factor-authentication-via-fido-u2f/)
-- Dropbox Account Security :warning:
 - Fastmail
-
-**:warning:: You need to [change Safari's User-Agent to chrome](http://www.howtogeek.com/211961/how-to-change-safaris-user-agent-in-os-x/) to make these sites work**
 
 ## Problems
 
 Plenty of sites do not work yet.
 
-The extension works by injecting some javascript to the page to implement the u2f API. Because of the way Safari's extensions work, it's not possible to inject this script early enough for all sites to spot that it is there.
+The extension works by injecting a u2f javascript object into to the page. Because of the way Safari's extensions work, it's not possible to inject this object early enough for all sites to spot that it is there. Some sites check too early, and/or add their own object which then gets overwritten.
 
 In addition, some sites base their checks on the idea that only Chrome supports U2F on the Mac. Because of this, you may need to [change Safari's User-Agent to Chrome](http://www.howtogeek.com/211961/how-to-change-safaris-user-agent-in-os-x/) to make these sites work.
+
 
 ## To Build With Xcode
 
@@ -65,3 +63,4 @@ The authors of this extension are not security, cryptography or javascript exper
 Use of the extension is entirely at your own risk! 
 
 All feedback and other contributions welcomed.
+In particular, please let us know about sites that do/don't work ok!
