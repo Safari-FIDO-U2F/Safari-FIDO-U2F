@@ -25,7 +25,7 @@ Technically, this extension adds the full FIDO U2F Javascript API to safari.
 But as stated in the specification, the interface (for now) is browser dependent, so each website is required to add support for it (by adding some code to test `if browser is safari`...).
 
 Currently, most of the sites using U2F are using [u2f-api.js](https://demo.yubico.com/js/u2f-api.js) to provide
-cross-browser support of U2F. This extension provides a JavaScript API that is compatible with it and will override it to seamlessly, so should support a large set of websites.
+cross-browser support of U2F. This extension provides a JavaScript API that is compatible with it and will override it seamlessly, so should support a large set of websites.
 
 However, there are still websites that do not work properly.
 
