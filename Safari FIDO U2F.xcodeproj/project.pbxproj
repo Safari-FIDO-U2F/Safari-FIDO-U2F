@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		224716C31E2A67A600A20A65 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A31DAFDFEF00088DAF /* libjson-c.a */; };
-		224716C41E2A67A600A20A65 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0733A11DAFBB8F00088DAF /* libhidapi.a */; };
-		224716C51E2A67A600A20A65 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA07339F1DAFBB8900088DAF /* libu2f-host.a */; };
 		22814ADB1E4790160020473B /* U2FError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADA1E4790160020473B /* U2FError.swift */; };
 		22814ADD1E4790300020473B /* U2FDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADC1E4790300020473B /* U2FDevice.swift */; };
 		22814ADF1E47908D0020473B /* U2FRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADE1E47908D0020473B /* U2FRequest.swift */; };
+		22AF58671F58BD0800F98F36 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22608F771F58B9F9007FB576 /* libhidapi.a */; };
+		22AF58681F58BD0800F98F36 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22608F751F58B9F4007FB576 /* libjson-c.a */; };
+		22AF58691F58BD0800F98F36 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22608F731F58B9E8007FB576 /* libu2f-host.a */; };
+		22AF586C1F58BF2400F98F36 /* libhidapi.a in Copy Dependent Libraries */ = {isa = PBXBuildFile; fileRef = 22608F771F58B9F9007FB576 /* libhidapi.a */; };
+		22AF586D1F58BF2400F98F36 /* libjson-c.a in Copy Dependent Libraries */ = {isa = PBXBuildFile; fileRef = 22608F751F58B9F4007FB576 /* libjson-c.a */; };
+		22AF586E1F58BF2400F98F36 /* libu2f-host.a in Copy Dependent Libraries */ = {isa = PBXBuildFile; fileRef = 22608F731F58B9E8007FB576 /* libu2f-host.a */; };
 		DA07336C1DAF84A200088DAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336B1DAF84A200088DAF /* AppDelegate.swift */; };
 		DA07336E1DAF84A200088DAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336D1DAF84A200088DAF /* ViewController.swift */; };
 		DA0733701DAF84A200088DAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA07336F1DAF84A200088DAF /* Assets.xcassets */; };
@@ -35,6 +38,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		22AF58631F58BC8B00F98F36 /* Copy Dependent Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILT_PRODUCTS_DIR}/lib";
+			dstSubfolderSpec = 0;
+			files = (
+				22AF586C1F58BF2400F98F36 /* libhidapi.a in Copy Dependent Libraries */,
+				22AF586D1F58BF2400F98F36 /* libjson-c.a in Copy Dependent Libraries */,
+				22AF586E1F58BF2400F98F36 /* libu2f-host.a in Copy Dependent Libraries */,
+			);
+			name = "Copy Dependent Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA0733971DAF851400088DAF /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -49,6 +65,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		22608F731F58B9E8007FB576 /* libu2f-host.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libu2f-host.a"; sourceTree = "<group>"; };
+		22608F751F58B9F4007FB576 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libjson-c.a"; sourceTree = "<group>"; };
+		22608F771F58B9F9007FB576 /* libhidapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libhidapi.a; sourceTree = "<group>"; };
 		22814ADA1E4790160020473B /* U2FError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FError.swift; sourceTree = "<group>"; };
 		22814ADC1E4790300020473B /* U2FDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FDevice.swift; sourceTree = "<group>"; };
 		22814ADE1E47908D0020473B /* U2FRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRequest.swift; sourceTree = "<group>"; };
@@ -70,9 +89,6 @@
 		DA07339B1DAFBA0B00088DAF /* u2f-host-types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "u2f-host-types.h"; sourceTree = "<group>"; };
 		DA07339C1DAFBA0B00088DAF /* u2f-host-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "u2f-host-version.h"; sourceTree = "<group>"; };
 		DA07339D1DAFBA0B00088DAF /* u2f-host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "u2f-host.h"; sourceTree = "<group>"; };
-		DA07339F1DAFBB8900088DAF /* libu2f-host.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libu2f-host.a"; sourceTree = "<group>"; };
-		DA0733A11DAFBB8F00088DAF /* libhidapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libhidapi.a; sourceTree = "<group>"; };
-		DA0733A31DAFDFEF00088DAF /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libjson-c.a"; sourceTree = "<group>"; };
 		DA0733A51DB2197A00088DAF /* u2f.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = u2f.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,9 +105,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA0733811DAF851400088DAF /* Cocoa.framework in Frameworks */,
-				224716C31E2A67A600A20A65 /* libjson-c.a in Frameworks */,
-				224716C41E2A67A600A20A65 /* libhidapi.a in Frameworks */,
-				224716C51E2A67A600A20A65 /* libu2f-host.a in Frameworks */,
+				22AF58671F58BD0800F98F36 /* libhidapi.a in Frameworks */,
+				22AF58681F58BD0800F98F36 /* libjson-c.a in Frameworks */,
+				22AF58691F58BD0800F98F36 /* libu2f-host.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,9 +128,9 @@
 		224716BC1E2A637900A20A65 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				DA0733A31DAFDFEF00088DAF /* libjson-c.a */,
-				DA0733A11DAFBB8F00088DAF /* libhidapi.a */,
-				DA07339F1DAFBB8900088DAF /* libu2f-host.a */,
+				22608F771F58B9F9007FB576 /* libhidapi.a */,
+				22608F751F58B9F4007FB576 /* libjson-c.a */,
+				22608F731F58B9E8007FB576 /* libu2f-host.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -229,6 +245,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA0733941DAF851400088DAF /* Build configuration list for PBXNativeTarget "Safari FIDO U2F Extension" */;
 			buildPhases = (
+				22AF58631F58BC8B00F98F36 /* Copy Dependent Libraries */,
 				DA07337A1DAF851400088DAF /* Sources */,
 				DA07337B1DAF851400088DAF /* Frameworks */,
 				DA07337C1DAF851400088DAF /* Resources */,
@@ -479,11 +496,8 @@
 				HEADER_SEARCH_PATHS = "/usr/local/include/u2f-host";
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/usr/local/lib,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				LIBRARY_SEARCH_PATHS = "${BUILT_PRODUCTS_DIR}/lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.blahgeek.Safari-FIDO-U2F.Safari-FIDO-U2F-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -502,11 +516,8 @@
 				HEADER_SEARCH_PATHS = "/usr/local/include/u2f-host";
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/usr/local/lib,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				LIBRARY_SEARCH_PATHS = "${BUILT_PRODUCTS_DIR}/lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.blahgeek.Safari-FIDO-U2F.Safari-FIDO-U2F-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
