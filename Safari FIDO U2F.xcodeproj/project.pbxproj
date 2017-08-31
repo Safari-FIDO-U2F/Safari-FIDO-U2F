@@ -106,7 +106,7 @@
 				DA07339D1DAFBA0B00088DAF /* u2f-host.h */,
 			);
 			name = include;
-			path = "u2f-host";
+			path = "include/u2f-host";
 			sourceTree = "<group>";
 		};
 		224716BC1E2A637900A20A65 /* lib */ = {
