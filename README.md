@@ -4,7 +4,7 @@
 
 ## Quick Start
 
-- Download [release](https://github.com/blahgeek/Safari-FIDO-U2F/releases)
+- Download [the latest release](https://github.com/blahgeek/Safari-FIDO-U2F/releases)
 - Open it
 - Enable the `Safari FIDO U2F Extension` in Safari Preferences
 
@@ -20,7 +20,7 @@ Only the high-level JavaScript API is implemented for now: `register` and `sign`
 
 ## Does it work in xxx.com?
 
-Technically, this extension adds the full FIDO U2F Javascript API to safari.
+Technically, this extension adds the full FIDO U2F Javascript API to Safari.
 
 But as stated in the specification, the interface (for now) is browser dependent, so each website is required to add support for it (by adding some code to test `if browser is safari`...).
 
@@ -43,16 +43,18 @@ The following websites do not work (yet):
 
 - Google Account (and all kinds of google sites)
 
-## Build
+## To Build
 
 - Clone this project
-- Install the dependencies: `brew install libu2f-host`
-
-- Open Xcode project and select and build target libu2f-host
-- Change target to Safari FIDO U2F and build it
+- Install the dependencies using Homebrew: `brew install hidapi json-c libu2f-host`
+- Open Xcode workspace and select the scheme `Safari FIDO U2F`
+- Select `Product/Run`
 
 Apple Developer ID may be needed (not tested).
 
 ## Disclaimer
 
-I am not an expert in neither swift or javascript, and definitely not an expert of cryptography, use it at your own risk. Contribution would be really appreciated.
+The authors of this extension are not security, cryptography or javascript experts.
+Use of the extension is entirely at your own risk! 
+
+All feedback and other contributions welcomed.
