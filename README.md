@@ -46,7 +46,8 @@ The following websites do not work (yet):
 ## Build
 
 - Clone this project
-- Install the build tools that required to build dependencies: `brew install autoconf automake libtool pkg-config`
+- Install the dependencies: `brew install libu2f-host`
+
 - Open Xcode project and select and build target libu2f-host
 - Change target to Safari FIDO U2F and build it
 
