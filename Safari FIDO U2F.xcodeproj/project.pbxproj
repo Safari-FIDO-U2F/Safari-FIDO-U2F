@@ -49,10 +49,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		224716C11E2A674400A20A65 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libjson-c.a"; sourceTree = "<group>"; };
 		22814ADA1E4790160020473B /* U2FError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FError.swift; sourceTree = "<group>"; };
 		22814ADC1E4790300020473B /* U2FDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FDevice.swift; sourceTree = "<group>"; };
 		22814ADE1E47908D0020473B /* U2FRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRequest.swift; sourceTree = "<group>"; };
+		229074671E61CBF100E04386 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		229074681E61CDEE00E04386 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA07336D1DAF84A200088DAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,12 +119,22 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
-		DA07335F1DAF84A100088DAF = {
+		229074691E61CE2C00E04386 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
 				DA07339E1DAFBA2100088DAF /* u2f-host */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		DA07335F1DAF84A100088DAF = {
+			isa = PBXGroup;
+			children = (
+				229074671E61CBF100E04386 /* README.md */,
+				229074681E61CDEE00E04386 /* LICENSE */,
 				DA07336A1DAF84A200088DAF /* Safari FIDO U2F */,
 				DA0733821DAF851400088DAF /* Safari FIDO U2F Extension */,
+				229074691E61CE2C00E04386 /* Dependencies */,
 				DA07337F1DAF851400088DAF /* Frameworks */,
 				DA0733691DAF84A200088DAF /* Products */,
 			);
@@ -153,7 +164,6 @@
 		DA07337F1DAF851400088DAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				224716C11E2A674400A20A65 /* libjson-c.a */,
 				DA0733801DAF851400088DAF /* Cocoa.framework */,
 			);
 			name = Frameworks;
