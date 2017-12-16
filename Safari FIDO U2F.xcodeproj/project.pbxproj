@@ -108,8 +108,7 @@
 				228DC2051FE541470060B6B5 /* u2f-host-version.h */,
 				228DC2061FE541470060B6B5 /* u2f-host.h */,
 			);
-			name = Dependencies;
-			path = ../Dependencies;
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		DA07335F1DAF84A100088DAF = {
@@ -119,6 +118,7 @@
 				229074681E61CDEE00E04386 /* LICENSE */,
 				DA07336A1DAF84A200088DAF /* Safari FIDO U2F */,
 				DA0733821DAF851400088DAF /* Safari FIDO U2F Extension */,
+				228DC2001FE541470060B6B5 /* Dependencies */,
 				DA07337F1DAF851400088DAF /* Frameworks */,
 				DA0733691DAF84A200088DAF /* Products */,
 			);
@@ -162,7 +162,6 @@
 				22814ADA1E4790160020473B /* U2FError.swift */,
 				DA07338C1DAF851400088DAF /* Info.plist */,
 				DA07338D1DAF851400088DAF /* bridge.js */,
-				228DC2001FE541470060B6B5 /* Dependencies */,
 				DA0733831DAF851400088DAF /* Supporting Files */,
 				DA0733981DAFB99200088DAF /* Safari FIDO U2F Extension-Bridging-Header.h */,
 				DA0733A51DB2197A00088DAF /* u2f.js */,

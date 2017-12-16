@@ -1,3 +1,10 @@
+//  ----------------------------------------------------------------
+//  Copyright (c) 2016-present, Yikai Zhao, Sam Deane, et al.
+//
+//  This source code is licensed under the MIT license found in the
+//  LICENSE file in the root directory of this source tree.
+//  ----------------------------------------------------------------
+
 // act as bridge between u2f.js and app extension
 
 window.addEventListener("message", function(e) {

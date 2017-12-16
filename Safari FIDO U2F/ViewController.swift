@@ -3,8 +3,13 @@
 //  Safari FIDO U2F
 //
 //  Created by Yikai Zhao on 10/13/16.
-//  Copyright © 2016 Yikai Zhao. All rights reserved.
 //
+//  ----------------------------------------------------------------
+//  Copyright (c) 2016-present, Yikai Zhao, Sam Deane, et al.
+//
+//  This source code is licensed under the MIT license found in the
+//  LICENSE file in the root directory of this source tree.
+//  ----------------------------------------------------------------
 
 import Cocoa
 import SafariServices

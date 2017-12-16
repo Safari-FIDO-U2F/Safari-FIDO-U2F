@@ -1,3 +1,10 @@
+//  ----------------------------------------------------------------
+//  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
+//
+//  This source code is licensed under the MIT license found in the
+//  LICENSE file in the root directory of this source tree.
+//  ----------------------------------------------------------------
+
 (function() {
     var u2f = window.u2f || {};
 

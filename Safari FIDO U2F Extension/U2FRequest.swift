@@ -3,9 +3,13 @@
 //  Safari FIDO U2F
 //
 //  Created by Sam Deane on 05/02/2017.
-//  Copyright © 2017 Sam Deane. All rights reserved.
-//  Based on origin code Copyright © 2017 Yikai Zhao. All rights reserved.
 //
+//  ----------------------------------------------------------------
+//  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
+//
+//  This source code is licensed under the MIT license found in the
+//  LICENSE file in the root directory of this source tree.
+//  ----------------------------------------------------------------
 
 import Foundation
 import SafariServices
