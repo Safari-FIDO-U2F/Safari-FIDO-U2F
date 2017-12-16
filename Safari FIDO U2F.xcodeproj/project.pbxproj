@@ -455,6 +455,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = 2H48644JM2;
+				HEADER_SEARCH_PATHS = Dependencies/;
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
@@ -475,6 +476,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = 2H48644JM2;
+				HEADER_SEARCH_PATHS = Dependencies/;
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;

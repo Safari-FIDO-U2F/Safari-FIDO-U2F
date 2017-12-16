@@ -41,6 +41,7 @@ typedef enum
   U2FH_NO_U2F_DEVICE = -5,
   U2FH_AUTHENTICATOR_ERROR = -6,
   U2FH_TIMEOUT_ERROR = -7,
+  U2FH_SIZE_ERROR = -8,
 } u2fh_rc;
 
 /**
@@ -56,7 +57,7 @@ typedef enum
 
 /**
  * u2fh_cmdflags:
- * @U2FH_REQUEST_USER_PRESENCE: Request user precense.
+ * @U2FH_REQUEST_USER_PRESENCE: Request user presence.
  *
  * Flags passed to u2fh_register() and u2fh_authenticate().
  */
