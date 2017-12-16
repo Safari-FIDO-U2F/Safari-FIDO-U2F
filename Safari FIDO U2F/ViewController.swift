@@ -18,7 +18,7 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         let link = NSMutableAttributedString.init(string: HOMEPAGE)
-        link.addAttribute(NSLinkAttributeName, value: HOMEPAGE, range: NSRange.init(location: 0, length: link.length))
+        link.addAttribute(NSAttributedStringKey.link, value: HOMEPAGE, range: NSRange.init(location: 0, length: link.length))
         self.hyperlinkField.attributedStringValue = link;
         self.updateExtensionStatus(self.extensionUpdateBtn)
         // Do any additional setup after loading the view.
