@@ -14,8 +14,8 @@
 import Cocoa
 import SafariServices
 
-let EXT_ID = "com.blahgeek.Safari-FIDO-U2F.Safari-FIDO-U2F-Extension"
-let HOMEPAGE = "https://github.com/blahgeek/Safari-FIDO-U2F"
+let EXT_ID = "com.safari-fido-u2f.app.extension"
+let HOMEPAGE = "https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F"
 
 class ViewController: NSViewController {
 
@@ -42,18 +42,15 @@ class ViewController: NSViewController {
     
     @IBAction func updateExtensionStatus(_ sender: NSButton) {
         SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: EXT_ID) { (state, error) in
-            print("extension: \(state!)")
             if error != nil {
                 print("Error determining the state of extension: \(error!)");
                 return;
             }
             
             DispatchQueue.main.async {
-                if state!.isEnabled {
-                    self.extensionStatusLabel.stringValue = "Enabled"
-                } else {
-                    self.extensionStatusLabel.stringValue = "Disabled"
-                }
+              let label = state!.isEnabled ? "Enabled" : "Disabled"
+              print("Extension: \(label)")
+              self.extensionStatusLabel.stringValue = label
             }
 
         }
