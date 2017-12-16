@@ -51,11 +51,25 @@ In addition, some sites base their checks on the idea that only Chrome supports 
 ## To Build With Xcode
 
 - Clone this project
-- Install the dependencies using Homebrew: `brew install hidapi json-c libu2f-host`
 - Open Xcode workspace and select the scheme `Safari FIDO U2F`
 - Extensions must be code signed. To build locally, you will need to adjust the `Development Team` setting of both targets to a team that you have Mac Developer certificates for
 - Choose `Run` from the `Product` menu.
 - Xcode should build & launch the small app. You can then enable the extension from within Safari.
+
+## Dependencies
+
+This plugin makes use of the following:
+
+- hidapi: git://github.com/signal11/hidapi.git
+- json-c: git://github.com/json-c/json-c.git
+- u2f-host: git://github.com/Yubico/libu2f-host.git
+
+For the sake of simplicity, compiled binaries for all three are committed to this repo.
+
+The source for all three is available in the github repos above.
+
+If you wish to build the libraries locally instead, you can do so using Homebrew, with `brew install hidapi json-c libu2f-host`.
+
 
 ## Disclaimer
 
