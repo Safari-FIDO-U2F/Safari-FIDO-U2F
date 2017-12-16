@@ -60,9 +60,9 @@ In addition, some sites base their checks on the idea that only Chrome supports 
 
 This plugin makes use of the following:
 
-- hidapi: git://github.com/signal11/hidapi.git
-- json-c: git://github.com/json-c/json-c.git
-- u2f-host: git://github.com/Yubico/libu2f-host.git
+- hidapi: https://github.com/signal11/hidapi.git
+- json-c: https://github.com/json-c/json-c.git
+- u2f-host: https://github.com/Yubico/libu2f-host.git
 
 For the sake of simplicity, compiled binaries for all three are committed to this repo.
 
