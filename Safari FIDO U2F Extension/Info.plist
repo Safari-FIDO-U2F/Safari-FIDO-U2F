@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1b5</string>
+	<string>$(U2F_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>U2F_BUILD</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSExtension</key>
@@ -42,7 +42,7 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2016 Yikai Zhao, Sam Deane, et al. All rights reserved.</string>
+	<string>$(U2F_COPYRIGHT)</string>
 	<key>NSHumanReadableDescription</key>
 	<string>Adds FIDO U2F support to Safari.</string>
 </dict>
