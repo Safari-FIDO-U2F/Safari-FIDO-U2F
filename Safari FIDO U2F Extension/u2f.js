@@ -155,8 +155,8 @@ u2f.isSafari = function() {
  Return the API version.
  */
 
-u2f.getApiVersion = function() {
-    return 1.1;
+u2f.getApiVersion = function(callback, opt_timeoutSeconds) {
+    callback({ 'js_api_version': 1.1 });
 };
 
 
@@ -223,5 +223,5 @@ Object.defineProperty(window, "u2f", {
     set : undefined, // prevent furthur change
 });
 
-console.log("FIDO U2F: loaded");
+ console.log("FIDO U2F: v" + u2f.getApiVersion +: loaded");
 })();
