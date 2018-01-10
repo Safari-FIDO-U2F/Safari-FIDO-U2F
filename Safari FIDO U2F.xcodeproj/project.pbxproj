@@ -122,7 +122,9 @@
 				DA07337F1DAF851400088DAF /* Frameworks */,
 				DA0733691DAF84A200088DAF /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		DA0733691DAF84A200088DAF /* Products */ = {
 			isa = PBXGroup;
