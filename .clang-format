@@ -1,0 +1,19 @@
+---
+# We'll use defaults from the LLVM style, but with 4 columns indentation.
+BasedOnStyle: WebKit
+IndentWidth: 4
+AllowShortIfStatementsOnASingleLine: false
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+ColumnLimit: 0
+MaxEmptyLinesToKeep: 3
+---
+Language: Cpp
+---
+Language: JavaScript
+---
+Language: Proto
+# Don't format .proto files.
+DisableFormat: true
+...
