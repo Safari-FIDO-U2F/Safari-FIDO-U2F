@@ -146,7 +146,7 @@ u2f.sign = function() {
  * Not part of the official API, but provided as a way of detecting that this extension has injected the implementation.
  */
 
-u2f.isSafariExtension = function() {
+u2f.isSafari = function() {
     return true;
 };
 
