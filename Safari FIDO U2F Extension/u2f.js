@@ -6,10 +6,19 @@
 //  ----------------------------------------------------------------
 
 (function() {
+ 
     var u2f = window.u2f || {};
-
+ 
     u2f._pending = null;
-
+ 
+    /**
+     * Not part of the official API, but provided as a way of detecting that this extension has injected the implementation.
+     */
+ 
+    u2f.isSafariExtension = function() {
+      return true;
+    }
+ 
     /**
      * Dispatches register requests to available U2F tokens. An array of sign
      * requests identifies already registered tokens.
@@ -35,10 +44,10 @@
         var registerRequests = arguments[arguments_offset];
         var callback = arguments[arguments_offset + 2];
 
-        console.log("FIDO U2F Safari Extension: registering ", appId);
+        console.log("FIDO U2F: registering ", appId);
 
         if (u2f._pending) {
-            console.log("FIDO U2F Safari Extension: Pending action exists, exit");
+            console.log("FIDO U2F: Pending action exists, exit");
             return;
         }
 
@@ -84,7 +93,7 @@
      *
      * Also support legacy function signature
      */
-    u2f.sign = function() {
+      u2f.sign = function() {
         var arguments_offset = 0;
         var appId = null;
         var challenge = null;
@@ -97,10 +106,10 @@
         var registeredKeys = arguments[arguments_offset];
         var callback = arguments[arguments_offset + 1];
 
-        console.log("FIDO U2F Safari Extension: signing ", appId);
+        console.log("FIDO U2F: signing ", appId);
 
         if (u2f._pending) {
-            console.log("FIDO U2F Safari Extension: Pending action exists, exit");
+            console.log("FIDO U2F: Pending action exists, exit");
             return;
         }
 
@@ -148,7 +157,7 @@
             return;
         data = data.message;
 
-        console.log("FIDO U2F Safari Extension: got response, error = ", data.error);
+        console.log("FIDO U2F: got response, error = ", data.error);
 
         var pending = u2f._pending;
         if (!pending)
@@ -180,11 +189,10 @@
         }
     });
 
-    if (window.u2f)
-        window.u2f = u2f;
     Object.defineProperty(window, "u2f", {
         get: function() { return u2f; },
         set: undefined,  // prevent furthur change
     });
-    console.log("FIDO U2F Safari Extension: loaded");
+ 
+    console.log("FIDO U2F: loaded");
 })();
