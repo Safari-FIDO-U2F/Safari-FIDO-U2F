@@ -187,19 +187,11 @@
 				22814ADA1E4790160020473B /* U2FError.swift */,
 				DA07338C1DAF851400088DAF /* Info.plist */,
 				DA07338D1DAF851400088DAF /* bridge.js */,
-				DA0733831DAF851400088DAF /* Supporting Files */,
+				DA0733841DAF851400088DAF /* Safari_FIDO_U2F_Extension.entitlements */,
 				DA0733981DAFB99200088DAF /* Safari FIDO U2F Extension-Bridging-Header.h */,
 				DA0733A51DB2197A00088DAF /* u2f.js */,
 			);
 			path = "Safari FIDO U2F Extension";
-			sourceTree = "<group>";
-		};
-		DA0733831DAF851400088DAF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				DA0733841DAF851400088DAF /* Safari_FIDO_U2F_Extension.entitlements */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
