@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		229EA5D4200640A6004F0B11 /* version */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 229EA5D5200640A6004F0B11 /* Build configuration list for PBXAggregateTarget "version" */;
+			buildPhases = (
+				229EA5D8200640AD004F0B11 /* Update Version */,
+			);
+			dependencies = (
+			);
+			name = version;
+			productName = version;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		22814ADB1E4790160020473B /* U2FError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADA1E4790160020473B /* U2FError.swift */; };
 		22814ADD1E4790300020473B /* U2FDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADC1E4790300020473B /* U2FDevice.swift */; };
@@ -25,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		229EA5D9200641D0004F0B11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA0733601DAF84A100088DAF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 229EA5D4200640A6004F0B11;
+			remoteInfo = version;
+		};
 		DA0733911DAF851400088DAF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DA0733601DAF84A100088DAF /* Project object */;
@@ -182,9 +203,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA0733671DAF84A100088DAF /* Safari FIDO U2F */ = {
+		DA0733671DAF84A100088DAF /* application */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA0733771DAF84A200088DAF /* Build configuration list for PBXNativeTarget "Safari FIDO U2F" */;
+			buildConfigurationList = DA0733771DAF84A200088DAF /* Build configuration list for PBXNativeTarget "application" */;
 			buildPhases = (
 				DA0733641DAF84A100088DAF /* Sources */,
 				DA0733651DAF84A100088DAF /* Frameworks */,
@@ -196,16 +217,15 @@
 			dependencies = (
 				DA0733921DAF851400088DAF /* PBXTargetDependency */,
 			);
-			name = "Safari FIDO U2F";
+			name = application;
 			productName = "Safari FIDO U2F";
 			productReference = DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DA07337D1DAF851400088DAF /* Safari FIDO U2F Extension */ = {
+		DA07337D1DAF851400088DAF /* extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA0733941DAF851400088DAF /* Build configuration list for PBXNativeTarget "Safari FIDO U2F Extension" */;
+			buildConfigurationList = DA0733941DAF851400088DAF /* Build configuration list for PBXNativeTarget "extension" */;
 			buildPhases = (
-				229EA5CF20058BF2004F0B11 /* Update Build Number */,
 				DA07337A1DAF851400088DAF /* Sources */,
 				DA07337B1DAF851400088DAF /* Frameworks */,
 				DA07337C1DAF851400088DAF /* Resources */,
@@ -213,8 +233,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				229EA5DA200641D0004F0B11 /* PBXTargetDependency */,
 			);
-			name = "Safari FIDO U2F Extension";
+			name = extension;
 			productName = "Safari FIDO U2F Extension";
 			productReference = DA07337E1DAF851400088DAF /* Safari FIDO U2F Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -229,6 +250,11 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Yikai Zhao";
 				TargetAttributes = {
+					229EA5D4200640A6004F0B11 = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = 2H48644JM2;
+						ProvisioningStyle = Automatic;
+					};
 					DA0733671DAF84A100088DAF = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 2H48644JM2;
@@ -256,8 +282,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA0733671DAF84A100088DAF /* Safari FIDO U2F */,
-				DA07337D1DAF851400088DAF /* Safari FIDO U2F Extension */,
+				DA0733671DAF84A100088DAF /* application */,
+				DA07337D1DAF851400088DAF /* extension */,
+				229EA5D4200640A6004F0B11 /* version */,
 			);
 		};
 /* End PBXProject section */
@@ -284,19 +311,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		229EA5CF20058BF2004F0B11 /* Update Build Number */ = {
+		229EA5D8200640AD004F0B11 /* Update Version */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Update Build Number";
+			name = "Update Version";
 			outputPaths = (
+				$INFOPLIST_PREFIX_HEADER,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "version=`/usr/bin/git log --oneline | wc -l`\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"";
+			shellScript = "echo \"Updating build number\"\nversion=`/usr/bin/git log --oneline | wc -l | tr -d ' '`\nmkdir -p \"$(dirname $INFOPLIST_PREFIX_HEADER)\"\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"\necho \"Build no is now $version\"";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -325,9 +353,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		229EA5DA200641D0004F0B11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 229EA5D4200640A6004F0B11 /* version */;
+			targetProxy = 229EA5D9200641D0004F0B11 /* PBXContainerItemProxy */;
+		};
 		DA0733921DAF851400088DAF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA07337D1DAF851400088DAF /* Safari FIDO U2F Extension */;
+			target = DA07337D1DAF851400088DAF /* extension */;
 			targetProxy = DA0733911DAF851400088DAF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -344,6 +377,24 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		229EA5D6200640A6004F0B11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2H48644JM2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		229EA5D7200640A6004F0B11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2H48644JM2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		DA0733751DAF84A200088DAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -469,7 +520,7 @@
 				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Safari FIDO U2F";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -483,7 +534,7 @@
 				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Safari FIDO U2F";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -498,7 +549,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Safari FIDO U2F Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -516,7 +567,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Safari FIDO U2F Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
@@ -526,6 +577,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		229EA5D5200640A6004F0B11 /* Build configuration list for PBXAggregateTarget "version" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				229EA5D6200640A6004F0B11 /* Debug */,
+				229EA5D7200640A6004F0B11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DA0733631DAF84A100088DAF /* Build configuration list for PBXProject "Safari FIDO U2F" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -535,7 +595,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA0733771DAF84A200088DAF /* Build configuration list for PBXNativeTarget "Safari FIDO U2F" */ = {
+		DA0733771DAF84A200088DAF /* Build configuration list for PBXNativeTarget "application" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA0733781DAF84A200088DAF /* Debug */,
@@ -544,7 +604,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA0733941DAF851400088DAF /* Build configuration list for PBXNativeTarget "Safari FIDO U2F Extension" */ = {
+		DA0733941DAF851400088DAF /* Build configuration list for PBXNativeTarget "extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA0733951DAF851400088DAF /* Debug */,
