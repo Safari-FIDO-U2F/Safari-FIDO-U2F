@@ -156,7 +156,7 @@ u2f.isSafari = function() {
  */
 
 u2f.getApiVersion = function() {
-    return "1.1";
+    return 1.1;
 };
 
 
