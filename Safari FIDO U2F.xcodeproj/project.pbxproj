@@ -453,6 +453,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				U2F_COPYRIGHT = "Copyright © 2016-2018 Yikai Zhao, Sam Deane, et al. All rights reserved.";
+				U2F_NAME = "Safari FIDO U2F";
 				U2F_VERSION = 1.1b6;
 			};
 			name = Debug;
@@ -507,6 +508,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				U2F_COPYRIGHT = "Copyright © 2016-2018 Yikai Zhao, Sam Deane, et al. All rights reserved.";
+				U2F_NAME = "Safari FIDO U2F";
 				U2F_VERSION = 1.1b6;
 			};
 			name = Release;
@@ -520,7 +522,7 @@
 				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
-				PRODUCT_NAME = "Safari FIDO U2F";
+				PRODUCT_NAME = "$(U2F_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -534,7 +536,7 @@
 				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
-				PRODUCT_NAME = "Safari FIDO U2F";
+				PRODUCT_NAME = "$(U2F_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -549,7 +551,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
-				PRODUCT_NAME = "Safari FIDO U2F Extension";
+				PRODUCT_NAME = "$(U2F_NAME) Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -567,7 +569,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
-				PRODUCT_NAME = "Safari FIDO U2F Extension";
+				PRODUCT_NAME = "$(U2F_NAME) Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
