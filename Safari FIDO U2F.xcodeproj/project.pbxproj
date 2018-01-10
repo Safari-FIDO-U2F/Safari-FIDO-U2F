@@ -203,6 +203,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA0733941DAF851400088DAF /* Build configuration list for PBXNativeTarget "Safari FIDO U2F Extension" */;
 			buildPhases = (
+				229EA5CF20058BF2004F0B11 /* Update Build Number */,
 				DA07337A1DAF851400088DAF /* Sources */,
 				DA07337B1DAF851400088DAF /* Frameworks */,
 				DA07337C1DAF851400088DAF /* Resources */,
@@ -279,6 +280,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		229EA5CF20058BF2004F0B11 /* Update Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "version=`/usr/bin/git log --oneline | wc -l`\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DA0733641DAF84A100088DAF /* Sources */ = {
@@ -365,6 +384,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_BUILD_DIR)/InfoPlist.h";
+				INFOPLIST_PREPROCESS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -372,6 +393,8 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				U2F_COPYRIGHT = "Copyright © 2018 Yikai Zhao, Sam Deane, et al. All rights reserved.";
+				U2F_VERSION = 1.1b6;
 			};
 			name = Debug;
 		};
@@ -411,11 +434,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_BUILD_DIR)/InfoPlist.h";
+				INFOPLIST_PREPROCESS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				U2F_COPYRIGHT = "Copyright © 2018 Yikai Zhao, Sam Deane, et al. All rights reserved.";
+				U2F_VERSION = 1.1b6;
 			};
 			name = Release;
 		};
