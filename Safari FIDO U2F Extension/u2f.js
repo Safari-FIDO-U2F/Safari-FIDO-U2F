@@ -11,7 +11,8 @@ var u2f = window.u2f || {};
 
 u2f._pending = null;
 
-
+u2f.extensionVersion = "$U2F_VERSION";
+u2f.extensionBuild = "$U2F_BUILD";
 
 /**
  * Dispatches register requests to available U2F tokens. An array of sign
@@ -223,5 +224,5 @@ Object.defineProperty(window, "u2f", {
     set : undefined, // prevent furthur change
 });
 
- console.log("FIDO U2F: v" + u2f.getApiVersion +: loaded");
+ console.log("FIDO U2F: v" + u2f.extensionVersion + " (" + u2f.extensionBuild + ") loaded");
 })();

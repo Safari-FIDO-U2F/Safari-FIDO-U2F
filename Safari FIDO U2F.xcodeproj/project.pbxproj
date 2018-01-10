@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -223,6 +223,7 @@
 				DA07337A1DAF851400088DAF /* Sources */,
 				DA07337B1DAF851400088DAF /* Frameworks */,
 				DA07337C1DAF851400088DAF /* Resources */,
+				22BA418B2006C534000CD2AC /* Insert Version Numbers Into Javascript */,
 			);
 			buildRules = (
 			);
@@ -242,7 +243,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0920;
-				ORGANIZATIONNAME = "Yikai Zhao";
+				ORGANIZATIONNAME = "Safari FIDO U2F";
 				TargetAttributes = {
 					229EA5D4200640A6004F0B11 = {
 						CreatedOnToolsVersion = 9.2;
@@ -264,7 +265,7 @@
 				};
 			};
 			buildConfigurationList = DA0733631DAF84A100088DAF /* Build configuration list for PBXProject "Safari FIDO U2F" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -318,8 +319,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Updating build number\"\nversion=`/usr/bin/git log --oneline | wc -l | tr -d ' '`\nmkdir -p \"$(dirname $INFOPLIST_PREFIX_HEADER)\"\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"\necho \"Build no is now $version\"";
+			shellScript = "echo \"Updating build number\"\nversion=`/usr/bin/git log --oneline | wc -l | tr -d ' '`\nmkdir -p \"$(dirname $INFOPLIST_PREFIX_HEADER)\"\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"\necho \"Build no is now $version\"\n\nSED_FILE=\"$CONFIGURATION_BUILD_DIR/Versions.txt\"\necho \"s/\\$U2F_VERSION/$U2F_VERSION/g\" > \"$SED_FILE\"\necho \"s/\\$U2F_BUILD/$version/g\" >> \"$SED_FILE\"\n";
 			showEnvVarsInLog = 0;
+		};
+		22BA418B2006C534000CD2AC /* Insert Version Numbers Into Javascript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Insert Version Numbers Into Javascript";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "U2F_SOURCE=\"$CONFIGURATION_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/Resources/u2f.js\"\n\nsed -f \"$CONFIGURATION_BUILD_DIR/Versions.txt\" -i \"\" \"$U2F_SOURCE\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
