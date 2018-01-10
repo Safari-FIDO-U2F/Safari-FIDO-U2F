@@ -18,20 +18,24 @@ let EXT_ID = "com.safari-fido-u2f.app.extension"
 let HOMEPAGE = "https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F"
 
 class ViewController: NSViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let link = NSMutableAttributedString.init(string: HOMEPAGE)
-        link.addAttribute(NSAttributedStringKey.link, value: HOMEPAGE, range: NSRange.init(location: 0, length: link.length))
+        let range = NSRange.init(location: 0, length: link.length)
+        link.addAttribute(NSAttributedStringKey.link, value: HOMEPAGE, range: range)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+        link.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
         self.hyperlinkField.attributedStringValue = link;
         self.updateExtensionStatus(self.extensionUpdateBtn)
         // Do any additional setup after loading the view.
     }
-
+    
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
     
@@ -48,19 +52,19 @@ class ViewController: NSViewController {
             }
             
             DispatchQueue.main.async {
-              let label = state!.isEnabled ? "Enabled" : "Disabled"
-              print("Extension: \(label)")
-              self.extensionStatusLabel.stringValue = label
+                let label = state!.isEnabled ? "Enabled" : "Disabled"
+                print("Extension: \(label)")
+                self.extensionStatusLabel.stringValue = label
             }
-
+            
         }
     }
-
+    
     @IBAction func enableSafariExtension(_ sender: NSButton) {
         SFSafariApplication.showPreferencesForExtension(withIdentifier: EXT_ID) { (_) in
             self.updateExtensionStatus(self.extensionUpdateBtn)
         }
     }
-
+    
 }
 
