@@ -1,0 +1,29 @@
+//
+//  Config.xcconfig
+//  Safari FIDO U2F
+//
+//  Created by Sam Deane on 10/01/2018.
+//
+//  ----------------------------------------------------------------
+//  Copyright (c) 2018-present, Yikai Zhao, Sam Deane, et al.
+//
+//  This source code is licensed under the MIT license found in the
+//  LICENSE file in the root directory of this source tree.
+//  ----------------------------------------------------------------
+
+
+U2F_NAME = Safari FIDO U2F
+U2F_COPYRIGHT = Copyright © 2016-2018 Yikai Zhao, Sam Deane, et al. All rights reserved.
+U2F_VERSION = 1.1b6
+
+
+SDKROOT = macosx
+MACOSX_DEPLOYMENT_TARGET = 10.11
+
+
+INFOPLIST_PREFIX_HEADER = $(CONFIGURATION_BUILD_DIR)/InfoPlist.h
+INFOPLIST_PREPROCESS = YES
+
+
+SWIFT_VERSION = 4.0
+
