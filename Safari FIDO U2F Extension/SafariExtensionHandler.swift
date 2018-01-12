@@ -34,7 +34,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         var userinfo: [String: Any] = [:]
         switch error {
         case U2FError.unknown(let pos):
-            userinfo["error"] = "Unknown Error in \(pos)"
+            userinfo["error"] = "Unknown Error: \(pos)"
         case U2FError.error(let errcode, let pos):
             let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
             userinfo["error"] = "Error in \(pos): \(errmsg)"
