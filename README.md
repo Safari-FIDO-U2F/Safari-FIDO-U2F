@@ -1,6 +1,6 @@
 # Safari FIDO U2F
 
-**FIDO U2F support is possible in Safari, finally!**
+**Adds FIDO U2F support to Safari.**
 
 ## Quick Start
 
@@ -23,19 +23,21 @@ Only the high-level JavaScript API is implemented for now: `register` and `sign`
 
 ## Does It Work With Site xyz.com?
 
-Technically, this extension adds the full FIDO U2F Javascript API to Safari.
+This extension adds support for the high-level FIDO U2F Javascript API to Safari.
 
-But as stated in the specification, the interface (for now) is browser dependent, so each website is required to add support for it (by adding some code to test `if browser is safari`...).
+The FIDO U2F specification leaves it up to the browser to implement this API, and leaves individual sites
+to work out if the API is present / supported.
 
-Currently, most of the sites using U2F are using [u2f-api.js](https://demo.yubico.com/js/u2f-api.js) to provide
-cross-browser support of U2F. This extension provides a JavaScript API that is compatible with it and will override it seamlessly, so should support a large set of websites.
+Many sites are using [u2f-api.js](https://demo.yubico.com/js/u2f-api.js) (or a variation of it) to provide
+cross-browser support of U2F. This extension should override that u2f-api implementation and work.
 
-However, there are still websites that do not work properly.
+However, there are still websites that do not work properly - see [Problems](#problems) below.
 
 The following sites should work out of the box:
 
-- [Yubico U2F DEMO](https://demo.yubico.com/u2f)
-- [Google's U2F DEMO](https://crxjs-dot-u2fdemo.appspot.com)
+- [Yubico Demo](https://demo.yubico.com/u2f)
+- [Google Demo](https://crxjs-dot-u2fdemo.appspot.com)
+- [AkiSec Demo](https://akisec.com/demo/)
 - [Github Account Two-factor authentication](https://help.github.com/articles/configuring-two-factor-authentication-via-fido-u2f/)
 - Fastmail
 
@@ -43,9 +45,13 @@ The following sites should work out of the box:
 
 Plenty of sites do not work yet.
 
-The extension works by injecting a u2f javascript object into to the page. Because of the way Safari's extensions work, it's not possible to inject this object early enough for all sites to spot that it is there. Some sites check too early, and/or add their own object which then gets overwritten.
+There are two main reasons for this:
 
-In addition, some sites base their checks on the idea that only Chrome supports U2F on the Mac. Because of this, you may need to [change Safari's User-Agent to Chrome](http://www.howtogeek.com/211961/how-to-change-safaris-user-agent-in-os-x/) to make these sites work.
+- The extension works by injecting a u2f javascript object into to the page. Because of the way Safari's extensions work, it's not possible to inject this object early enough for all sites
+to spot that it is there.
+
+- Some sites base their checks on the idea that only Chrome supports U2F on the Mac, and won't even try to use U2F if they detect Safari. Because of this,
+you may need to [change Safari's User-Agent to Chrome](http://www.howtogeek.com/211961/how-to-change-safaris-user-agent-in-os-x/) to make them work.
 
 
 ## To Build With Xcode
@@ -77,4 +83,5 @@ The authors of this extension are not security, cryptography or javascript exper
 Use of the extension is entirely at your own risk! 
 
 All feedback and other contributions welcomed.
-In particular, please let us know about sites that do/don't work ok!
+
+In particular, please [let us know](https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F/issues) about sites that do / don't work!
