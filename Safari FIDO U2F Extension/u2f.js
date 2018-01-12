@@ -14,6 +14,12 @@ u2f._pending = null;
 u2f.extensionVersion = "$U2F_VERSION";
 u2f.extensionBuild = "$U2F_BUILD";
 
+ u2f.log = function(args) {
+    arguments[0] = "FIDO-U2F: " + arguments[0]
+    console.log(args)
+ }
+
+
 /**
  * Dispatches register requests to available U2F tokens. An array of sign
  * requests identifies already registered tokens.
@@ -39,10 +45,10 @@ u2f.register = function() {
     var registerRequests = arguments[arguments_offset];
     var callback = arguments[arguments_offset + 2];
 
-    console.log("FIDO U2F: registering ", appId);
+    u2f.log("registering ", appId);
 
     if (u2f._pending) {
-        console.log("FIDO U2F: Pending action exists, exit");
+        u2f.log("Pending action exists, exit");
         return;
     }
 
@@ -101,10 +107,10 @@ u2f.sign = function() {
     var registeredKeys = arguments[arguments_offset];
     var callback = arguments[arguments_offset + 1];
 
-    console.log("FIDO U2F: signing ", appId);
+    u2f.log("signing ", appId);
 
     if (u2f._pending) {
-        console.log("FIDO U2F: Pending action exists, exit");
+        u2f.log("Pending action exists, exit");
         return;
     }
 
@@ -177,7 +183,7 @@ window.addEventListener("message", function(e) {
         return;
     data = data.message;
 
-    console.log("FIDO U2F: got response, error = ", data.error);
+    u2f.log("got response, error = ", data.error);
 
     var pending = u2f._pending;
     if (!pending)
@@ -224,5 +230,5 @@ Object.defineProperty(window, "u2f", {
     set : undefined, // prevent furthur change
 });
 
- console.log("FIDO U2F: v" + u2f.extensionVersion + " (" + u2f.extensionBuild + ") loaded");
+ u2f.log("v" + u2f.extensionVersion + " (" + u2f.extensionBuild + ") loaded");
 })();
