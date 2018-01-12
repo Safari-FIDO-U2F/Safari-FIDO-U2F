@@ -65,6 +65,7 @@ class U2FDevice {
     }
 
     func Register(challenge : String, origin : String) throws -> String {
+        print("register: \(challenge) \(origin)")
         var response: UnsafeMutablePointer<Int8>? = nil
         let ret = u2fh_register(self.device, challenge, origin, &response, U2FH_REQUEST_USER_PRESENCE)
 
@@ -72,6 +73,7 @@ class U2FDevice {
     }
 
     func Sign(challenge : String, origin : String) throws -> String {
+        print("sign: \(challenge) \(origin)")
         var response: UnsafeMutablePointer<Int8>? = nil
         let ret = u2fh_authenticate(device, challenge, origin, &response, U2FH_REQUEST_USER_PRESENCE)
 
