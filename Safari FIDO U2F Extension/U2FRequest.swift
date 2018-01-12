@@ -31,24 +31,24 @@ class U2FRequest {
 
     static func ParseRequest(name : String, info : [String : Any]?, properties : SFSafariPageProperties?) throws -> U2FRequest {
         var request : U2FRequest?
-
+        var origin = "https://unknown"
         if let scheme = properties?.url?.scheme, let host = properties?.url?.host {
-            let origin = scheme + "://" + host
-            if let info = info {
-                switch name {
-                case U2FSignMessage:
-                    request = U2FSignRequest(info:info, origin:origin)
+            origin = scheme + "://" + host
+        }
 
-                case U2FRegisterMessage:
-                    request = U2FRegisterRequest(info:info, origin:origin)
+        if let info = info {
+            switch name {
+            case U2FSignMessage:
+                request = U2FSignRequest(info:info, origin:origin)
 
-                default:
-                    break
-                }
+            case U2FRegisterMessage:
+                request = U2FRegisterRequest(info:info, origin:origin)
 
+            default:
+                break
             }
         } else {
-            throw U2FError.unknown(in: "bad origin")
+            throw U2FError.unknown(in: "bad origin \(name) \(origin)")
         }
 
         guard request != nil else {
