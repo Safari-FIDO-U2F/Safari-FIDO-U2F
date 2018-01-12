@@ -14,7 +14,7 @@
 
 U2F_NAME = Safari FIDO U2F
 U2F_COPYRIGHT = Copyright © 2016-2018 Yikai Zhao, Sam Deane, et al. All rights reserved.
-U2F_VERSION = 1.1b7
+U2F_VERSION = 1.1b8
 
 
 SDKROOT = macosx
