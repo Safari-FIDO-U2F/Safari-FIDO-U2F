@@ -11,14 +11,91 @@ var u2f = window.u2f || {};
 
 u2f._pending = null;
 
+ 
 u2f.extensionVersion = "$U2F_VERSION";
 u2f.extensionBuild = "$U2F_BUILD";
+
+ /**
+  * Message types for messsages to/from the extension
+  * @const
+  * @enum {string}
+  */
+ u2f.MessageTypes = {
+ 'U2F_REGISTER_REQUEST': 'u2f_register_request',
+ 'U2F_REGISTER_RESPONSE': 'u2f_register_response',
+ 'U2F_SIGN_REQUEST': 'u2f_sign_request',
+ 'U2F_SIGN_RESPONSE': 'u2f_sign_response',
+ 'U2F_GET_API_VERSION_REQUEST': 'u2f_get_api_version_request',
+ 'U2F_GET_API_VERSION_RESPONSE': 'u2f_get_api_version_response'
+ };
+
+
+/**
+ * Response status codes
+ * @const
+ * @enum {number}
+ */
+ u2f.ErrorCodes = {
+ 'OK': 0,
+ 'OTHER_ERROR': 1,
+ 'BAD_REQUEST': 2,
+ 'CONFIGURATION_UNSUPPORTED': 3,
+ 'DEVICE_INELIGIBLE': 4,
+ 'TIMEOUT': 5
+ };
+
+
+/**
+ * A counter for requestIds.
+ * @type {number}
+ * @private
+ */
+ u2f.reqCounter_ = 0;
+
+
+/**
+ * A map from requestIds to client callbacks
+ * @type {Object.<number,(function((u2f.Error|u2f.RegisterResponse))
+ *                       |function((u2f.Error|u2f.SignResponse)))>}
+ * @private
+ */
+ u2f.callbackMap_ = {};
+
+
+/**
+ * Default extension response timeout in seconds.
+ * @const
+ */
+ u2f.EXTENSION_TIMEOUT_SEC = 30;
+
+
+/**
+ * Handles response messages from the extension.
+ * @param {MessageEvent.<u2f.Response>} message
+ * @private
+ */
+ u2f.responseHandler_ = function(message) {
+ var response = message.data;
+ var reqId = response['requestId'];
+ if (!reqId || !u2f.callbackMap_[reqId]) {
+ u2f.error('Unknown or missing requestId in response.');
+ return;
+ }
+ var cb = u2f.callbackMap_[reqId];
+ delete u2f.callbackMap_[reqId];
+ cb(response['responseData']);
+ };
+
 
  u2f.log = function(args) {
     arguments[0] = "FIDO-U2F: " + arguments[0]
     console.log(args)
  }
 
+ u2f.error = function(args) {
+ arguments[0] = "FIDO-U2F: " + arguments[0]
+ console.error(args)
+ }
 
 /**
  * Dispatches register requests to available U2F tokens. An array of sign
@@ -34,117 +111,49 @@ u2f.extensionBuild = "$U2F_BUILD";
  *
  * Also support legacy function signature
  */
-u2f.register = function() {
-    var arguments_offset = 0;
-    var appId = null;
-    if (typeof(arguments[0]) == "string") {
-        appId = arguments[0];
-        arguments_offset += 1;
-    }
+u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
+ u2f.log("registering ", appId);
+ var reqId = ++u2f.reqCounter_;
+ u2f.callbackMap_[reqId] = callback;
+ var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
+ var request =  {
+ type: u2f.MessageTypes.U2F_REGISTER_REQUEST,
+ appId: appId,
+ registerRequests: registerRequests,
+ registeredKeys: registeredKeys,
+ timeoutSeconds: timeoutSeconds,
+ requestId: reqId
+ };
 
-    var registerRequests = arguments[arguments_offset];
-    var callback = arguments[arguments_offset + 2];
-
-    u2f.log("registering ", appId);
-
-    if (u2f._pending) {
-        u2f.log("Pending action exists, exit");
-        return;
-    }
-
-    var challenge = null;
-    for (var i = 0; i < registerRequests.length; i += 1) {
-        if (registerRequests[i].version == "U2F_V2") {
-            challenge = registerRequests[i].challenge;
-            if (!appId)
-                appId = registerRequests[i].appId;
-            break;
-        }
-    }
-    if (!challenge || !appId) {
-        callback({ errorCode : 1 });
-        return;
-    }
-
-    u2f._pending = { type : "register", callback : callback };
-
-    window.postMessage(JSON.stringify({
-        _meta : "u2f_window2safari",
-        name : "U2FRegister",
-        message : {
-            appId : appId,
-            challenge : challenge,
-        }
-    }),
-        window.location.origin);
+ window.postMessage(request, window.location.origin);
 };
 
 
 
 /**
  * Dispatches an array of sign requests to available U2F tokens.
- * If the JS API version supported by the extension is unknown, it first sends a
- * message to the extension to find out the supported API version and then it sends
- * the sign request.
  * @param {string=} appId
  * @param {string=} challenge
  * @param {Array<u2f.RegisteredKey>} registeredKeys
  * @param {function((u2f.Error|u2f.SignResponse))} callback
  * @param {number=} opt_timeoutSeconds
- *
- * Also support legacy function signature
  */
-u2f.sign = function() {
-    var arguments_offset = 0;
-    var appId = null;
-    var challenge = null;
-    if (typeof(arguments[0]) == "string") {
-        appId = arguments[0];
-        challenge = arguments[1];
-        arguments_offset += 2;
-    }
 
-    var registeredKeys = arguments[arguments_offset];
-    var callback = arguments[arguments_offset + 1];
+ u2f.sign = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
+ u2f.log("signing ", appId);
+ var reqId = ++u2f.reqCounter_;
+ u2f.callbackMap_[reqId] = callback;
+ var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
+ var request = {
+ type: u2f.MessageTypes.U2F_SIGN_REQUEST,
+ appId: appId,
+ challenge: challenge,
+ registeredKeys: registeredKeys,
+ timeoutSeconds: timeoutSeconds,
+ requestId: reqId
+ };
 
-    u2f.log("signing ", appId);
-
-    if (u2f._pending) {
-        u2f.log("Pending action exists, exit");
-        return;
-    }
-
-    var keyHandle = null;
-    for (var i = 0; i < registeredKeys.length; i += 1) {
-        if (registeredKeys[i].version == "U2F_V2") {
-            keyHandle = registeredKeys[i].keyHandle;
-            if (!appId || !challenge) {
-                appId = registeredKeys[i].appId;
-                challenge = registeredKeys[i].challenge;
-            }
-            break;
-        }
-    }
-    if (!keyHandle || !appId || !challenge) {
-        callback({ errorCode : 1 });
-        return;
-    }
-
-    u2f._pending = {
-        type : "sign",
-        callback : callback,
-    };
-
-    window.postMessage(JSON.stringify({
-        _meta : "u2f_window2safari",
-        name : "U2FSign",
-        message : {
-            appId : appId,
-            challenge : challenge,
-            keyHandle : keyHandle,
-        }
-    }),
-        window.location.origin);
+ window.postMessage(request, window.location.origin);
 };
 
 
@@ -171,49 +180,7 @@ u2f.getApiVersion = function(callback, opt_timeoutSeconds) {
   Listener to process messages to/from the extension.
 */
 
-window.addEventListener("message", function(e) {
-    if (e.origin != window.location.origin)
-        return;
-
-    if (!e.data.includes("u2f_safari2window")) // if the data includes our tag, it's safe to parse it as JSON
-        return;
-
-    var data = JSON.parse(e.data);
-    if (data._meta != "u2f_safari2window" || data.name != "U2FResponse")
-        return;
-    data = data.message;
-
-    u2f.log("got response, error = ", data.error);
-
-    var pending = u2f._pending;
-    if (!pending)
-        return;
-    u2f._pending = null;
-
-    if (data.error && data.error != 0) {
-        pending.callback({
-            errorCode : 1,
-            errorMessage : data.error,
-        });
-        return;
-    }
-
-    var result = JSON.parse(data.result);
-    if (pending.type == "register") {
-        pending.callback({
-            version : "U2F_V2",
-            registrationData : result.registrationData,
-            clientData : result.clientData,
-        });
-    } else if (pending.type == "sign") {
-        pending.callback({
-            version : "U2F_V2",
-            keyHandle : result.keyHandle,
-            signatureData : result.signatureData,
-            clientData : result.clientData,
-        });
-    }
-});
+window.addEventListener("message", responseHandler_)
 
 
 
