@@ -16,12 +16,12 @@ test('version is 1.1', done => {
 });
 
 test('app id set correctly', () => {
-  var request = u2f.basicRequest("test", "myAppID", null);
+  var request = u2f.basicRequest("test", "myAppID");
   expect(request.appId).toBe("myAppID");
 });
 
 test('type set correctly', () => {
-  var request = u2f.basicRequest("myType", "myAppID", null);
+  var request = u2f.basicRequest("myType", "myAppID");
   expect(request.type).toBe("myType");
 });
 
@@ -31,15 +31,24 @@ test('timeout set correctly', () => {
 });
 
 test('timeout defaulted correctly', () => {
-  var request = u2f.basicRequest("myType", "myAppID", null);
+  var request = u2f.basicRequest("myType", "myAppID");
   expect(request.timeoutSeconds).toBe(u2f.EXTENSION_TIMEOUT_SEC);
 });
 
 test('request ids are unique', () => {
-  var request1 = u2f.basicRequest("test", "appID", null);
-  var request2 = u2f.basicRequest("test", "appID", null);
+  var request1 = u2f.basicRequest("test", "appID");
+  var request2 = u2f.basicRequest("test", "appID");
   expect(request1.requestId).toBeDefined();
   expect(request1.requestId).not.toBe(request2.requestId);
+});
+
+test('register request', () => {
+  var registerRequests = ["myRequests"];
+  var registeredKeys = ["myKeys"];
+    var request = u2f.registerRequest("myAppID", registerRequests, registeredKeys);
+    expect(request.type).toBe(u2f.MessageTypes.U2F_REGISTER_REQUEST);
+    expect(request.registerRequests).toBe(registerRequests);
+    expect(request.registeredKeys).toBe(registeredKeys);
 });
 
 test('basic request', done => {
