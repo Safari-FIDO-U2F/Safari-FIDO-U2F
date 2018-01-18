@@ -25,6 +25,16 @@ test('type set correctly', () => {
   expect(request.type).toBe("myType");
 });
 
+test('timeout set correctly', () => {
+  var request = u2f.basicRequest("myType", "myAppID", null, 123);
+  expect(request.timeoutSeconds).toBe(123);
+});
+
+test('timeout defaulted correctly', () => {
+  var request = u2f.basicRequest("myType", "myAppID", null);
+  expect(request.timeoutSeconds).toBe(u2f.EXTENSION_TIMEOUT_SEC);
+});
+
 test('request ids are unique', () => {
   var request1 = u2f.basicRequest("test", "appID", null);
   var request2 = u2f.basicRequest("test", "appID", null);
