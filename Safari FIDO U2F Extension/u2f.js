@@ -11,23 +11,23 @@ var u2f = window.u2f || {};
 
 u2f._pending = null;
 
- 
+
 u2f.extensionVersion = "$U2F_VERSION";
 u2f.extensionBuild = "$U2F_BUILD";
 
- /**
+/**
   * Message types for messsages to/from the extension
   * @const
   * @enum {string}
   */
- u2f.MessageTypes = {
- 'U2F_REGISTER_REQUEST': 'u2f_register_request',
- 'U2F_REGISTER_RESPONSE': 'u2f_register_response',
- 'U2F_SIGN_REQUEST': 'u2f_sign_request',
- 'U2F_SIGN_RESPONSE': 'u2f_sign_response',
- 'U2F_GET_API_VERSION_REQUEST': 'u2f_get_api_version_request',
- 'U2F_GET_API_VERSION_RESPONSE': 'u2f_get_api_version_response'
- };
+u2f.MessageTypes = {
+    'U2F_REGISTER_REQUEST' : 'u2f_register_request',
+    'U2F_REGISTER_RESPONSE' : 'u2f_register_response',
+    'U2F_SIGN_REQUEST' : 'u2f_sign_request',
+    'U2F_SIGN_RESPONSE' : 'u2f_sign_response',
+    'U2F_GET_API_VERSION_REQUEST' : 'u2f_get_api_version_request',
+    'U2F_GET_API_VERSION_RESPONSE' : 'u2f_get_api_version_response'
+};
 
 
 /**
@@ -35,14 +35,14 @@ u2f.extensionBuild = "$U2F_BUILD";
  * @const
  * @enum {number}
  */
- u2f.ErrorCodes = {
- 'OK': 0,
- 'OTHER_ERROR': 1,
- 'BAD_REQUEST': 2,
- 'CONFIGURATION_UNSUPPORTED': 3,
- 'DEVICE_INELIGIBLE': 4,
- 'TIMEOUT': 5
- };
+u2f.ErrorCodes = {
+    'OK' : 0,
+    'OTHER_ERROR' : 1,
+    'BAD_REQUEST' : 2,
+    'CONFIGURATION_UNSUPPORTED' : 3,
+    'DEVICE_INELIGIBLE' : 4,
+    'TIMEOUT' : 5
+};
 
 
 /**
@@ -50,7 +50,7 @@ u2f.extensionBuild = "$U2F_BUILD";
  * @type {number}
  * @private
  */
- u2f.reqCounter_ = 0;
+u2f.reqCounter_ = 0;
 
 
 /**
@@ -59,14 +59,14 @@ u2f.extensionBuild = "$U2F_BUILD";
  *                       |function((u2f.Error|u2f.SignResponse)))>}
  * @private
  */
- u2f.callbackMap_ = {};
+u2f.callbackMap_ = {};
 
 
 /**
  * Default extension response timeout in seconds.
  * @const
  */
- u2f.EXTENSION_TIMEOUT_SEC = 30;
+u2f.EXTENSION_TIMEOUT_SEC = 30;
 
 
 /**
@@ -74,28 +74,47 @@ u2f.extensionBuild = "$U2F_BUILD";
  * @param {MessageEvent.<u2f.Response>} message
  * @private
  */
- u2f.responseHandler_ = function(message) {
- var response = message.data;
- var reqId = response['requestId'];
- if (!reqId || !u2f.callbackMap_[reqId]) {
- u2f.error('Unknown or missing requestId in response.');
- return;
- }
- var cb = u2f.callbackMap_[reqId];
- delete u2f.callbackMap_[reqId];
- cb(response['responseData']);
- };
+u2f.responseHandler_ = function(message) {
+    var response = message.data;
+    var reqId = response['requestId'];
+    if (!reqId || !u2f.callbackMap_[reqId]) {
+        u2f.error('Unknown or missing requestId in response.');
+        return;
+    }
+    var cb = u2f.callbackMap_[reqId];
+    delete u2f.callbackMap_[reqId];
+    cb(response['responseData']);
+};
 
 
- u2f.log = function(args) {
+u2f.log = function(args) {
     arguments[0] = "FIDO-U2F: " + arguments[0]
     console.log(args)
- }
+};
 
- u2f.error = function(args) {
- arguments[0] = "FIDO-U2F: " + arguments[0]
- console.error(args)
- }
+u2f.error = function(args) {
+    arguments[0] = "FIDO-U2F: " + arguments[0]
+    console.error(args)
+};
+
+u2f.basicRequest = function(type, appId, callback, opt_timeoutSeconds) {
+    var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
+    var reqId = ++u2f.reqCounter_;
+    u2f.callbackMap_[reqId] = callback;
+    return {
+        type : type,
+        appId : appId,
+        timeoutSeconds : timeoutSeconds,
+        requestId : reqId
+    };
+};
+
+u2f.registerRequest = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
+    var request = u2f.basicRequest(u2f.MessageTypes.U2F_REGISTER_REQUEST, appId, callback, opt_timeoutSeconds);
+    request.registerRequests = registerRequests;
+    request.registeredKeys = registeredKeys;
+    return request;
+};
 
 /**
  * Dispatches register requests to available U2F tokens. An array of sign
@@ -108,24 +127,12 @@ u2f.extensionBuild = "$U2F_BUILD";
  * @param {Array<u2f.RegisteredKey>} registeredKeys
  * @param {function((u2f.Error|u2f.RegisterResponse))} callback
  * @param {number=} opt_timeoutSeconds
- *
- * Also support legacy function signature
  */
-u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
- u2f.log("registering ", appId);
- var reqId = ++u2f.reqCounter_;
- u2f.callbackMap_[reqId] = callback;
- var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
- var request =  {
- type: u2f.MessageTypes.U2F_REGISTER_REQUEST,
- appId: appId,
- registerRequests: registerRequests,
- registeredKeys: registeredKeys,
- timeoutSeconds: timeoutSeconds,
- requestId: reqId
- };
 
- window.postMessage(request, window.location.origin);
+u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
+    u2f.log("registering ", appId);
+    var request = registerRequest(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds);
+    window.postMessage(request, window.location.origin);
 };
 
 
@@ -139,21 +146,19 @@ u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_t
  * @param {number=} opt_timeoutSeconds
  */
 
- u2f.sign = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
- u2f.log("signing ", appId);
- var reqId = ++u2f.reqCounter_;
- u2f.callbackMap_[reqId] = callback;
- var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
- var request = {
- type: u2f.MessageTypes.U2F_SIGN_REQUEST,
- appId: appId,
- challenge: challenge,
- registeredKeys: registeredKeys,
- timeoutSeconds: timeoutSeconds,
- requestId: reqId
- };
+u2f.sign = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
+    u2f.log("signing ", appId);
+    var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
+    var request = {
+        type : u2f.MessageTypes.U2F_SIGN_REQUEST,
+        appId : appId,
+        challenge : challenge,
+        registeredKeys : registeredKeys,
+        timeoutSeconds : timeoutSeconds,
+        requestId : u2f.registerCallback(callback)
+    };
 
- window.postMessage(request, window.location.origin);
+    window.postMessage(request, window.location.origin);
 };
 
 
@@ -172,7 +177,7 @@ u2f.isSafari = function() {
  */
 
 u2f.getApiVersion = function(callback, opt_timeoutSeconds) {
-    callback({ 'js_api_version': 1.1 });
+    callback({ 'js_api_version' : 1.1 });
 };
 
 
@@ -180,7 +185,7 @@ u2f.getApiVersion = function(callback, opt_timeoutSeconds) {
   Listener to process messages to/from the extension.
 */
 
-window.addEventListener("message", responseHandler_)
+window.addEventListener("message", u2f.responseHandler_)
 
 
 
@@ -197,5 +202,5 @@ Object.defineProperty(window, "u2f", {
     set : undefined, // prevent furthur change
 });
 
- u2f.log("v" + u2f.extensionVersion + " (" + u2f.extensionBuild + ") loaded");
+u2f.log("v" + u2f.extensionVersion + " (" + u2f.extensionBuild + ") loaded");
 })();
