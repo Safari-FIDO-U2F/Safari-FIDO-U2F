@@ -4,7 +4,9 @@ test('u2f is defined', () => {
     expect(window.u2f).toBeDefined();
 });
 
-test('isSafari is true', () => { expect(window.u2f.isSafari) });
+test('isSafari is true', () => {
+   expect(window.u2f.isSafari)
+ });
 
 test('version is 1.1', done => {
     function callback(info) {
@@ -16,49 +18,58 @@ test('version is 1.1', done => {
 });
 
 test('app id set correctly', () => {
-  var request = u2f.basicRequest("test", "myAppID");
+  var request = u2f.basicRequest_("test", "myAppID", ["myKey"]);
   expect(request.appId).toBe("myAppID");
 });
 
 test('type set correctly', () => {
-  var request = u2f.basicRequest("myType", "myAppID");
+  var request = u2f.basicRequest_("myType", "myAppID", ["myKey"]);
   expect(request.type).toBe("myType");
 });
 
+test('keys set correctly', () => {
+  var registeredKeys = ['myKey'];
+  var request = u2f.basicRequest_("myType", "myAppID", registeredKeys);
+  expect(request.registeredKeys).toBe(registeredKeys);
+});
+
 test('timeout set correctly', () => {
-  var request = u2f.basicRequest("myType", "myAppID", null, 123);
+  var request = u2f.basicRequest_("myType", "myAppID", ["myKey"], null, 123);
   expect(request.timeoutSeconds).toBe(123);
 });
 
 test('timeout defaulted correctly', () => {
-  var request = u2f.basicRequest("myType", "myAppID");
+  var request = u2f.basicRequest_("myType", "myAppID", ["myKey"]);
   expect(request.timeoutSeconds).toBe(u2f.EXTENSION_TIMEOUT_SEC);
 });
 
 test('request ids are unique', () => {
-  var request1 = u2f.basicRequest("test", "appID");
-  var request2 = u2f.basicRequest("test", "appID");
+  var request1 = u2f.basicRequest_("test", "appID", ["myKey"]);
+  var request2 = u2f.basicRequest_("test", "appID", ["myKey"]);
   expect(request1.requestId).toBeDefined();
   expect(request1.requestId).not.toBe(request2.requestId);
 });
 
 test('register request', () => {
   var registerRequests = ["myRequests"];
-  var registeredKeys = ["myKeys"];
-    var request = u2f.registerRequest("myAppID", registerRequests, registeredKeys);
+    var request = u2f.registerRequest_("myAppID", registerRequests, ["myKey"]);
     expect(request.type).toBe(u2f.MessageTypes.U2F_REGISTER_REQUEST);
     expect(request.registerRequests).toBe(registerRequests);
-    expect(request.registeredKeys).toBe(registeredKeys);
+});
+
+
+test('sign request', () => {
+    var request = u2f.signRequest_("myAppID", "myChallenge", ["myKey"]);
+    expect(request.type).toBe(u2f.MessageTypes.U2F_SIGN_REQUEST);
+    expect(request.challenge).toBe("myChallenge");
 });
 
 test('basic request', done => {
   function callback(info) {
-    console.log(info);
     done();
   };
 
-  var request = u2f.basicRequest("test", "appID", callback);
-  console.log(request);
+  var request = u2f.basicRequest_("test", "appID", ["myKeys"], callback);
   var message = {};
   message.data = request;
   u2f.responseHandler_(message);

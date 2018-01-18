@@ -97,23 +97,29 @@ u2f.error = function(args) {
     console.error(args)
 };
 
-u2f.basicRequest = function(type, appId, callback, opt_timeoutSeconds) {
+u2f.basicRequest_ = function(type, appId, registeredKeys, callback, opt_timeoutSeconds) {
     var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
     var reqId = ++u2f.reqCounter_;
     u2f.callbackMap_[reqId] = callback;
     return {
         type : type,
         appId : appId,
+        registeredKeys : registeredKeys,
         timeoutSeconds : timeoutSeconds,
         requestId : reqId
     };
 };
 
-u2f.registerRequest = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
-    var request = u2f.basicRequest(u2f.MessageTypes.U2F_REGISTER_REQUEST, appId, callback, opt_timeoutSeconds);
+u2f.registerRequest_ = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
+    var request = u2f.basicRequest_(u2f.MessageTypes.U2F_REGISTER_REQUEST, appId, registeredKeys, callback, opt_timeoutSeconds);
     request.registerRequests = registerRequests;
-    request.registeredKeys = registeredKeys;
     return request;
+};
+
+u2f.signRequest_ = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
+  var request = u2f.basicRequest_(u2f.MessageTypes.U2F_SIGN_REQUEST, appId, registeredKeys, callback, opt_timeoutSeconds);
+  request.challenge = challenge;
+  return request;
 };
 
 /**
@@ -131,7 +137,7 @@ u2f.registerRequest = function(appId, registerRequests, registeredKeys, callback
 
 u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
     u2f.log("registering ", appId);
-    var request = registerRequest(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds);
+    var request = registerRequest_(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds);
     window.postMessage(request, window.location.origin);
 };
 
@@ -148,16 +154,7 @@ u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_t
 
 u2f.sign = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
     u2f.log("signing ", appId);
-    var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
-    var request = {
-        type : u2f.MessageTypes.U2F_SIGN_REQUEST,
-        appId : appId,
-        challenge : challenge,
-        registeredKeys : registeredKeys,
-        timeoutSeconds : timeoutSeconds,
-        requestId : u2f.registerCallback(callback)
-    };
-
+    var request = u2f.signRequest_(appId, challenge, registeredKeys, callback, opt_timeoutSeconds)
     window.postMessage(request, window.location.origin);
 };
 
