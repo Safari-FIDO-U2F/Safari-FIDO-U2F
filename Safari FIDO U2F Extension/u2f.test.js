@@ -64,13 +64,31 @@ test('sign request', () => {
     expect(request.challenge).toBe("myChallenge");
 });
 
-test('basic request', done => {
-  function callback(info) {
+test('response fires callback', done => {
+  function callback(responseData) {
+    expect(responseData).toBe("myResponse");
     done();
   };
 
   var request = u2f.basicRequest_("test", "appID", ["myKeys"], callback);
-  var message = {};
-  message.data = request;
+  var message = {
+    data: {
+      responseData: "myResponse",
+      requestId: request.requestId
+    }
+  };
+  u2f.responseHandler_(message);
+});
+
+test('missing request id fails', done => {
+  function callback(responseData) {
+    expect(responseData).toBe("myResponse");
+    done();
+  };
+  var message = {
+    data: {
+      responseData: "myResponse"
+    }
+  };
   u2f.responseHandler_(message);
 });
