@@ -6,7 +6,7 @@
 
 To just test the extension without building it:
 
-- Download [the latest release](https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F/releases
+- Download [the latest release](https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F/releases)
 - Run It
 - Click `Open Safari Preferences`
 - Enable the `Safari FIDO U2F Extension`
