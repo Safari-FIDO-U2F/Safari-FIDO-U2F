@@ -46,8 +46,8 @@ u2f.ErrorCodes = {
 
 
 u2f.CallbackMissingException = function() {
-  this.message = 'Response does not have a callback registered.';
-  this.name = 'CallbackMissingException';
+    this.message = 'Response does not have a callback registered.';
+    this.name = 'CallbackMissingException';
 };
 
 /**
@@ -83,9 +83,9 @@ u2f.responseHandler_ = function(message) {
     var response = message.data;
     var reqId = response['requestId'];
     if (!reqId || !u2f.callbackMap_[reqId]) {
-      error = new CallbackMissingException();
-      u2f.error(error.message);
-      throw error;
+        error = new u2f.CallbackMissingException();
+        u2f.error(error.message);
+        throw error;
     }
 
     var cb = u2f.callbackMap_[reqId];
@@ -124,9 +124,9 @@ u2f.registerRequest_ = function(appId, registerRequests, registeredKeys, callbac
 };
 
 u2f.signRequest_ = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
-  var request = u2f.basicRequest_(u2f.MessageTypes.U2F_SIGN_REQUEST, appId, registeredKeys, callback, opt_timeoutSeconds);
-  request.challenge = challenge;
-  return request;
+    var request = u2f.basicRequest_(u2f.MessageTypes.U2F_SIGN_REQUEST, appId, registeredKeys, callback, opt_timeoutSeconds);
+    request.challenge = challenge;
+    return request;
 };
 
 /**
