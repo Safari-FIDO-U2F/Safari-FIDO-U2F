@@ -92,3 +92,17 @@ test('missing request id throws exception', () => {
     }
     expect(handleResponse).toThrow();
 });
+
+test('missing unregistered id throws exception', () => {
+    function handleResponse()
+    {
+        var message = {
+            data : {
+                responseData : "myResponse",
+                requestId : 1234567
+            }
+        };
+        u2f.responseHandler_(message);
+    }
+    expect(handleResponse).toThrow();
+});
