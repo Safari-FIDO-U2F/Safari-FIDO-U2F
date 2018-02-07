@@ -1,8 +1,13 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/safari-fido-u2f/safari-fido-u2f.git"
+  },
+  "license": "MIT",
   "scripts": {
     "test": "jest"
   },
   "devDependencies": {
-    "jest": "^22.1.1"
+    "jest": "^22.2.0"
   }
 }
