@@ -52,3 +52,7 @@ Backup[ ]of[ ]*.numbers/
 # compiled python
 *.pyc
 test-build
+
+
+# npm
+node_modules/
