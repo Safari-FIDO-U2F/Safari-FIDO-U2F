@@ -217,7 +217,4 @@ Object.defineProperty(window, "u2f", {
 });
 
 u2f.log("v" + u2f.extensionVersion + " (" + u2f.extensionBuild + ") loaded");
- if (safari.self != null) {
-    u2f.log("safari present")
- }
 })();
