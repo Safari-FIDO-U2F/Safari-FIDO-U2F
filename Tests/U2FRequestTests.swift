@@ -9,43 +9,6 @@
 
 import XCTest
 
-let testOriginString = "http://test.origin"
-let testOrigin = URL(string: testOriginString)!
-
-let testAppId = "https://demo.yubico.com"
-
-let testTimeout = 30
-
-let testRequestId = 123
-
-let testKeyHandle = "oea6fGi-MGzyGGrJzb2LFdvCm9KCOy-gVuW4hgSXwNz7koDuZcnP7X4K9MK5DX2wwxud_QRqjmuWhIqGIYhUta5g6f36_b_QO1hzvBO8vb8"
-
-let testRegisteredKey : U2FRequest.Dictionary = [
-    "version": U2FDevice.VERSION,
-    "keyHandle": testKeyHandle
-]
-
-let testChallenge = "P5GB3YFGHmtccXKanP6G9xOXl10e6n5gIqTxNc2WcfI"
-
-let testRegisterRequest : U2FRequest.Dictionary = [
-    "type" : U2FRegisterRequest.RequestType,
-    "appId" : testAppId,
-    "timeoutSeconds" : testTimeout,
-    "requestId" : testRequestId,
-    "registeredKeys" : [],
-    "registerRequests" : [
-        ["version" : U2FDevice.VERSION, "challenge" : testChallenge]
-    ]
-]
-
-let testSignRequest : U2FRequest.Dictionary = [
-    "type": U2FSignRequest.RequestType,
-    "appId": testAppId,
-    "timeoutSeconds":testTimeout,
-    "requestId": testRequestId,
-    "registeredKeys": [testRegisteredKey],
-    "challenge": testChallenge
-]
 
 class tests: XCTestCase {
     func assertThrowsU2FError(_ block : () throws -> () ) -> U2FError? {
@@ -63,7 +26,7 @@ class tests: XCTestCase {
     
     
     func testRegisterRequestParsing() {
-        guard let request = U2FRegisterRequest(requestDictionary: testRegisterRequest, origin: testOrigin) else {
+        guard let request = U2FRegisterRequest(requestDictionary: testRegisterRequest, origin: testOriginURL) else {
             XCTFail()
             return
         }
@@ -76,7 +39,7 @@ class tests: XCTestCase {
     }
 
     func testSignRequestParsing() {
-        guard let request = U2FSignRequest(requestDictionary: testSignRequest, origin: testOrigin), let registeredKey = request.registeredKey else {
+        guard let request = U2FSignRequest(requestDictionary: testSignRequest, origin: testOriginURL), let registeredKey = request.registeredKey else {
             XCTFail()
             return
         }
@@ -91,12 +54,12 @@ class tests: XCTestCase {
     }
 
     func testRequestParsing() {
-        XCTAssertNotNil(try U2FRequest.parse(type:U2FRegisterRequest.RequestType, requestDictionary:testRegisterRequest, url:testOrigin) as? U2FRegisterRequest)
-        XCTAssertNotNil(try U2FRequest.parse(type:U2FSignRequest.RequestType, requestDictionary:testSignRequest, url:testOrigin) as? U2FSignRequest)
+        XCTAssertNotNil(try U2FRequest.parse(type:U2FRegisterRequest.RequestType, requestDictionary:testRegisterRequest, url:testOriginURL) as? U2FRegisterRequest)
+        XCTAssertNotNil(try U2FRequest.parse(type:U2FSignRequest.RequestType, requestDictionary:testSignRequest, url:testOriginURL) as? U2FSignRequest)
     }
     
     func testUnknownType() {
-        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:"unknown", requestDictionary:[:], url:testOrigin) }) {
+        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:"unknown", requestDictionary:[:], url:testOriginURL) }) {
             switch error {
             case .unknownRequestType(let type):
                 XCTAssertEqual(type, "unknown")
@@ -108,7 +71,7 @@ class tests: XCTestCase {
     }
     
     func testMalformedRegisterRequest() {
-        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:U2FRegisterRequest.RequestType, requestDictionary:[:], url:testOrigin) }) {
+        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:U2FRegisterRequest.RequestType, requestDictionary:[:], url:testOriginURL) }) {
             switch error {
             case .unparseableRequest:
                 break
@@ -120,7 +83,7 @@ class tests: XCTestCase {
     }
 
     func testMalformedSignRequest() {
-        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:U2FSignRequest.RequestType, requestDictionary:[:], url:testOrigin) }) {
+        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:U2FSignRequest.RequestType, requestDictionary:[:], url:testOriginURL) }) {
             switch error {
             case .unparseableRequest:
                 break
