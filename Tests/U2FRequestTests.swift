@@ -18,9 +18,11 @@ let testTimeout = 30
 
 let testRequestId = 123
 
+let testKeyHandle = "oea6fGi-MGzyGGrJzb2LFdvCm9KCOy-gVuW4hgSXwNz7koDuZcnP7X4K9MK5DX2wwxud_QRqjmuWhIqGIYhUta5g6f36_b_QO1hzvBO8vb8"
+
 let testRegisteredKey : U2FRequest.Dictionary = [
     "version": U2FDevice.VERSION,
-    "keyHandle":"VoJjU-7HNBC1_oiHwGc-95TjoHdeGIexHExlXG4nA0D62lvSAFSJdLkmE2LrwNHAuOBlLb0ijZ52Ie-ykHZVlA"
+    "keyHandle": testKeyHandle
 ]
 
 let testChallenge = "P5GB3YFGHmtccXKanP6G9xOXl10e6n5gIqTxNc2WcfI"
@@ -32,7 +34,7 @@ let testRegisterRequest : U2FRequest.Dictionary = [
     "requestId" : testRequestId,
     "registeredKeys" : [],
     "registerRequests" : [
-        ["version" : U2FDevice.VERSION, "challenge" : "EefRkXg6Q6HhGpU28SSBbjU_Al6ezT5zWWo6gwGJkAY"]
+        ["version" : U2FDevice.VERSION, "challenge" : testChallenge]
     ]
 ]
 
