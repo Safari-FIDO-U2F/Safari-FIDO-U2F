@@ -1,10 +1,6 @@
-//
-//  U2FDevice.swift
-//  Safari FIDO U2F
-//
+//  ----------------------------------------------------------------
 //  Created by Sam Deane on 05/02/2017.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the
@@ -13,9 +9,11 @@
 
 import Foundation
 
-let U2F_NODEVICE_RETRY_COUNT = 10
 
 class U2FDevice {
+    static let VERSION = "U2F_V2"
+    static let RETRY_COUNT = 10
+
     let device : OpaquePointer
 
     init() throws {
@@ -34,7 +32,7 @@ class U2FDevice {
             throw U2FError.unknown(in: "Device Init")
         }
 
-        for _ in 0..<U2F_NODEVICE_RETRY_COUNT {
+        for _ in 0 ..< U2FDevice.RETRY_COUNT {
             ret = u2fh_devs_discover(device, nil)
             if ret == U2FH_OK {
                 break
@@ -63,24 +61,40 @@ class U2FDevice {
         return jsonString
     }
     
-    private func processResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> U2FResponse.Data {
+    private func decodeResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> String {
         guard result == U2FH_OK else {
-            throw U2FError.error(result, in: "Bad response.")
+            throw U2FError.error(result, in: "hardware returned error")
         }
 
         guard response != nil else {
-            throw U2FError.unknown(in: "Bad response.")
+            throw U2FError.unknown(in: "no response data")
         }
 
         let json = String.init(cString: response!)
+        return json
+    }
+    
+    private func decodeResponse(json: String) throws -> U2FResponse.Data {
         guard let data = json.data(using: String.Encoding.ascii) else {
-            throw U2FError.unknown(in: "Bad response.")
+            throw U2FError.unknown(in: "response couldn't be decoded")
         }
         
         let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments)
         return parsed
     }
 
+    internal func register_(jsonRequest : String, origin : String) throws -> String {
+        var response: UnsafeMutablePointer<Int8>? = nil
+        let ret = u2fh_register(device, jsonRequest, origin, &response, U2FH_REQUEST_USER_PRESENCE)
+        return try decodeResponse(result: ret, response: response)
+    }
+
+    internal func sign_(jsonRequest : String, origin : String) throws -> String {
+        var response: UnsafeMutablePointer<Int8>? = nil
+        let ret = u2fh_authenticate(device, jsonRequest, origin, &response, U2FH_REQUEST_USER_PRESENCE)
+        return try decodeResponse(result: ret, response: response)
+    }
+    
     func perform(request : U2FRequest) throws -> U2FResponse {
         let responseData = try request.run(device: self)
         return U2FResponse(type: request.responseType, requestId : request.requestId, responseData : responseData)
@@ -90,20 +104,16 @@ class U2FDevice {
         print("register: \(request) \(origin)")
 
         let jsonRequest = try encodeRequest(request: request)
-        var response: UnsafeMutablePointer<Int8>? = nil
-        let ret = u2fh_register(self.device, jsonRequest, origin, &response, U2FH_REQUEST_USER_PRESENCE)
-
-        return try processResponse(result: ret, response: response)
+        let jsonResponse = try register_(jsonRequest: jsonRequest, origin: origin)
+        return try decodeResponse(json: jsonResponse)
     }
 
-    func sign(challenge : String, origin : String) throws -> U2FResponse.Data {
-        print("sign: \(challenge) \(origin)")
+    public func sign(request : U2FRequest.Dictionary, origin : String) throws -> U2FResponse.Data {
+        print("sign: \(request) \(origin)")
 
-        let jsonRequest = try encodeRequest(request: challenge)
-        var response: UnsafeMutablePointer<Int8>? = nil
-        let ret = u2fh_authenticate(device, jsonRequest, origin, &response, U2FH_REQUEST_USER_PRESENCE)
-
-        return try processResponse(result: ret, response: response)
+        let jsonRequest = try encodeRequest(request: request)
+        let jsonResponse = try sign_(jsonRequest: jsonRequest, origin: origin)
+        return try decodeResponse(json: jsonResponse)
     }
 }
 

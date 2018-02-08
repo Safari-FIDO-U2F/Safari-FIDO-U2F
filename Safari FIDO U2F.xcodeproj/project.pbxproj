@@ -40,6 +40,7 @@
 		22EF78E7202C79CB00009C38 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2011FE541470060B6B5 /* libhidapi.a */; };
 		22EF78E8202C79CB00009C38 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2021FE541470060B6B5 /* libjson-c.a */; };
 		22EF78E9202C79CB00009C38 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2031FE541470060B6B5 /* libu2f-host.a */; };
+		22EF78EB202CB2B900009C38 /* U2FDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78EA202CB2B900009C38 /* U2FDeviceTests.swift */; };
 		DA07336C1DAF84A200088DAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336B1DAF84A200088DAF /* AppDelegate.swift */; };
 		DA07336E1DAF84A200088DAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336D1DAF84A200088DAF /* ViewController.swift */; };
 		DA0733701DAF84A200088DAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA07336F1DAF84A200088DAF /* Assets.xcassets */; };
@@ -101,6 +102,7 @@
 		22EF78D9202C792400009C38 /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EF78DB202C792400009C38 /* U2FRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = U2FRequestTests.swift; sourceTree = "<group>"; };
 		22EF78DD202C792400009C38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22EF78EA202CB2B900009C38 /* U2FDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = U2FDeviceTests.swift; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA07336D1DAF84A200088DAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				22EF78DB202C792400009C38 /* U2FRequestTests.swift */,
+				22EF78EA202CB2B900009C38 /* U2FDeviceTests.swift */,
 				22EF78DD202C792400009C38 /* Info.plist */,
 			);
 			path = Tests;
@@ -422,6 +425,7 @@
 				22EF78E6202C799E00009C38 /* U2FError.swift in Sources */,
 				22EF78E1202C799E00009C38 /* U2FRequest.swift in Sources */,
 				22EF78E5202C799E00009C38 /* U2FDevice.swift in Sources */,
+				22EF78EB202CB2B900009C38 /* U2FDeviceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

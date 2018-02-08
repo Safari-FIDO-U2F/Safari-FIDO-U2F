@@ -1,10 +1,6 @@
-//
-//  U2FRequest.swift
-//  Safari FIDO U2F
-//
+//  ----------------------------------------------------------------
 //  Created by Sam Deane on 05/02/2017.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the
@@ -22,15 +18,11 @@ class U2FRegisterRequest : U2FRequest {
     let registerRequest : Dictionary
     
     override init?(requestDictionary : Dictionary, origin : URL) {
-        guard let registerRequests = requestDictionary["registerRequests"] as? [Dictionary] else {
+        guard let registerRequest = U2FRequest.find(key: "registerRequests", version: U2FDevice.VERSION, in: requestDictionary) else {
             return nil
         }
         
-        guard registerRequests.count > 0 else {
-            return nil
-        }
-        
-        self.registerRequest = registerRequests[0]
+        self.registerRequest = registerRequest
         super.init(requestDictionary: requestDictionary, origin: origin)
     }
 

@@ -1,10 +1,6 @@
-//
-//  U2FRequest.swift
-//  Safari FIDO U2F
-//
+//  ----------------------------------------------------------------
 //  Created by Sam Deane on 05/02/2017.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the
@@ -31,6 +27,13 @@ class U2FSignRequest : U2FRequest {
     }
 
     override func run(device : U2FDevice) throws -> U2FResponse.Data {
-        return try device.sign(challenge: challenge, origin: self.origin)
+        guard let registeredKey = self.registeredKey else {
+            throw U2FError.badRequest(reason: "missing key")
+        }
+
+        var request = registeredKey
+        request["appId"] = self.appId
+        request["challenge"] = self.challenge
+        return try device.sign(request: request, origin: self.origin)
     }
 }

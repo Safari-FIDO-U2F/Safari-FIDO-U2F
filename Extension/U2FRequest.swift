@@ -1,10 +1,6 @@
-//
-//  U2FRequest.swift
-//  Safari FIDO U2F
-//
+//  ----------------------------------------------------------------
 //  Created by Sam Deane on 05/02/2017.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the
@@ -29,7 +25,7 @@ class U2FRequest {
         }
         
         self.appId = appId
-        self.registeredKey = U2FRequest.find(key: "registeredKeys", version: "U2F_V2", in: requestDictionary)
+        self.registeredKey = U2FRequest.find(key: "registeredKeys", version: U2FDevice.VERSION, in: requestDictionary)
         self.requestId = requestId
         self.timeout = requestDictionary["timeout"] as? Int
         self.origin = "\(origin.scheme!)://\(origin.host!)"
@@ -53,7 +49,7 @@ class U2FRequest {
         }
 
         guard request != nil else {
-            throw U2FError.badRequest(reason: "couldn't parse request")
+            throw U2FError.unparseableRequest(request: requestDictionary)
         }
 
         return request!

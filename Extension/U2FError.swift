@@ -1,10 +1,6 @@
-//
-//  U2FError.swift
-//  Safari FIDO U2F
-//
+//  ----------------------------------------------------------------
 //  Created by Sam Deane on 05/02/2017.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the
@@ -26,6 +22,7 @@ enum U2FError: Error {
     case missingInfo
     case missingRequestId
     case unknownRequestType(type: String)
+    case unparseableRequest(request: U2FRequest.Dictionary)
     case badRequest(reason: String)
     case error(u2fh_rc, in: String)
     case unknown(in: String)
@@ -44,6 +41,9 @@ enum U2FError: Error {
             
         case .unknownRequestType(let type):
             description = ["errorMessage" : "unknown request type: \(type)", "errorCode" : U2FErrorCode.BAD_REQUEST]
+
+        case .unparseableRequest(let request):
+            description = ["errorMessage" : "couldn't parse request: \(request)", "errorCode" : U2FErrorCode.BAD_REQUEST]
 
         case .error(let errcode, let pos):
             let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))

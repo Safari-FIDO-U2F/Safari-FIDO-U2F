@@ -1,10 +1,6 @@
-//
-//  U2FResponse.swift
-//  application
-//
+//  ----------------------------------------------------------------
 //  Created by Sam Deane on 07/02/2018.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the

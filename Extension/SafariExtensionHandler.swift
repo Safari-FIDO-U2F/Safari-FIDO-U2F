@@ -1,10 +1,6 @@
-//
-//  SafariExtensionHandler.swift
-//  Safari FIDO U2F Extension
-//
+//  ----------------------------------------------------------------
 //  Created by Yikai Zhao on 10/13/16.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2016-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the
@@ -13,7 +9,6 @@
 
 import SafariServices
 
-let U2F_V2 = "U2F_V2"
 
 let U2FErrorResponse = "u2f_error_response"
 let DefaultOrigin = URL(string: "https://default.origin")!

@@ -1,10 +1,6 @@
-//
-//  tests.swift
-//  tests
-//
+//  ----------------------------------------------------------------
 //  Created by Sam Deane on 08/02/2018.
 //
-//  ----------------------------------------------------------------
 //  Copyright (c) 2017-present, Yikai Zhao, Sam Deane, et al.
 //
 //  This source code is licensed under the MIT license found in the
@@ -23,7 +19,7 @@ let testTimeout = 30
 let testRequestId = 123
 
 let testRegisteredKey : U2FRequest.Dictionary = [
-    "version":"U2F_V2",
+    "version": U2FDevice.VERSION,
     "keyHandle":"VoJjU-7HNBC1_oiHwGc-95TjoHdeGIexHExlXG4nA0D62lvSAFSJdLkmE2LrwNHAuOBlLb0ijZ52Ie-ykHZVlA"
 ]
 
@@ -36,7 +32,7 @@ let testRegisterRequest : U2FRequest.Dictionary = [
     "requestId" : testRequestId,
     "registeredKeys" : [],
     "registerRequests" : [
-        ["version" : "U2F_V2", "challenge" : "EefRkXg6Q6HhGpU28SSBbjU_Al6ezT5zWWo6gwGJkAY"]
+        ["version" : U2FDevice.VERSION, "challenge" : "EefRkXg6Q6HhGpU28SSBbjU_Al6ezT5zWWo6gwGJkAY"]
     ]
 ]
 
@@ -50,6 +46,19 @@ let testSignRequest : U2FRequest.Dictionary = [
 ]
 
 class tests: XCTestCase {
+    func assertThrowsU2FError(_ block : () throws -> () ) -> U2FError? {
+        do {
+            try block()
+            XCTFail("should have thrown")
+        } catch let error as U2FError {
+            return error
+        } catch {
+            XCTFail("wrong error thrown")
+        }
+        
+        return nil
+    }
+    
     
     func testRegisterRequestParsing() {
         guard let request = U2FRegisterRequest(requestDictionary: testRegisterRequest, origin: testOrigin) else {
@@ -85,10 +94,7 @@ class tests: XCTestCase {
     }
     
     func testUnknownType() {
-        do {
-            let _ = try U2FRequest.parse(type:"unknown", requestDictionary:[:], url:testOrigin)
-            XCTFail("should have thrown")
-        } catch let error as U2FError {
+        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:"unknown", requestDictionary:[:], url:testOrigin) }) {
             switch error {
             case .unknownRequestType(let type):
                 XCTAssertEqual(type, "unknown")
@@ -96,9 +102,31 @@ class tests: XCTestCase {
             default:
                 XCTFail("wrong error type")
             }
-        } catch {
-            XCTFail("wrong error thrown")
         }
-
     }
+    
+    func testMalformedRegisterRequest() {
+        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:U2FRegisterRequest.RequestType, requestDictionary:[:], url:testOrigin) }) {
+            switch error {
+            case .unparseableRequest:
+                break
+                
+            default:
+                XCTFail("wrong error type")
+            }
+        }
+    }
+
+    func testMalformedSignRequest() {
+        if let error = assertThrowsU2FError({ let _ = try U2FRequest.parse(type:U2FSignRequest.RequestType, requestDictionary:[:], url:testOrigin) }) {
+            switch error {
+            case .unparseableRequest:
+                break
+                
+            default:
+                XCTFail("wrong error type")
+            }
+        }
+    }
+
 }
