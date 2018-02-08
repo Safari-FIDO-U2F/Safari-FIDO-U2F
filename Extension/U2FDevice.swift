@@ -77,10 +77,7 @@ class U2FDevice {
             throw U2FError.unknown(in: "Bad response.")
         }
         
-        guard let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments) as? U2FResponse.Data else {
-            throw U2FError.unknown(in: "Bad response.")
-        }
-        
+        let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments)
         return parsed
     }
 
