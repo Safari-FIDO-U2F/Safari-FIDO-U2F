@@ -15,8 +15,9 @@ import Foundation
 
 class U2FRegisterRequest : U2FRequest {
     static let RequestType = "u2f_register_request"
-    
-    override var responseType : String { get { return "u2f_register_response" } }
+    static let ResponseType = "u2f_register_response"
+
+    override var responseType : String { get { return U2FRegisterRequest.ResponseType  } }
 
     let registerRequest : Dictionary
     

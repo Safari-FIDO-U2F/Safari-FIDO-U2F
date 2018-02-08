@@ -14,9 +14,10 @@
 import Foundation
 
 class U2FSignRequest : U2FRequest {
-    public static let RequestType = "u2f_sign_request"
+    static let RequestType = "u2f_sign_request"
+    static let ResponseType = "u2f_sign_response"
 
-    override var responseType : String { get { return "u2f_sign_response" } }
+    override var responseType : String { get { return U2FSignRequest.ResponseType  } }
 
     let challenge : String
 
