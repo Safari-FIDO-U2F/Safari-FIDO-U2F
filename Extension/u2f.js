@@ -81,16 +81,24 @@ u2f.EXTENSION_TIMEOUT_SEC = 30;
  */
 u2f.responseHandler_ = function(message) {
     var response = message.data;
-    var reqId = response['requestId'];
-    if (!reqId || !u2f.callbackMap_[reqId]) {
-        error = new u2f.CallbackMissingException();
-        u2f.error(error.message);
-        throw error;
-    }
+    var data = response['responseData']
+    if (data) {
+     u2f.log("got response")
+     u2f.log(response)
+     var reqId = response['requestId'];
+     if (!reqId || !u2f.callbackMap_[reqId]) {
+     u2f.log(u2f.callbackMap_)
+     var error = new u2f.CallbackMissingException();
+     u2f.error(error.message);
+     throw error;
+     }
 
-    var cb = u2f.callbackMap_[reqId];
-    delete u2f.callbackMap_[reqId];
-    cb(response['responseData']);
+     var cb = u2f.callbackMap_[reqId];
+     delete u2f.callbackMap_[reqId];
+     u2f.log("responding with");
+     u2f.log(data);
+     cb(data);
+    }
 };
 
 
@@ -209,4 +217,7 @@ Object.defineProperty(window, "u2f", {
 });
 
 u2f.log("v" + u2f.extensionVersion + " (" + u2f.extensionBuild + ") loaded");
+ if (safari.self != null) {
+    u2f.log("safari present")
+ }
 })();

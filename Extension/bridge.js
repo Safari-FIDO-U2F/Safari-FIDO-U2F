@@ -29,3 +29,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     s.src = safari.extension.baseURI + 'u2f.js';
     document.head.appendChild(s);
 });
+
+document.addEventListener("BeforeLoad", function(e) {
+                          console.log("before load");
+                          });

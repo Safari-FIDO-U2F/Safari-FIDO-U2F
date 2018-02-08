@@ -178,7 +178,7 @@
 				229EA5DB20064634004F0B11 /* Config.xcconfig */,
 				229074681E61CDEE00E04386 /* LICENSE */,
 				DA07336A1DAF84A200088DAF /* Application */,
-				DA0733821DAF851400088DAF /* Safari FIDO U2F Extension */,
+				DA0733821DAF851400088DAF /* Extension */,
 				228DC2001FE541470060B6B5 /* Dependencies */,
 				22EF78DA202C792400009C38 /* Tests */,
 				DA07337F1DAF851400088DAF /* Frameworks */,
@@ -218,7 +218,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DA0733821DAF851400088DAF /* Safari FIDO U2F Extension */ = {
+		DA0733821DAF851400088DAF /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				DA0733851DAF851400088DAF /* SafariExtensionHandler.swift */,
@@ -234,7 +234,7 @@
 				DA0733981DAFB99200088DAF /* Safari FIDO U2F Extension-Bridging-Header.h */,
 				DA0733A51DB2197A00088DAF /* u2f.js */,
 			);
-			path = "Safari FIDO U2F Extension";
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
