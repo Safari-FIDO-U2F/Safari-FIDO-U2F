@@ -30,7 +30,7 @@
 		22EF78D2202BBC8200009C38 /* U2FRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */; };
 		22EF78D3202BBC8200009C38 /* U2FSignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */; };
 		22EF78D4202BC22C00009C38 /* U2FResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78CE202BB86800009C38 /* U2FResponse.swift */; };
-		22EF78DC202C792400009C38 /* tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78DB202C792400009C38 /* tests.swift */; };
+		22EF78DC202C792400009C38 /* U2FRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78DB202C792400009C38 /* U2FRequestTests.swift */; };
 		22EF78E1202C799E00009C38 /* U2FRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADE1E47908D0020473B /* U2FRequest.swift */; };
 		22EF78E2202C799E00009C38 /* U2FResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78CE202BB86800009C38 /* U2FResponse.swift */; };
 		22EF78E3202C799E00009C38 /* U2FRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */; };
@@ -99,7 +99,7 @@
 		22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRegisterRequest.swift; sourceTree = "<group>"; };
 		22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FSignRequest.swift; sourceTree = "<group>"; };
 		22EF78D9202C792400009C38 /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		22EF78DB202C792400009C38 /* tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tests.swift; sourceTree = "<group>"; };
+		22EF78DB202C792400009C38 /* U2FRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = U2FRequestTests.swift; sourceTree = "<group>"; };
 		22EF78DD202C792400009C38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -165,7 +165,7 @@
 		22EF78DA202C792400009C38 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				22EF78DB202C792400009C38 /* tests.swift */,
+				22EF78DB202C792400009C38 /* U2FRequestTests.swift */,
 				22EF78DD202C792400009C38 /* Info.plist */,
 			);
 			path = Tests;
@@ -416,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22EF78E2202C799E00009C38 /* U2FResponse.swift in Sources */,
-				22EF78DC202C792400009C38 /* tests.swift in Sources */,
+				22EF78DC202C792400009C38 /* U2FRequestTests.swift in Sources */,
 				22EF78E4202C799E00009C38 /* U2FSignRequest.swift in Sources */,
 				22EF78E3202C799E00009C38 /* U2FRegisterRequest.swift in Sources */,
 				22EF78E6202C799E00009C38 /* U2FError.swift in Sources */,
