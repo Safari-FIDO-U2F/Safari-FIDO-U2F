@@ -13,8 +13,14 @@ let testRegistrationData = "BQR_5ng1-yI6hc6x20RVjMYuHJTyp6biyrzl5yT0V4-0d4ywEQgG
 let testClientData = "eyAiY2hhbGxlbmdlIjogIkVlZlJrWGc2UTZIaEdwVTI4U1NCYmpVX0FsNmV6VDV6V1dvNmd3R0prQVkiLCAib3JpZ2luIjogImh0dHA6XC9cL3Rlc3Qub3JpZ2luIiwgInR5cCI6ICJuYXZpZ2F0b3IuaWQuZmluaXNoRW5yb2xsbWVudCIgfQ"
 let testRegisterResponse = "{ \"registrationData\": \"\(testRegistrationData)\", \"clientData\": \"\(testClientData)\" }"
 
+let registerChallenge = "{\"challenge\":\"YPl5PhLxO9S_m6rJaHkw7iL-wp46Zyzaqsa9C_wamuQ\",\"version\":\"U2F_V2\",\"appId\":\"https://demo.yubico.com\"}"
+let signChallenge = "{\"version\":\"U2F_V2\",\"challenge\":\"ZR-2IyxSFTSoQ00GOMN6hrQC5qmXXoDyG7PmwYYWUTw\",\"keyHandle\":\"oea6fGi-MGzyGGrJzb2LFdvCm9KCOy-gVuW4hgSXwNz7koDuZcnP7X4K9MK5DX2wwxud_QRqjmuWhIqGIYhUta5g6f36_b_QO1hzvBO8vb8\",\"appId\":\"https://demo.yubico.com\"}"
+
 class MockDevice : U2FDevice {
+    var request = ""
+    
     override func register_(jsonRequest: String, origin: String) throws -> String {
+        request = jsonRequest
         return testRegisterResponse
     }
 }
@@ -30,6 +36,8 @@ class U2FDeviceTests: XCTestCase {
         do {
             let device = try MockDevice()
             let response = try device.perform(request: request)
+            
+            print(device.request)
             
             XCTAssertEqual(response.type, U2FRegisterRequest.ResponseType)
             XCTAssertEqual(response.requestId, request.requestId)
@@ -63,7 +71,9 @@ class U2FDeviceTests: XCTestCase {
         do {
             let device = try U2FDevice()
             let response = try device.perform(request: request)
-            
+
+//            print(device.request)
+
             XCTAssertEqual(response.type, U2FRegisterRequest.ResponseType)
             XCTAssertEqual(response.requestId, request.requestId)
             
