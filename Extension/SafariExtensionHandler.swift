@@ -43,7 +43,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, url: properties?.url ?? DefaultOrigin)
                 let device = try U2FDevice()
                 let response = try device.perform(request: request)
-                response.sendTo(page: page)
+                page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
             } catch let error as U2FError {
                 self.sendError(error, toPage: page, requestId: requestId)
             } catch {
@@ -69,7 +69,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         }
 
         let response = U2FResponse(type: U2FErrorResponse, requestId: requestId, responseData: responseData)
-        response.sendTo(page: page)
+        page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
     }
     
 

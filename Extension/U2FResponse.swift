@@ -12,7 +12,6 @@
 //  ----------------------------------------------------------------
 
 import Foundation
-import SafariServices
 
 public class U2FResponse {
     typealias Data = Any
@@ -27,13 +26,14 @@ public class U2FResponse {
         self.responseData = responseData
     }
     
-    func sendTo(page: SFSafariPage) {
-        let info : Dictionary = [
+    var info : [String:Any] { get {
+        let info : [String:Any] = [
             "type" : type,
             "requestId" : requestId,
             "responseData" : responseData
         ]
-
-        page.dispatchMessageToScript(withName: self.type, userInfo: info)
+        
+        return info
+        }
     }
 }

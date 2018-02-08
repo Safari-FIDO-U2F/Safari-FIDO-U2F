@@ -12,7 +12,6 @@
 //  ----------------------------------------------------------------
 
 import Foundation
-import SafariServices
 
 class U2FRequest {
     typealias Dictionary = [String:Any]
