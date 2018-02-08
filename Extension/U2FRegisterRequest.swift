@@ -27,7 +27,9 @@ class U2FRegisterRequest : U2FRequest {
     }
 
     override func run(device : U2FDevice) throws -> U2FResponse.Data {
-        return try device.register(request: registerRequest, origin: self.origin)
+        var request = registerRequest
+        request["appId"] = self.appId
+        return try device.register(request: request, origin: self.origin)
     }
 }
 
