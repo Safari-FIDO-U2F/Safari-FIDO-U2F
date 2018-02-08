@@ -27,6 +27,9 @@
 		228DC2071FE541610060B6B5 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2011FE541470060B6B5 /* libhidapi.a */; };
 		228DC2081FE541610060B6B5 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2021FE541470060B6B5 /* libjson-c.a */; };
 		228DC2091FE541610060B6B5 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2031FE541470060B6B5 /* libu2f-host.a */; };
+		22EF78D2202BBC8200009C38 /* U2FRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */; };
+		22EF78D3202BBC8200009C38 /* U2FSignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */; };
+		22EF78D4202BC22C00009C38 /* U2FResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78CE202BB86800009C38 /* U2FResponse.swift */; };
 		DA07336C1DAF84A200088DAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336B1DAF84A200088DAF /* AppDelegate.swift */; };
 		DA07336E1DAF84A200088DAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336D1DAF84A200088DAF /* ViewController.swift */; };
 		DA0733701DAF84A200088DAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA07336F1DAF84A200088DAF /* Assets.xcassets */; };
@@ -82,6 +85,9 @@
 		229074671E61CBF100E04386 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; wrapsLines = 1; };
 		229074681E61CDEE00E04386 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		229EA5DB20064634004F0B11 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		22EF78CE202BB86800009C38 /* U2FResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = U2FResponse.swift; sourceTree = "<group>"; };
+		22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRegisterRequest.swift; sourceTree = "<group>"; };
+		22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FSignRequest.swift; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA07336D1DAF84A200088DAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +189,9 @@
 			children = (
 				DA0733851DAF851400088DAF /* SafariExtensionHandler.swift */,
 				22814ADE1E47908D0020473B /* U2FRequest.swift */,
+				22EF78CE202BB86800009C38 /* U2FResponse.swift */,
+				22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */,
+				22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */,
 				22814ADC1E4790300020473B /* U2FDevice.swift */,
 				22814ADA1E4790160020473B /* U2FError.swift */,
 				DA07338C1DAF851400088DAF /* Info.plist */,
@@ -242,7 +251,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Safari FIDO U2F";
 				TargetAttributes = {
 					229EA5D4200640A6004F0B11 = {
@@ -353,8 +362,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				22814ADB1E4790160020473B /* U2FError.swift in Sources */,
+				22EF78D4202BC22C00009C38 /* U2FResponse.swift in Sources */,
+				22EF78D2202BBC8200009C38 /* U2FRegisterRequest.swift in Sources */,
 				22814ADF1E47908D0020473B /* U2FRequest.swift in Sources */,
 				DA0733861DAF851400088DAF /* SafariExtensionHandler.swift in Sources */,
+				22EF78D3202BBC8200009C38 /* U2FSignRequest.swift in Sources */,
 				22814ADD1E4790300020473B /* U2FDevice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +401,7 @@
 		229EA5D6200640A6004F0B11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H48644JM2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -398,6 +411,7 @@
 		229EA5D7200640A6004F0B11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H48644JM2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -418,6 +432,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -425,6 +440,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -475,6 +491,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -482,6 +499,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -515,6 +533,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -528,6 +547,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -540,6 +560,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
 				HEADER_SEARCH_PATHS = Dependencies/;
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
@@ -557,6 +578,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
 				HEADER_SEARCH_PATHS = Dependencies/;
 				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";

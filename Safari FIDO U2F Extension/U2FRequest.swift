@@ -15,40 +15,52 @@ import Foundation
 import SafariServices
 
 class U2FRequest {
+    typealias U2FRequestDictionary = [String:Any]
+    
     let appId : String
-    let challenge : String
+    let registeredKeys : [String]
     let origin : String
+    let requestId : Int
+    let timeout : Int?
+    var responseType : String { get { return "unknown" } }
 
-    init?(info : [String : Any], origin : String) {
+    init?(requestDictionary : U2FRequestDictionary, origin : String) {
         self.origin = origin
-        if let appId = info["appId"] as? String, let challenge = info["challenge"] as? String {
-            self.appId = appId
-            self.challenge = challenge
+        if
+            let appId = requestDictionary["appId"] as? String,
+            let keys = requestDictionary["registeredKeys"] as? [String],
+            let requestId = requestDictionary["requestId"] as? Int {
+                self.appId = appId
+                self.registeredKeys = keys
+                self.requestId = requestId
+                self.timeout = requestDictionary["timeout"] as? Int
         } else {
             return nil
         }
     }
-
-    static func ParseRequest(name : String, info : [String : Any]?, properties : SFSafariPageProperties?) throws -> U2FRequest {
-        var request : U2FRequest?
-        var origin = "https://unknown"
+    
+    /**
+        Parse a request dictionary, and attempt to create and return a request object.
+     */
+    
+    static func parse(type : String, requestDictionary : U2FRequestDictionary, properties : SFSafariPageProperties?) throws -> U2FRequest {
+        let origin : String
         if let scheme = properties?.url?.scheme, let host = properties?.url?.host {
             origin = scheme + "://" + host
+        } else {
+            origin = "https://unknown"
         }
 
-        if let info = info {
-            switch name {
-            case U2FSignMessage:
-                request = U2FSignRequest(info:info, origin:origin)
+        var request : U2FRequest?
+        switch type {
+        case U2FSignRequest.RequestType:
+            request = U2FSignRequest(requestDictionary: requestDictionary, origin:origin)
 
-            case U2FRegisterMessage:
-                request = U2FRegisterRequest(info:info, origin:origin)
+        case U2FRegisterRequest.RequestType:
+            request = U2FRegisterRequest(requestDictionary: requestDictionary, origin:origin)
 
-            default:
-                break
-            }
-        } else {
-            throw U2FError.unknown(in: "bad origin \(name) \(origin)")
+        default:
+            break
         }
 
         guard request != nil else {
@@ -58,50 +70,8 @@ class U2FRequest {
         return request!
     }
 
-    func ChallengeDictionary() -> [String:String] {
-        return ["challenge": self.challenge, "version": U2F_V2, "appId": self.appId]
-    }
-
-    func Challenge() throws -> String  {
-        let dict = self.ChallengeDictionary()
-        let bytes = try JSONSerialization.data(withJSONObject:dict)
-        let challenge = String.init(data:bytes, encoding: .utf8)!
-        return challenge
-    }
-
-    func Perform(device : U2FDevice) throws -> String {
+    func run(device : U2FDevice) throws -> U2FResponse.Dictionary {
         throw U2FError.unknown(in: "abstract method should have been implemented")
     }
 }
 
-class U2FRegisterRequest : U2FRequest {
-    override func Perform(device : U2FDevice) throws -> String {
-        let challenge = try self.Challenge()
-        return try device.Register(challenge: challenge, origin: self.origin)
-    }
-}
-
-class U2FSignRequest : U2FRequest {
-    let keyHandle : String
-
-    override init?(info : [String : Any], origin: String) {
-        if let keyHandle = info["keyHandle"] as? String {
-            self.keyHandle = keyHandle
-            super.init(info: info, origin: origin)
-        } else {
-            return nil
-        }
-    }
-
-    override func ChallengeDictionary() -> [String:String] {
-        var dict = super.ChallengeDictionary()
-        dict["keyHandle"] = self.keyHandle
-        return dict
-    }
-
-    override func Perform(device : U2FDevice) throws -> String {
-        let challenge = try self.Challenge()
-        return try device.Sign(challenge: challenge, origin: self.origin)
-    }
-    
-}

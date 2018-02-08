@@ -52,7 +52,16 @@ class U2FDevice {
         u2fh_global_done()
     }
 
-    func ProcessResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> String {
+    private func encodeRequest(request : Any) throws -> String {
+        let jsonBytes = try JSONSerialization.data(withJSONObject:request)
+        guard let jsonString = String.init(data:jsonBytes, encoding: .utf8) else {
+            throw U2FError.unknown(in: "Couldn't encode request")
+        }
+        
+        return jsonString
+    }
+    
+    private func processResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> U2FResponse.Dictionary {
         guard result == U2FH_OK else {
             throw U2FError.error(result, in: "Bad response.")
         }
@@ -61,23 +70,41 @@ class U2FDevice {
             throw U2FError.unknown(in: "Bad response.")
         }
 
-        return String.init(cString: response!)
+        let json = String.init(cString: response!)
+        guard let data = json.data(using: String.Encoding.utf8) else {
+            throw U2FError.unknown(in: "Bad response.")
+        }
+        
+        guard let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments) as? U2FResponse.Dictionary else {
+            throw U2FError.unknown(in: "Bad response.")
+        }
+        
+        return parsed
     }
 
-    func Register(challenge : String, origin : String) throws -> String {
-        print("register: \(challenge) \(origin)")
+    func perform(request : U2FRequest) throws -> U2FResponse {
+        let responseData = try request.run(device: self)
+        return U2FResponse(type: request.responseType, requestId : request.requestId, responseData : response)
+    }
+    
+    func register(request : U2FRequest.U2FRequestDictionary, origin : String) throws -> U2FResponse.Dictionary {
+        print("register: \(request) \(origin)")
+
+        let jsonRequest = try encodeRequest(request: request)
         var response: UnsafeMutablePointer<Int8>? = nil
-        let ret = u2fh_register(self.device, challenge, origin, &response, U2FH_REQUEST_USER_PRESENCE)
+        let ret = u2fh_register(self.device, jsonRequest, origin, &response, U2FH_REQUEST_USER_PRESENCE)
 
-        return try ProcessResponse(result: ret, response: response)
+        return try processResponse(result: ret, response: response)
     }
 
-    func Sign(challenge : String, origin : String) throws -> String {
+    func sign(challenge : String, origin : String) throws -> U2FResponse.Dictionary {
         print("sign: \(challenge) \(origin)")
-        var response: UnsafeMutablePointer<Int8>? = nil
-        let ret = u2fh_authenticate(device, challenge, origin, &response, U2FH_REQUEST_USER_PRESENCE)
 
-        return try ProcessResponse(result: ret, response: response)
+        let jsonRequest = try encodeRequest(request: challenge)
+        var response: UnsafeMutablePointer<Int8>? = nil
+        let ret = u2fh_authenticate(device, jsonRequest, origin, &response, U2FH_REQUEST_USER_PRESENCE)
+
+        return try processResponse(result: ret, response: response)
     }
 }
 

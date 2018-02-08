@@ -13,61 +13,66 @@
 
 import SafariServices
 
-let U2FSignMessage = "U2FSign"
-let U2FRegisterMessage = "U2FRegister"
-let U2FResponseMessage = "U2FResponse"
-
 let U2F_V2 = "U2F_V2"
 let U2F_NODEVICE_RETRY_COUNT = 10
 
-
+let U2FErrorResponse = "u2f_error_response"
 
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
-    func sendResponse(page: SFSafariPage, response: String) {
-        let userinfo = [ "result" : response]
-        page.dispatchMessageToScript(withName: U2FResponseMessage, userInfo: userinfo)
-    }
-
-    func sendError(page: SFSafariPage, error: U2FError) {
-        var userinfo: [String: Any] = [:]
-        switch error {
-        case U2FError.unknown(let pos):
-            userinfo["error"] = "Unknown Error: \(pos)"
-        case U2FError.error(let errcode, let pos):
-            let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
-            userinfo["error"] = "Error in \(pos): \(errmsg)"
-        case U2FError.badRequest():
-            userinfo["error"] = "Bad Request"
-        }
-        page.dispatchMessageToScript(withName: U2FResponseMessage, userInfo: userinfo)
-    }
-
 
     /**
      Process a message from the content script.
+    
+     The request dictionary should contain enough information to create a request object.
+     We then make a device object, and ask it to perform the request, which gives us back a response.
+     We send the response back as a message.
      
-     We construct a request based on the name of the message.
-     We then make a new device
-     We attempt to construct
+     If anything goes wrong along the way, a U2FError is thrown. We catch these and turn them into error responses.
      */
 
     override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
-        // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
+        guard let requestDictionary = userInfo, let requestId = requestDictionary["requestId"] as? Int else {
+            self.sendError(U2FError.badRequest(), toPage: page)
+            return
+        }
 
         page.getPropertiesWithCompletionHandler { properties in
             do {
-                let request = try U2FSignRequest.ParseRequest(name: messageName, info:userInfo, properties:properties)
+                print("\(messageName)\n\(userInfo!)")
+                let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, properties:properties)
                 let device = try U2FDevice()
-                let response = try request.Perform(device: device)
-                self.sendResponse(page: page, response: response)
+                let response = try device.perform(request: request)
+                response.sendTo(page: page)
             } catch let error as U2FError {
-                self.sendError(page: page, error: error)
+                self.sendError(error, toPage: page, requestId: requestId)
             } catch {
-                self.sendError(page: page, error: U2FError.unknown(in: "messageReceived"))
+                self.sendError(U2FError.unknown(in: "messageReceived"), toPage: page, requestId: requestId)
             }
         }
     }
+    
+    func sendError(_ error: U2FError, toPage page: SFSafariPage, requestId : Int = 0) {
+        var responseData: [String: Any] = [:]
+        switch error {
+        case U2FError.unknown(let pos):
+            responseData["errorMessage"] = "Unknown Error: \(pos)"
+            
+        case U2FError.error(let errcode, let pos):
+            let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
+            responseData["errorCode"] = errcode
+            responseData["errorMessage"] = "Error in \(pos): \(errmsg)"
+
+        case U2FError.badRequest():
+            responseData["errorMessage"] = "Bad Request"
+            responseData["errorCode"] = 2
+        }
+
+        let response = U2FResponse(type: U2FErrorResponse, requestId: requestId, responseData: responseData)
+        response.sendTo(page: page)
+    }
+    
+
 
 }
