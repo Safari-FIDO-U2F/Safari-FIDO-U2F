@@ -49,11 +49,11 @@ class U2FRequest {
             request = U2FRegisterRequest(requestDictionary: requestDictionary, origin:url)
 
         default:
-            break
+            throw U2FError.unknownRequestType(type: type)
         }
 
         guard request != nil else {
-            throw U2FError.badRequest()
+            throw U2FError.badRequest(reason: "couldn't parse request")
         }
 
         return request!

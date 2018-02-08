@@ -32,8 +32,13 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
      */
 
     override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
-        guard let requestDictionary = userInfo, let requestId = requestDictionary["requestId"] as? Int else {
-            self.sendError(U2FError.badRequest(), toPage: page)
+        guard let requestDictionary = userInfo else {
+            self.sendError(U2FError.missingInfo, toPage: page)
+            return
+        }
+        
+        guard let requestId = requestDictionary["requestId"] as? Int else {
+            self.sendError(U2FError.missingRequestId, toPage: page)
             return
         }
 
@@ -53,22 +58,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     }
     
     func sendError(_ error: U2FError, toPage page: SFSafariPage, requestId : Int = 0) {
-        var responseData: [String: Any] = [:]
-        switch error {
-        case U2FError.unknown(let pos):
-            responseData["errorMessage"] = "Unknown Error: \(pos)"
-            
-        case U2FError.error(let errcode, let pos):
-            let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
-            responseData["errorCode"] = errcode
-            responseData["errorMessage"] = "Error in \(pos): \(errmsg)"
-
-        case U2FError.badRequest():
-            responseData["errorMessage"] = "Bad Request"
-            responseData["errorCode"] = 2
-        }
-
-        let response = U2FResponse(type: U2FErrorResponse, requestId: requestId, responseData: responseData)
+        let response = U2FResponse(type: U2FErrorResponse, requestId: requestId, responseData: error.errorDescription())
         page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
     }
     
