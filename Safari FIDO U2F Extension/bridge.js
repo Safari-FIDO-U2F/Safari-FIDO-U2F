@@ -11,17 +11,15 @@ window.addEventListener("message", function(e) {
     if (e.origin == window.location.origin) {
         message = e.data;
         type = message.type;
-        if (type && type.includes("u2f_")) { // if the data includes our tag, it's safe to parse it as JSON
-            console.log("passing on message to extension");
-            console.log(message);
+        if ((type == "u2f_register_request") || (type == "u2f_sign_request")) { // if the data includes our tag, it's safe to parse it as JSON
+            console.log("passing on message to extension: " + JSON.stringify(message));
             safari.extension.dispatchMessage(type, message);
         }
     }
 });
 
 safari.self.addEventListener("message", function(e) {
-    console.log("passing on message from extension");
-    console.log(e.message);
+    console.log("passing on message from extension: " + JSON.stringify(e.message.data));
     window.postMessage(e.message, window.location.origin);
 });
 
