@@ -13,6 +13,8 @@
 
 import Foundation
 
+let U2F_NODEVICE_RETRY_COUNT = 10
+
 class U2FDevice {
     let device : OpaquePointer
 
@@ -61,7 +63,7 @@ class U2FDevice {
         return jsonString
     }
     
-    private func processResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> U2FResponse.Dictionary {
+    private func processResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> U2FResponse.Data {
         guard result == U2FH_OK else {
             throw U2FError.error(result, in: "Bad response.")
         }
@@ -71,11 +73,11 @@ class U2FDevice {
         }
 
         let json = String.init(cString: response!)
-        guard let data = json.data(using: String.Encoding.utf8) else {
+        guard let data = json.data(using: String.Encoding.ascii) else {
             throw U2FError.unknown(in: "Bad response.")
         }
         
-        guard let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments) as? U2FResponse.Dictionary else {
+        guard let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments) as? U2FResponse.Data else {
             throw U2FError.unknown(in: "Bad response.")
         }
         
@@ -84,10 +86,10 @@ class U2FDevice {
 
     func perform(request : U2FRequest) throws -> U2FResponse {
         let responseData = try request.run(device: self)
-        return U2FResponse(type: request.responseType, requestId : request.requestId, responseData : response)
+        return U2FResponse(type: request.responseType, requestId : request.requestId, responseData : responseData)
     }
     
-    func register(request : U2FRequest.U2FRequestDictionary, origin : String) throws -> U2FResponse.Dictionary {
+    func register(request : U2FRequest.Dictionary, origin : String) throws -> U2FResponse.Data {
         print("register: \(request) \(origin)")
 
         let jsonRequest = try encodeRequest(request: request)
@@ -97,7 +99,7 @@ class U2FDevice {
         return try processResponse(result: ret, response: response)
     }
 
-    func sign(challenge : String, origin : String) throws -> U2FResponse.Dictionary {
+    func sign(challenge : String, origin : String) throws -> U2FResponse.Data {
         print("sign: \(challenge) \(origin)")
 
         let jsonRequest = try encodeRequest(request: challenge)

@@ -15,13 +15,13 @@ import Foundation
 import SafariServices
 
 public class U2FResponse {
-    typealias Dictionary = [String:Any]
+    typealias Data = Any
     
     let type : String
     let requestId : Int
-    let responseData : Dictionary
+    let responseData : Data
     
-    init(type : String, requestId : Int, responseData: Dictionary) {
+    init(type : String, requestId : Int, responseData: Data) {
         self.type = type
         self.requestId = requestId
         self.responseData = responseData

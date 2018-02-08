@@ -18,10 +18,10 @@ class U2FRegisterRequest : U2FRequest {
     
     override var responseType : String { get { return "u2f_register_response" } }
 
-    let registerRequest : U2FRequestDictionary
+    let registerRequest : Dictionary
     
-    override init?(requestDictionary : U2FRequestDictionary, origin : String) {
-        guard let registerRequests = requestDictionary["registerRequests"] as? [U2FRequestDictionary] else {
+    override init?(requestDictionary : Dictionary, origin : URL) {
+        guard let registerRequests = requestDictionary["registerRequests"] as? [Dictionary] else {
             return nil
         }
         
@@ -33,7 +33,7 @@ class U2FRegisterRequest : U2FRequest {
         super.init(requestDictionary: requestDictionary, origin: origin)
     }
 
-    override func run(device : U2FDevice) throws -> U2FResponse.Dictionary {
+    override func run(device : U2FDevice) throws -> U2FResponse.Data {
         return try device.register(request: registerRequest, origin: self.origin)
     }
 }

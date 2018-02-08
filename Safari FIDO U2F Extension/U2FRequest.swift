@@ -15,49 +15,39 @@ import Foundation
 import SafariServices
 
 class U2FRequest {
-    typealias U2FRequestDictionary = [String:Any]
+    typealias Dictionary = [String:Any]
     
     let appId : String
-    let registeredKeys : [String]
+    let registeredKey : Dictionary?
     let origin : String
     let requestId : Int
     let timeout : Int?
     var responseType : String { get { return "unknown" } }
 
-    init?(requestDictionary : U2FRequestDictionary, origin : String) {
-        self.origin = origin
-        if
-            let appId = requestDictionary["appId"] as? String,
-            let keys = requestDictionary["registeredKeys"] as? [String],
-            let requestId = requestDictionary["requestId"] as? Int {
-                self.appId = appId
-                self.registeredKeys = keys
-                self.requestId = requestId
-                self.timeout = requestDictionary["timeout"] as? Int
-        } else {
+    init?(requestDictionary : Dictionary, origin : URL) {
+        guard let appId = requestDictionary["appId"] as? String, let requestId = requestDictionary["requestId"] as? Int else {
             return nil
         }
+        
+        self.appId = appId
+        self.registeredKey = U2FRequest.find(key: "registeredKeys", version: "U2F_V2", in: requestDictionary)
+        self.requestId = requestId
+        self.timeout = requestDictionary["timeout"] as? Int
+        self.origin = "\(origin.scheme!)://\(origin.host!)"
     }
     
     /**
         Parse a request dictionary, and attempt to create and return a request object.
      */
     
-    static func parse(type : String, requestDictionary : U2FRequestDictionary, properties : SFSafariPageProperties?) throws -> U2FRequest {
-        let origin : String
-        if let scheme = properties?.url?.scheme, let host = properties?.url?.host {
-            origin = scheme + "://" + host
-        } else {
-            origin = "https://unknown"
-        }
-
+    static func parse(type : String, requestDictionary : Dictionary, url : URL) throws -> U2FRequest {
         var request : U2FRequest?
         switch type {
         case U2FSignRequest.RequestType:
-            request = U2FSignRequest(requestDictionary: requestDictionary, origin:origin)
+            request = U2FSignRequest(requestDictionary: requestDictionary, origin:url)
 
         case U2FRegisterRequest.RequestType:
-            request = U2FRegisterRequest(requestDictionary: requestDictionary, origin:origin)
+            request = U2FRegisterRequest(requestDictionary: requestDictionary, origin:url)
 
         default:
             break
@@ -70,7 +60,20 @@ class U2FRequest {
         return request!
     }
 
-    func run(device : U2FDevice) throws -> U2FResponse.Dictionary {
+    static func find(key: String, version : String, in dictionary : Dictionary) -> Dictionary? {
+        if let items = dictionary[key] as? [Dictionary] {
+            for item in items {
+                if let itemVersion = item["version"] as? String {
+                    if version == itemVersion {
+                        return item
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    func run(device : U2FDevice) throws -> U2FResponse.Data {
         throw U2FError.unknown(in: "abstract method should have been implemented")
     }
 }

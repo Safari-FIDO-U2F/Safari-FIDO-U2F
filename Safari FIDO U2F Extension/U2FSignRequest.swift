@@ -20,7 +20,7 @@ class U2FSignRequest : U2FRequest {
 
     let challenge : String
 
-    override init?(requestDictionary : U2FRequestDictionary, origin : String) {
+    override init?(requestDictionary : Dictionary, origin : URL) {
         if let challenge = requestDictionary["challenge"] as? String {
             self.challenge = challenge
             super.init(requestDictionary: requestDictionary, origin: origin)
@@ -29,7 +29,7 @@ class U2FSignRequest : U2FRequest {
         }
     }
 
-    override func run(device : U2FDevice) throws -> U2FResponse.Dictionary {
+    override func run(device : U2FDevice) throws -> U2FResponse.Data {
         return try device.sign(challenge: challenge, origin: self.origin)
     }
 }

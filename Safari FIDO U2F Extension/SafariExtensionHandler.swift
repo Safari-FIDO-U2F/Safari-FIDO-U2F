@@ -14,10 +14,9 @@
 import SafariServices
 
 let U2F_V2 = "U2F_V2"
-let U2F_NODEVICE_RETRY_COUNT = 10
 
 let U2FErrorResponse = "u2f_error_response"
-
+let DefaultOrigin = URL(string: "https://default.origin")!
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
@@ -41,7 +40,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         page.getPropertiesWithCompletionHandler { properties in
             do {
                 print("\(messageName)\n\(userInfo!)")
-                let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, properties:properties)
+                let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, url: properties?.url ?? DefaultOrigin)
                 let device = try U2FDevice()
                 let response = try device.perform(request: request)
                 response.sendTo(page: page)
@@ -76,3 +75,14 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
 
 }
+
+
+/*
+ 
+ testRegister = {"type":"u2f_register_request","appId":"https://demo.yubico.com","registeredKeys":[],"timeoutSeconds":30,"requestId":1,"registerRequests":[{"version":"U2F_V2","challenge":"EefRkXg6Q6HhGpU28SSBbjU_Al6ezT5zWWo6gwGJkAY"}]}
+ 
+ testChallenge = {"type":"u2f_sign_request","appId":"http://demo.yubico.com","registeredKeys":[{"version":"U2F_V2","keyHandle":"VoJjU-7HNBC1_oiHwGc-95TjoHdeGIexHExlXG4nA0D62lvSAFSJdLkmE2LrwNHAuOBlLb0ijZ52Ie-ykHZVlA"}],"timeoutSeconds":30,"requestId":1,"challenge":"P5GB3YFGHmtccXKanP6G9xOXl10e6n5gIqTxNc2WcfI"}
+ */
+
+ 
+ 
