@@ -517,7 +517,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -544,7 +544,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 			};
@@ -667,7 +667,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
+				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
 				PRODUCT_NAME = "$(U2F_NAME)";
@@ -681,7 +681,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
+				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
 				PRODUCT_NAME = "$(U2F_NAME)";
@@ -693,15 +693,15 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Extension/Safari_FIDO_U2F_Extension.entitlements;
 				HEADER_SEARCH_PATHS = Dependencies/;
-				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
+				INFOPLIST_FILE = Extension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
 				PRODUCT_NAME = "$(U2F_NAME) Extension";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -711,15 +711,15 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Extension/Safari_FIDO_U2F_Extension.entitlements;
 				HEADER_SEARCH_PATHS = Dependencies/;
-				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
+				INFOPLIST_FILE = Extension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
 				PRODUCT_NAME = "$(U2F_NAME) Extension";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 			};
 			name = Release;
 		};
