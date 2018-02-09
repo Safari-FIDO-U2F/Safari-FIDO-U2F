@@ -36,7 +36,7 @@ class U2FSignRequest : U2FRequest {
                 return response
             } catch let error as U2FError {
                 switch error {
-                    case .error(let code, let _):
+                    case .error(let code, _):
                         if code != U2FH_AUTHENTICATOR_ERROR {
                             throw error
                         }
