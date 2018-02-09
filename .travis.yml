@@ -12,8 +12,8 @@ cache:
 install: npm install
 
 script:
-- npm test
-- xcodebuild -workspace "Safari FIDO U2F.xcworkspace" -scheme application test
+- npm test -- --coverage
+- xcodebuild -workspace "Safari FIDO U2F.xcworkspace" -scheme application clean test -hideShellScriptEnvironment
 
 notifications:
   slack:
