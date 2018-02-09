@@ -83,34 +83,18 @@ u2f.responseHandler_ = function(message) {
     var response = message.data;
     var data = response['responseData']
     if (data) {
-     u2f.log("got response")
-     u2f.log(response)
      var reqId = response['requestId'];
      if (!reqId || !u2f.callbackMap_[reqId]) {
-     u2f.log(u2f.callbackMap_)
-     var error = new u2f.CallbackMissingException();
-     u2f.error(error.message);
-     throw error;
+        throw new u2f.CallbackMissingException();
      }
 
      var cb = u2f.callbackMap_[reqId];
      delete u2f.callbackMap_[reqId];
-     u2f.log("responding with");
-     u2f.log(data);
+     u2f.log("got response " + JSON.stringify(data));
      cb(data);
     }
 };
 
-
-u2f.log = function(args) {
-    arguments[0] = "FIDO-U2F: " + arguments[0]
-    console.log(args)
-};
-
-u2f.error = function(args) {
-    arguments[0] = "FIDO-U2F: " + arguments[0]
-    console.error(args)
-};
 
 u2f.basicRequest_ = function(type, appId, registeredKeys, callback, opt_timeoutSeconds) {
     var timeoutSeconds = (typeof opt_timeoutSeconds !== 'undefined' ? opt_timeoutSeconds : u2f.EXTENSION_TIMEOUT_SEC);
@@ -138,11 +122,43 @@ u2f.signRequest_ = function(appId, challenge, registeredKeys, callback, opt_time
 };
 
 /**
+ * Creates or retrieves the MessagePort singleton to use.
+ * @param {function((MessagePort|u2f.WrappedChromeRuntimePort_))} callback
+ * @private
+ *
+ * For this implementation we always use window as the port.
+ * There's not really any need to dispatch through a function like this,
+ * it's done mostly for uniformity with the Yubico/Google implementation,
+ * just in case anything is relying on getPortSingleton_ existing.
+ */
+ u2f.getPortSingleton_ = function(callback) {
+    callback(window);
+ }
+
+ 
+/**
+ * Log a tagged message to the console.
+ *
+ */
+ 
+ u2f.log = function(message) {
+    console.log("FIDO-U2F: " + message)
+ };
+
+ 
+ /**
+  * Log a tagged error to the console.
+  *
+  */
+
+ u2f.error = function(message) {
+    console.error("FIDO-U2F: " + message)
+ };
+ 
+
+/**
  * Dispatches register requests to available U2F tokens. An array of sign
  * requests identifies already registered tokens.
- * If the JS API version supported by the extension is unknown, it first sends a
- * message to the extension to find out the supported API version and then it sends
- * the register request.
  * @param {string=} appId
  * @param {Array<u2f.RegisterRequest>} registerRequests
  * @param {Array<u2f.RegisteredKey>} registeredKeys
@@ -151,11 +167,11 @@ u2f.signRequest_ = function(appId, challenge, registeredKeys, callback, opt_time
  */
 
 u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
-    u2f.log("registering ", appId);
-    console.log(appId);
-    var request = u2f.registerRequest_(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds);
-    u2f.log(request);
-    window.postMessage(request, window.location.origin);
+    u2f.getPortSingleton_(function(port) {
+        var request = u2f.registerRequest_(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds);
+        u2f.log("registering " + JSON.stringify(request));
+        port.postMessage(request, window.location.origin);
+    });
 };
 
 
@@ -170,9 +186,11 @@ u2f.register = function(appId, registerRequests, registeredKeys, callback, opt_t
  */
 
 u2f.sign = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
-    u2f.log("signing ", appId);
-    var request = u2f.signRequest_(appId, challenge, registeredKeys, callback, opt_timeoutSeconds)
-    window.postMessage(request, window.location.origin);
+    u2f.getPortSingleton_(function(port) {
+        var request = u2f.signRequest_(appId, challenge, registeredKeys, callback, opt_timeoutSeconds)
+        u2f.log("signing " + JSON.stringify(request));
+        window.postMessage(request, window.location.origin);
+    });
 };
 
 
@@ -199,7 +217,7 @@ u2f.getApiVersion = function(callback, opt_timeoutSeconds) {
   Listener to process messages to/from the extension.
 */
 
-window.addEventListener("message", u2f.responseHandler_)
+window.addEventListener("message", u2f.responseHandler_, true)
 
 
 

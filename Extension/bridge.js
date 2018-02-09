@@ -5,31 +5,30 @@
 //  LICENSE file in the root directory of this source tree.
 //  ----------------------------------------------------------------
 
-// act as bridge between u2f.js and app extension
-
-window.addEventListener("message", function(e) {
+function forwardMessageToExtension(e) {
     if (e.origin == window.location.origin) {
         message = e.data;
         type = message.type;
-        if ((type == "u2f_register_request") || (type == "u2f_sign_request")) { // if the data includes our tag, it's safe to parse it as JSON
-            console.log("passing on message to extension: " + JSON.stringify(message));
+        if ((type == "u2f_register_request") || (type == "u2f_sign_request")) {
+//            console.log("extension <- " + JSON.stringify(message));
             safari.extension.dispatchMessage(type, message);
         }
     }
-});
+}
 
-safari.self.addEventListener("message", function(e) {
-    console.log("passing on message from extension: " + JSON.stringify(e.message.data));
+function forwardMessageFromExtension(e) {
+    //    console.log("extension -> " + JSON.stringify(e.message.data));
     window.postMessage(e.message, window.location.origin);
-});
+}
 
-document.addEventListener("DOMContentLoaded", function(e) {
+function handleBeforeLoad(e) {
+    document.removeEventListener("beforeload", handleBeforeLoad, true)
     var s = document.createElement('script');
     s.type = 'text/javascript';
     s.src = safari.extension.baseURI + 'u2f.js';
     document.head.appendChild(s);
-});
+}
 
-document.addEventListener("BeforeLoad", function(e) {
-                          console.log("before load");
-                          });
+window.addEventListener("message", forwardMessageToExtension, true);
+safari.self.addEventListener("message", forwardMessageFromExtension);
+document.addEventListener("beforeload", handleBeforeLoad , true);
