@@ -10,7 +10,7 @@
 import XCTest
 
 
-class tests: XCTestCase {
+class U2FRequestTests: XCTestCase {
     func assertThrowsU2FError(_ block : () throws -> () ) -> U2FError? {
         do {
             try block()
