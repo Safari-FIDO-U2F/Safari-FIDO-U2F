@@ -27,13 +27,25 @@ class U2FSignRequest : U2FRequest {
     }
 
     override func run(device : U2FDevice) throws -> U2FResponse.Data {
-        guard let registeredKey = self.registeredKey else {
-            throw U2FError.badRequest(reason: "missing key")
+        for key in self.registeredKeys {
+            do {
+                var request = key
+                request["appId"] = self.appId
+                request["challenge"] = self.challenge
+                let response = try device.sign(request: request, origin: self.origin)
+                return response
+            } catch let error as U2FError {
+                switch error {
+                    case .error(let code, let _):
+                        if code != U2FH_AUTHENTICATOR_ERROR {
+                            throw error
+                        }
+                    default:
+                        throw error
+                    }
+            }
         }
-
-        var request = registeredKey
-        request["appId"] = self.appId
-        request["challenge"] = self.challenge
-        return try device.sign(request: request, origin: self.origin)
+        
+        throw U2FError.badRequest(reason: "missing key")
     }
 }

@@ -34,12 +34,12 @@ class tests: XCTestCase {
         XCTAssertEqual(request.appId, testAppId)
         XCTAssertEqual(request.origin, testOriginString)
         XCTAssertEqual(request.requestId, testRequestId)
-        XCTAssertNil(request.registeredKey)
+        XCTAssertEqual(request.registeredKeys.count, 0)
         XCTAssertEqual(request.responseType, U2FRegisterRequest.ResponseType)
     }
 
     func testSignRequestParsing() {
-        guard let request = U2FSignRequest(requestDictionary: testSignRequest, origin: testOriginURL), let registeredKey = request.registeredKey else {
+        guard let request = U2FSignRequest(requestDictionary: testSignRequest, origin: testOriginURL) else {
             XCTFail()
             return
         }
@@ -48,6 +48,8 @@ class tests: XCTestCase {
         XCTAssertEqual(request.origin, testOriginString)
         XCTAssertEqual(request.requestId, testRequestId)
         XCTAssertEqual(request.responseType, U2FSignRequest.ResponseType)
+        XCTAssertEqual(request.registeredKeys.count, 1)
+        let registeredKey = request.registeredKeys[0]
         XCTAssertEqual(registeredKey["version"] as? String, testRegisteredKey["version"] as? String)
         XCTAssertEqual(registeredKey["keyHandle"] as? String, testRegisteredKey["keyHandle"] as? String)
         XCTAssertEqual(request.challenge, testChallenge)

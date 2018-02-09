@@ -13,7 +13,7 @@ class U2FRequest {
     typealias Dictionary = [String:Any]
     
     let appId : String
-    let registeredKey : Dictionary?
+    let registeredKeys : [Dictionary]
     let origin : String
     let requestId : Int
     let timeout : Int?
@@ -25,7 +25,12 @@ class U2FRequest {
         }
         
         self.appId = appId
-        self.registeredKey = U2FRequest.find(key: "registeredKeys", version: U2FDevice.VERSION, in: requestDictionary)
+        
+        if let keys = requestDictionary["registeredKeys"] as? [Dictionary] {
+            self.registeredKeys = keys.filter { return ($0["version"] as? String) == U2FDevice.VERSION }
+        } else {
+            self.registeredKeys = []
+        }
         self.requestId = requestId
         self.timeout = requestDictionary["timeout"] as? Int
         self.origin = "\(origin.scheme!)://\(origin.host!)"

@@ -27,6 +27,8 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
      */
 
     override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
+        NSLog("blah")
+        
         guard let requestDictionary = userInfo else {
             self.sendError(U2FError.missingInfo, toPage: page)
             return
@@ -39,10 +41,11 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
         page.getPropertiesWithCompletionHandler { properties in
             do {
-                print("\(messageName)\n\(userInfo!)")
+                NSLog("\(messageName)\n\(userInfo!)")
                 let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, url: properties?.url ?? DefaultOrigin)
                 let device = try U2FDevice()
                 let response = try device.perform(request: request)
+                NSLog("response \(response)")
                 page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
             } catch let error as U2FError {
                 self.sendError(error, toPage: page, requestId: requestId)
@@ -54,6 +57,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
     func sendError(_ error: U2FError, toPage page: SFSafariPage, requestId : Int = 0) {
         let response = U2FResponse(type: U2FErrorResponse, requestId: requestId, responseData: error.errorDescription())
+        NSLog("error \(response.info)")
         page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
     }
     
