@@ -399,7 +399,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Updating build number\"\nversion=`/usr/bin/git log --oneline | wc -l | tr -d ' '`\nmkdir -p \"$(dirname $INFOPLIST_PREFIX_HEADER)\"\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"\necho \"Build no is now $version\"\n\nSED_FILE=\"$CONFIGURATION_BUILD_DIR/Versions.txt\"\necho \"s/\\$U2F_VERSION/$U2F_VERSION/g\" > \"$SED_FILE\"\necho \"s/\\$U2F_BUILD/$version/g\" >> \"$SED_FILE\"\n";
+			shellScript = "echo \"Updating build number\"\nversion=`/usr/bin/git log --oneline | wc -l | tr -d ' '`\n\nPREFIX_DIR=`dirname \"$INFOPLIST_PREFIX_HEADER\"`\nmkdir -p \"$PREFIX_DIR\"\n\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"\necho \"Build no is now $version\"\n\nSED_FILE=\"$CONFIGURATION_BUILD_DIR/Versions.txt\"\necho \"s/\\$U2F_VERSION/$U2F_VERSION/g\" > \"$SED_FILE\"\necho \"s/\\$U2F_BUILD/$version/g\" >> \"$SED_FILE\"\n";
 			showEnvVarsInLog = 0;
 		};
 		22BA418B2006C534000CD2AC /* Insert Version Numbers Into Javascript */ = {

@@ -13,9 +13,15 @@ import SafariServices
 let U2FErrorResponse = "u2f_error_response"
 let DefaultOrigin = URL(string: "https://default.origin")!
 
+func debug(_ message : String) {
+    #if DEBUG
+    NSLog(message)
+    #endif
+}
+
 class SafariExtensionHandler: SFSafariExtensionHandler {
     
-
+    
     /**
      Process a message from the content script.
     
@@ -27,8 +33,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
      */
 
     override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
-        NSLog("blah")
-        
         guard let requestDictionary = userInfo else {
             self.sendError(U2FError.missingInfo, toPage: page)
             return
@@ -41,11 +45,11 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
         page.getPropertiesWithCompletionHandler { properties in
             do {
-                NSLog("\(messageName)\n\(userInfo!)")
+                debug("\(messageName)\n\(userInfo!)")
                 let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, url: properties?.url ?? DefaultOrigin)
                 let device = try U2FDevice()
                 let response = try device.perform(request: request)
-                NSLog("response \(response)")
+                debug("response \(response)")
                 page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
             } catch let error as U2FError {
                 self.sendError(error, toPage: page, requestId: requestId)
@@ -57,7 +61,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     
     func sendError(_ error: U2FError, toPage page: SFSafariPage, requestId : Int = 0) {
         let response = U2FResponse(type: U2FErrorResponse, requestId: requestId, responseData: error.errorDescription())
-        NSLog("error \(response.info)")
+        debug("error \(response.info)")
         page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
     }
     
