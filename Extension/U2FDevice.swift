@@ -19,17 +19,17 @@ class U2FDevice {
     init() throws {
         var ret = u2fh_global_init(U2FH_DEBUG)
         guard ret == U2FH_OK else {
-            throw U2FError.error(ret, in: "Global Init")
+            throw U2FError.error(ret, action: "u2fh_global_init")
         }
 
         var returnedDevice: OpaquePointer?
         ret = u2fh_devs_init(&returnedDevice)
         guard ret == U2FH_OK else {
-            throw U2FError.error(ret, in: "Device Init")
+            throw U2FError.error(ret, action: "u2fh_devs_init")
         }
 
         guard let device = returnedDevice else {
-            throw U2FError.unknown(in: "Device Init")
+            throw U2FError.unknown(in: "no device returned")
         }
 
         for _ in 0 ..< U2FDevice.RETRY_COUNT {
@@ -41,7 +41,7 @@ class U2FDevice {
         }
 
         guard ret == U2FH_OK else {
-            throw U2FError.error(ret, in: "Device Discover")
+            throw U2FError.error(ret, action: "u2fh_devs_discover")
         }
 
         self.device = device
@@ -63,7 +63,7 @@ class U2FDevice {
     
     private func decodeResponse(result : u2fh_rc, response : UnsafeMutablePointer<Int8>?) throws -> String {
         guard result == U2FH_OK else {
-            throw U2FError.error(result, in: "hardware returned error")
+            throw U2FError.error(result, action: "decoding response")
         }
 
         guard response != nil else {

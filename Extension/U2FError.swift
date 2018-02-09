@@ -24,7 +24,7 @@ enum U2FError: Error {
     case unknownRequestType(type: String)
     case unparseableRequest(request: U2FRequest.Dictionary)
     case badRequest(reason: String)
-    case error(u2fh_rc, in: String)
+    case error(u2fh_rc, action: String)
     case unknown(in: String)
 
     func errorDescription() -> [String:Any] {
@@ -45,9 +45,9 @@ enum U2FError: Error {
         case .unparseableRequest(let request):
             description = ["errorMessage" : "couldn't parse request: \(request)", "errorCode" : U2FErrorCode.BAD_REQUEST]
 
-        case .error(let errcode, let pos):
+        case .error(let errcode, let action):
             let errmsg = String.init(cString: u2fh_strerror(errcode.rawValue))
-            description = ["errorMessage": "Error in \(pos): \(errmsg)", "errorCode" : errcode]
+            description = ["errorMessage": "\(errmsg) (\(action))", "errorCode" : errcode.rawValue]
             
         case .badRequest(let reason):
             description = ["errorMessage": "Bad Request: \(reason)", "errorCode" : U2FErrorCode.OTHER_ERROR]
