@@ -85,7 +85,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		224B985F202DD00100FDF0B5 /* FIDO-U2F-COMPLETE-v1.2-ps-20170411.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "FIDO-U2F-COMPLETE-v1.2-ps-20170411.pdf"; sourceTree = "<group>"; };
+		224B985F202DD00100FDF0B5 /* FIDO Specifications.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "FIDO Specifications.pdf"; sourceTree = "<group>"; };
+		224B9862202E049D00FDF0B5 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		224BD0F3202D0B97008E60AA /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		22814ADA1E4790160020473B /* U2FError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FError.swift; sourceTree = "<group>"; };
 		22814ADC1E4790300020473B /* U2FDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FDevice.swift; sourceTree = "<group>"; };
@@ -182,9 +183,10 @@
 			isa = PBXGroup;
 			children = (
 				229074671E61CBF100E04386 /* README.md */,
-				224B985F202DD00100FDF0B5 /* FIDO-U2F-COMPLETE-v1.2-ps-20170411.pdf */,
-				229EA5DB20064634004F0B11 /* Config.xcconfig */,
 				229074681E61CDEE00E04386 /* LICENSE */,
+				224B985F202DD00100FDF0B5 /* FIDO Specifications.pdf */,
+				229EA5DB20064634004F0B11 /* Config.xcconfig */,
+				224B9862202E049D00FDF0B5 /* .travis.yml */,
 				DA07336A1DAF84A200088DAF /* Application */,
 				DA0733821DAF851400088DAF /* Extension */,
 				228DC2001FE541470060B6B5 /* Dependencies */,
