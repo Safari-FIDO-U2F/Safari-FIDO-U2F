@@ -21,7 +21,7 @@ let DefaultOrigin = URL(string: "https://default.origin")!
 
 func debug(_ message : String) {
     #if DEBUG
-    NSLog(message)
+    NSLog("%@", message)
     #endif
 }
 
