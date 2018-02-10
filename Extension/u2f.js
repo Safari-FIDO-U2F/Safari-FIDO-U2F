@@ -110,12 +110,30 @@ u2f.basicRequest_ = function(type, appId, registeredKeys, callback, opt_timeoutS
 };
 
 u2f.registerRequest_ = function(appId, registerRequests, registeredKeys, callback, opt_timeoutSeconds) {
+    if (typeof(appId) != "string") {
+        // convert from 1.0 parameters
+        opt_timeoutSeconds = callback
+        callback = registeredKeys
+        registeredKeys = registerRequests
+        registerRequests = appId
+        appId = registerRequests[0].appId
+    }
+
     var request = u2f.basicRequest_(u2f.MessageTypes.U2F_REGISTER_REQUEST, appId, registeredKeys, callback, opt_timeoutSeconds);
     request.registerRequests = registerRequests;
     return request;
 };
 
 u2f.signRequest_ = function(appId, challenge, registeredKeys, callback, opt_timeoutSeconds) {
+    if (typeof(appId) != "string") {
+        // convert from 1.0 parameters
+        opt_timeoutSeconds = callback
+        callback = challenge
+        registeredKeys = appId
+        challenge = registeredKeys[0].challenge
+        appId = registeredKeys[0].appId
+    }
+
     var request = u2f.basicRequest_(u2f.MessageTypes.U2F_SIGN_REQUEST, appId, registeredKeys, callback, opt_timeoutSeconds);
     request.challenge = challenge;
     return request;
