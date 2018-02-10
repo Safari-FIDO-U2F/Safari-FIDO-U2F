@@ -21,12 +21,27 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		224BD0F4202D0B97008E60AA /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224BD0F3202D0B97008E60AA /* TestData.swift */; };
 		22814ADB1E4790160020473B /* U2FError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADA1E4790160020473B /* U2FError.swift */; };
 		22814ADD1E4790300020473B /* U2FDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADC1E4790300020473B /* U2FDevice.swift */; };
 		22814ADF1E47908D0020473B /* U2FRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADE1E47908D0020473B /* U2FRequest.swift */; };
 		228DC2071FE541610060B6B5 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2011FE541470060B6B5 /* libhidapi.a */; };
 		228DC2081FE541610060B6B5 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2021FE541470060B6B5 /* libjson-c.a */; };
 		228DC2091FE541610060B6B5 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2031FE541470060B6B5 /* libu2f-host.a */; };
+		22EF78D2202BBC8200009C38 /* U2FRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */; };
+		22EF78D3202BBC8200009C38 /* U2FSignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */; };
+		22EF78D4202BC22C00009C38 /* U2FResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78CE202BB86800009C38 /* U2FResponse.swift */; };
+		22EF78DC202C792400009C38 /* U2FRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78DB202C792400009C38 /* U2FRequestTests.swift */; };
+		22EF78E1202C799E00009C38 /* U2FRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADE1E47908D0020473B /* U2FRequest.swift */; };
+		22EF78E2202C799E00009C38 /* U2FResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78CE202BB86800009C38 /* U2FResponse.swift */; };
+		22EF78E3202C799E00009C38 /* U2FRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */; };
+		22EF78E4202C799E00009C38 /* U2FSignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */; };
+		22EF78E5202C799E00009C38 /* U2FDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADC1E4790300020473B /* U2FDevice.swift */; };
+		22EF78E6202C799E00009C38 /* U2FError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22814ADA1E4790160020473B /* U2FError.swift */; };
+		22EF78E7202C79CB00009C38 /* libhidapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2011FE541470060B6B5 /* libhidapi.a */; };
+		22EF78E8202C79CB00009C38 /* libjson-c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2021FE541470060B6B5 /* libjson-c.a */; };
+		22EF78E9202C79CB00009C38 /* libu2f-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228DC2031FE541470060B6B5 /* libu2f-host.a */; };
+		22EF78EB202CB2B900009C38 /* U2FDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF78EA202CB2B900009C38 /* U2FDeviceTests.swift */; };
 		DA07336C1DAF84A200088DAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336B1DAF84A200088DAF /* AppDelegate.swift */; };
 		DA07336E1DAF84A200088DAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07336D1DAF84A200088DAF /* ViewController.swift */; };
 		DA0733701DAF84A200088DAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA07336F1DAF84A200088DAF /* Assets.xcassets */; };
@@ -39,6 +54,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		224B9863202E07EB00FDF0B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA0733601DAF84A100088DAF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 229EA5D4200640A6004F0B11;
+			remoteInfo = version;
+		};
 		229EA5D9200641D0004F0B11 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DA0733601DAF84A100088DAF /* Project object */;
@@ -70,6 +92,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		224B985F202DD00100FDF0B5 /* FIDO Specifications.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "FIDO Specifications.pdf"; sourceTree = "<group>"; };
+		224B9862202E049D00FDF0B5 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		224B9865202E14B400FDF0B5 /* u2f.test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = u2f.test.js; sourceTree = "<group>"; };
+		224BD0F3202D0B97008E60AA /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		22814ADA1E4790160020473B /* U2FError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FError.swift; sourceTree = "<group>"; };
 		22814ADC1E4790300020473B /* U2FDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FDevice.swift; sourceTree = "<group>"; };
 		22814ADE1E47908D0020473B /* U2FRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRequest.swift; sourceTree = "<group>"; };
@@ -79,9 +105,16 @@
 		228DC2041FE541470060B6B5 /* u2f-host-types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "u2f-host-types.h"; sourceTree = "<group>"; };
 		228DC2051FE541470060B6B5 /* u2f-host-version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "u2f-host-version.h"; sourceTree = "<group>"; };
 		228DC2061FE541470060B6B5 /* u2f-host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "u2f-host.h"; sourceTree = "<group>"; };
-		229074671E61CBF100E04386 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		229074671E61CBF100E04386 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; wrapsLines = 1; };
 		229074681E61CDEE00E04386 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		229EA5DB20064634004F0B11 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		22EF78CE202BB86800009C38 /* U2FResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = U2FResponse.swift; sourceTree = "<group>"; };
+		22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRegisterRequest.swift; sourceTree = "<group>"; };
+		22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FSignRequest.swift; sourceTree = "<group>"; };
+		22EF78D9202C792400009C38 /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		22EF78DB202C792400009C38 /* U2FRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = U2FRequestTests.swift; sourceTree = "<group>"; };
+		22EF78DD202C792400009C38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22EF78EA202CB2B900009C38 /* U2FDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = U2FDeviceTests.swift; sourceTree = "<group>"; };
 		DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safari FIDO U2F.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07336B1DAF84A200088DAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA07336D1DAF84A200088DAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +132,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		22EF78D6202C792400009C38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22EF78E7202C79CB00009C38 /* libhidapi.a in Frameworks */,
+				22EF78E9202C79CB00009C38 /* libu2f-host.a in Frameworks */,
+				22EF78E8202C79CB00009C38 /* libjson-c.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA0733651DAF84A100088DAF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,15 +176,29 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
+		22EF78DA202C792400009C38 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				224BD0F3202D0B97008E60AA /* TestData.swift */,
+				22EF78DB202C792400009C38 /* U2FRequestTests.swift */,
+				22EF78EA202CB2B900009C38 /* U2FDeviceTests.swift */,
+				22EF78DD202C792400009C38 /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		DA07335F1DAF84A100088DAF = {
 			isa = PBXGroup;
 			children = (
 				229074671E61CBF100E04386 /* README.md */,
-				229EA5DB20064634004F0B11 /* Config.xcconfig */,
 				229074681E61CDEE00E04386 /* LICENSE */,
-				DA07336A1DAF84A200088DAF /* Safari FIDO U2F */,
-				DA0733821DAF851400088DAF /* Safari FIDO U2F Extension */,
+				224B985F202DD00100FDF0B5 /* FIDO Specifications.pdf */,
+				229EA5DB20064634004F0B11 /* Config.xcconfig */,
+				224B9862202E049D00FDF0B5 /* .travis.yml */,
+				DA07336A1DAF84A200088DAF /* Application */,
+				DA0733821DAF851400088DAF /* Extension */,
 				228DC2001FE541470060B6B5 /* Dependencies */,
+				22EF78DA202C792400009C38 /* Tests */,
 				DA07337F1DAF851400088DAF /* Frameworks */,
 				DA0733691DAF84A200088DAF /* Products */,
 			);
@@ -154,11 +211,12 @@
 			children = (
 				DA0733681DAF84A200088DAF /* Safari FIDO U2F.app */,
 				DA07337E1DAF851400088DAF /* Safari FIDO U2F Extension.appex */,
+				22EF78D9202C792400009C38 /* tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DA07336A1DAF84A200088DAF /* Safari FIDO U2F */ = {
+		DA07336A1DAF84A200088DAF /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				DA07336B1DAF84A200088DAF /* AppDelegate.swift */,
@@ -167,7 +225,7 @@
 				DA0733711DAF84A200088DAF /* Main.storyboard */,
 				DA0733741DAF84A200088DAF /* Info.plist */,
 			);
-			path = "Safari FIDO U2F";
+			path = Application;
 			sourceTree = "<group>";
 		};
 		DA07337F1DAF851400088DAF /* Frameworks */ = {
@@ -178,25 +236,47 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DA0733821DAF851400088DAF /* Safari FIDO U2F Extension */ = {
+		DA0733821DAF851400088DAF /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				DA0733851DAF851400088DAF /* SafariExtensionHandler.swift */,
 				22814ADE1E47908D0020473B /* U2FRequest.swift */,
+				22EF78CE202BB86800009C38 /* U2FResponse.swift */,
+				22EF78D0202BBC8200009C38 /* U2FRegisterRequest.swift */,
+				22EF78D1202BBC8200009C38 /* U2FSignRequest.swift */,
 				22814ADC1E4790300020473B /* U2FDevice.swift */,
 				22814ADA1E4790160020473B /* U2FError.swift */,
 				DA07338C1DAF851400088DAF /* Info.plist */,
-				DA07338D1DAF851400088DAF /* bridge.js */,
 				DA0733841DAF851400088DAF /* Safari_FIDO_U2F_Extension.entitlements */,
 				DA0733981DAFB99200088DAF /* Safari FIDO U2F Extension-Bridging-Header.h */,
+				DA07338D1DAF851400088DAF /* bridge.js */,
 				DA0733A51DB2197A00088DAF /* u2f.js */,
+				224B9865202E14B400FDF0B5 /* u2f.test.js */,
 			);
-			path = "Safari FIDO U2F Extension";
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		22EF78D8202C792400009C38 /* tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22EF78DE202C792400009C38 /* Build configuration list for PBXNativeTarget "tests" */;
+			buildPhases = (
+				22EF78D5202C792400009C38 /* Sources */,
+				22EF78D6202C792400009C38 /* Frameworks */,
+				22EF78D7202C792400009C38 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				224B9864202E07EB00FDF0B5 /* PBXTargetDependency */,
+			);
+			name = tests;
+			productName = tests;
+			productReference = 22EF78D9202C792400009C38 /* tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DA0733671DAF84A100088DAF /* application */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA0733771DAF84A200088DAF /* Build configuration list for PBXNativeTarget "application" */;
@@ -241,13 +321,17 @@
 		DA0733601DAF84A100088DAF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0920;
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Safari FIDO U2F";
 				TargetAttributes = {
 					229EA5D4200640A6004F0B11 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = 2H48644JM2;
+						ProvisioningStyle = Automatic;
+					};
+					22EF78D8202C792400009C38 = {
+						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
 					};
 					DA0733671DAF84A100088DAF = {
@@ -280,11 +364,19 @@
 				DA0733671DAF84A100088DAF /* application */,
 				DA07337D1DAF851400088DAF /* extension */,
 				229EA5D4200640A6004F0B11 /* version */,
+				22EF78D8202C792400009C38 /* tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		22EF78D7202C792400009C38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA0733661DAF84A100088DAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,7 +411,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Updating build number\"\nversion=`/usr/bin/git log --oneline | wc -l | tr -d ' '`\nmkdir -p \"$(dirname $INFOPLIST_PREFIX_HEADER)\"\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"\necho \"Build no is now $version\"\n\nSED_FILE=\"$CONFIGURATION_BUILD_DIR/Versions.txt\"\necho \"s/\\$U2F_VERSION/$U2F_VERSION/g\" > \"$SED_FILE\"\necho \"s/\\$U2F_BUILD/$version/g\" >> \"$SED_FILE\"\n";
+			shellScript = "echo \"Updating build number\"\nversion=`/usr/bin/git log --oneline | wc -l | tr -d ' '`\n\nPREFIX_DIR=`dirname \"$INFOPLIST_PREFIX_HEADER\"`\nmkdir -p \"$PREFIX_DIR\"\n\necho \"#define U2F_BUILD $version\" > \"$INFOPLIST_PREFIX_HEADER\"\necho \"Build no is now $version\"\n\nSED_FILE=\"$CONFIGURATION_BUILD_DIR/Versions.txt\"\necho \"s/\\$U2F_VERSION/$U2F_VERSION/g\" > \"$SED_FILE\"\necho \"s/\\$U2F_BUILD/$version/g\" >> \"$SED_FILE\"\n";
 			showEnvVarsInLog = 0;
 		};
 		22BA418B2006C534000CD2AC /* Insert Version Numbers Into Javascript */ = {
@@ -339,6 +431,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		22EF78D5202C792400009C38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				224BD0F4202D0B97008E60AA /* TestData.swift in Sources */,
+				22EF78E2202C799E00009C38 /* U2FResponse.swift in Sources */,
+				22EF78DC202C792400009C38 /* U2FRequestTests.swift in Sources */,
+				22EF78E4202C799E00009C38 /* U2FSignRequest.swift in Sources */,
+				22EF78E3202C799E00009C38 /* U2FRegisterRequest.swift in Sources */,
+				22EF78E6202C799E00009C38 /* U2FError.swift in Sources */,
+				22EF78E1202C799E00009C38 /* U2FRequest.swift in Sources */,
+				22EF78E5202C799E00009C38 /* U2FDevice.swift in Sources */,
+				22EF78EB202CB2B900009C38 /* U2FDeviceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA0733641DAF84A100088DAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -353,8 +461,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				22814ADB1E4790160020473B /* U2FError.swift in Sources */,
+				22EF78D4202BC22C00009C38 /* U2FResponse.swift in Sources */,
+				22EF78D2202BBC8200009C38 /* U2FRegisterRequest.swift in Sources */,
 				22814ADF1E47908D0020473B /* U2FRequest.swift in Sources */,
 				DA0733861DAF851400088DAF /* SafariExtensionHandler.swift in Sources */,
+				22EF78D3202BBC8200009C38 /* U2FSignRequest.swift in Sources */,
 				22814ADD1E4790300020473B /* U2FDevice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,6 +473,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		224B9864202E07EB00FDF0B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 229EA5D4200640A6004F0B11 /* version */;
+			targetProxy = 224B9863202E07EB00FDF0B5 /* PBXContainerItemProxy */;
+		};
 		229EA5DA200641D0004F0B11 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 229EA5D4200640A6004F0B11 /* version */;
@@ -389,8 +505,10 @@
 		229EA5D6200640A6004F0B11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H48644JM2;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -398,9 +516,68 @@
 		229EA5D7200640A6004F0B11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H48644JM2;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		22EF78DF202C792400009C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 2H48644JM2;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = Dependencies/;
+				INFOPLIST_FILE = tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		22EF78E0202C792400009C38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 2H48644JM2;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = Dependencies/;
+				INFOPLIST_FILE = tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -418,6 +595,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -425,6 +603,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -475,6 +654,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -482,6 +662,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -515,8 +696,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
+				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
 				PRODUCT_NAME = "$(U2F_NAME)";
@@ -528,8 +710,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Safari FIDO U2F/Info.plist";
+				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app";
 				PRODUCT_NAME = "$(U2F_NAME)";
@@ -540,15 +723,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = Extension/Safari_FIDO_U2F_Extension.entitlements;
 				HEADER_SEARCH_PATHS = Dependencies/;
-				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
+				INFOPLIST_FILE = Extension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
 				PRODUCT_NAME = "$(U2F_NAME) Extension";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -557,15 +741,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Safari FIDO U2F Extension/Safari_FIDO_U2F_Extension.entitlements";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = Extension/Safari_FIDO_U2F_Extension.entitlements;
 				HEADER_SEARCH_PATHS = Dependencies/;
-				INFOPLIST_FILE = "Safari FIDO U2F Extension/Info.plist";
+				INFOPLIST_FILE = Extension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = Dependencies/;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safari-fido-u2f.app.extension";
 				PRODUCT_NAME = "$(U2F_NAME) Extension";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Safari FIDO U2F Extension/Safari FIDO U2F Extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Extension/Safari FIDO U2F Extension-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -577,6 +762,15 @@
 			buildConfigurations = (
 				229EA5D6200640A6004F0B11 /* Debug */,
 				229EA5D7200640A6004F0B11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22EF78DE202C792400009C38 /* Build configuration list for PBXNativeTarget "tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22EF78DF202C792400009C38 /* Debug */,
+				22EF78E0202C792400009C38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

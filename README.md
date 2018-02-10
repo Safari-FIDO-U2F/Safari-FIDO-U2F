@@ -1,10 +1,10 @@
 # Safari FIDO U2F
 
-**FIDO U2F support is possible in Safari, finally!**
+**Adds FIDO U2F support to Safari.**
 
 ## Quick Start
 
-To just test the extension without building it:
+To use the extension:
 
 - Download [the latest release](https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F/releases)
 - Run It
@@ -13,29 +13,25 @@ To just test the extension without building it:
 
 This extension requires *macOS 10.12* and later or macOS 10.11.5 when Safari 10 is installed.
 
-## How?
-
-This extension uses the new [Safari App Extensions](https://developer.apple.com/library/prerelease/content/documentation/NetworkingInternetWeb/Conceptual/SafariAppExtension_PG/index.html#//apple_ref/doc/uid/TP40017319-CH15-SW1) API introduced in Safari 10, which allows a Safari extension to be built using native code, and embedded in another app.
-
-The native part uses [libu2f-host](https://github.com/Yubico/libu2f-host) as the backend.
-
-Only the high-level JavaScript API is implemented for now: `register` and `sign` (see [FIDO U2F Javascript API Specification](https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-javascript-api.html)). A new object `window.u2f` is exported. Both the API 1.1 and API 1.0 specifications are supported.
-
 ## Does It Work With Site xyz.com?
 
-Technically, this extension adds the full FIDO U2F Javascript API to Safari.
+This extension adds support for the high-level FIDO U2F Javascript API to Safari.
 
-But as stated in the specification, the interface (for now) is browser dependent, so each website is required to add support for it (by adding some code to test `if browser is safari`...).
+The FIDO U2F specification leaves it up to the browser to implement this API, and leaves individual sites
+to work out if the API is present / supported.
 
-Currently, most of the sites using U2F are using [u2f-api.js](https://demo.yubico.com/js/u2f-api.js) to provide
-cross-browser support of U2F. This extension provides a JavaScript API that is compatible with it and will override it seamlessly, so should support a large set of websites.
+Many sites are using [u2f-api.js](https://demo.yubico.com/js/u2f-api.js) (or a variation of it) to provide
+cross-browser support of U2F. This extension should override that u2f-api implementation and work.
 
-However, there are still websites that do not work properly.
+However, there are still websites that do not work properly - see [Problems](#problems) below.
 
 The following sites should work out of the box:
 
-- [Yubico U2F DEMO](https://demo.yubico.com/u2f)
-- [Google's U2F DEMO](https://crxjs-dot-u2fdemo.appspot.com)
+- [Yubico Demo](https://demo.yubico.com/u2f)
+- [Google Demo](https://crxjs-dot-u2fdemo.appspot.com)
+- [AkiSec Demo](https://akisec.com/demo/)
+- [u2f.bin.coffee Demo](https://u2f.bin.coffee)
+- [U2F Test Page](https://alexander.sagen.me/u2f-test-page/)
 - [Github Account Two-factor authentication](https://help.github.com/articles/configuring-two-factor-authentication-via-fido-u2f/)
 - Fastmail
 
@@ -43,9 +39,37 @@ The following sites should work out of the box:
 
 Plenty of sites do not work yet.
 
-The extension works by injecting a u2f javascript object into to the page. Because of the way Safari's extensions work, it's not possible to inject this object early enough for all sites to spot that it is there. Some sites check too early, and/or add their own object which then gets overwritten.
+There are two main reasons for this:
 
-In addition, some sites base their checks on the idea that only Chrome supports U2F on the Mac. Because of this, you may need to [change Safari's User-Agent to Chrome](http://www.howtogeek.com/211961/how-to-change-safaris-user-agent-in-os-x/) to make these sites work.
+- The extension works by injecting code into to the page as it loads. Some sites perform their checks too early, before the injected code is present.
+
+- Some sites assume that only Chrome supports U2F on the Mac, and won't even try to use U2F if they detect Safari. [Changing Safari's User-Agent to Chrome](http://www.howtogeek.com/211961/how-to-change-safaris-user-agent-in-os-x/) may make these sites work.
+
+
+## Technical Details
+
+This extension uses the [Safari App Extensions](https://developer.apple.com/library/prerelease/content/documentation/NetworkingInternetWeb/Conceptual/SafariAppExtension_PG/index.html#//apple_ref/doc/uid/TP40017319-CH15-SW1) API introduced in Safari 10, which allows a Safari extension to be built using native code, and embedded in another app.
+
+The native part uses [libu2f-host](https://github.com/Yubico/libu2f-host) as the backend.
+
+Only the high-level JavaScript API is implemented for now: `register` and `sign` (see [FIDO U2F Javascript API Specification](https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-javascript-api.html)). Both the API 1.1 and API 1.0 specifications are supported.
+
+The extension works by setting `window.u2f` to an object which implements the FIDO javascript API.
+
+This is accomplished via two scripts. A small `bridge.js` script is loaded automatically by the extension. This script can receive messages sent to `window`, but can't directly set properties on it, so we use it to do three things:
+
+- listen for `DOMContentLoaded`, and use it to inject `u2f.js` into the document
+- listen for messages generated by `u2f.js`, and pass them on to the native code which implements the U2F support
+- listen for messages from the native code and pass them back to `u2f.js` for processing
+
+The meat of the implementation is in `u2f.js`, which is injected into the document when the `DOMContentLoaded` event fires.
+
+If the page had already set `window.u2f`, we merge our implementation into it, rather than completely replacing it, which means that any custom properties on it should be preserved.
+
+As mentioned in [problems](#problems) above, the fact that we have to wait for `DOMContentLoaded` before injecting the `u2f` object can cause timing problems. If a page has code which decides whether to enable U2F support based on whether `window.u2f` is present, it's possible that it will run too early.
+
+There doesn't appear to be much we can do about this. If anyone knows of a mechanism for injecting our code earlier, please [let us know](https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F/issues)!
+
 
 
 ## To Build With Xcode
@@ -70,11 +94,12 @@ The source for all three is available in the github repos above.
 
 If you wish to build the libraries locally instead, you can do so using Homebrew, with `brew install hidapi json-c libu2f-host`.
 
-
 ## Disclaimer
 
 The authors of this extension are not security, cryptography or javascript experts.
-Use of the extension is entirely at your own risk! 
+
+This extension is still experimental, and use of it is entirely at your own risk!
 
 All feedback and other contributions welcomed.
-In particular, please let us know about sites that do/don't work ok!
+
+In particular, please [tell us about sites that do / don't work](https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F/issues)! Please also consider contacting the owners of those sites to make them aware of this extension, so that we can work together to fix any problems.

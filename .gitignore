@@ -56,3 +56,6 @@ test-build
 
 # npm
 node_modules/
+
+# jest
+coverage/

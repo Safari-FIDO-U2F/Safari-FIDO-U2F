@@ -1,9 +1,20 @@
+os: osx
+osx_image: xcode9.2
+
 language: node_js
 node_js:
- - "8.9.1"
+- 8.9.1
 
-install:
-  npm install
+cache:
+  directories:
+  - node_modules
+
+install: npm install
 
 script:
-  npm test
+- npm test -- --coverage
+- xcodebuild -workspace "Safari FIDO U2F.xcworkspace" -scheme application clean test -hideShellScriptEnvironment
+
+notifications:
+  slack:
+    secure: e7zzv5qOWf/mnXx3AQVn+bzd9g5WiInBWFDgKif1izyu8A7CeJI3+sfYq+tqFYZyz2k9tEL3OrJUEpkjx1z7SO523z1DPshNOb1zVbWSroiaqRk8zC/0yMVhSr3eDdlRfYmdJT16sIFmk4CwEEhhgImhystCzBe5TlvpD556TgPr1FeS9Rh3Pz55bdC/3ptHtHdwrUbNW5TwcdARybPa2W8slqEO2nFRNUDNWs5v1pRVbFIeDoZks9OKXEKpUx9PJBSCrs+3saxnBEm2WIhDuKxIUoUsDQZyZcS3buAXle1GU2bkJVD/DBX6dCoKCL2K63MihDYdiPTCTB6GzoG/ZOYKVsrg2o32vTErJHRHDKa/7W1Djd4BVFiabuVGtaQx9TM6rqUIb1RV3PKIbhpGu4ESgBqnLINZLhfvumBG2Ew+l5tVSV+ylay1hqDM1Y/+UXGUM8IiUzy1kpQtDzch3rW7lJ1a8wkU6DbzqjsvM2meERQttDyHJ+JHTTsf/wWq9ldqmUc+vEu7HRn7L2JA9dflBTSDIJ8+jQbfB7KfrjvrrOMLr14V2T2NDcHVtcWFcoDi5ZOc1a6ChrHRe3e7yWkLye5iC65Qp91VhGLACEreuLjtxL4DMktJFJ34rYoAVoxYAKMfAE4vodxW0JJkzdqgWnBhRmAfhn8iySUOCng=
