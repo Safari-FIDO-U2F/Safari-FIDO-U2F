@@ -30,6 +30,8 @@ The following sites should work out of the box:
 - [Yubico Demo](https://demo.yubico.com/u2f)
 - [Google Demo](https://crxjs-dot-u2fdemo.appspot.com)
 - [AkiSec Demo](https://akisec.com/demo/)
+- [u2f.bin.coffee Demo](https://u2f.bin.coffee)
+- [U2F Test Page](https://alexander.sagen.me/u2f-test-page/)
 - [Github Account Two-factor authentication](https://help.github.com/articles/configuring-two-factor-authentication-via-fido-u2f/)
 - Fastmail
 
