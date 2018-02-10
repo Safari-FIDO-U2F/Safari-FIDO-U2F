@@ -4,7 +4,7 @@ test('u2f is defined', () => {
     expect(window.u2f).toBeDefined();
 });
 
-test('isSafari is true', () => { expect(window.u2f.isSafari) });
+test('isSafari is true', () => { expect(window.u2f.isSafari).toBeTruthy() });
 
 test('version is 1.1', done => {
     function callback(info)
