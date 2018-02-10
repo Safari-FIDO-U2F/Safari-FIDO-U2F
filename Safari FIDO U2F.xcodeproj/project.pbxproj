@@ -94,6 +94,7 @@
 /* Begin PBXFileReference section */
 		224B985F202DD00100FDF0B5 /* FIDO Specifications.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "FIDO Specifications.pdf"; sourceTree = "<group>"; };
 		224B9862202E049D00FDF0B5 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		224B9865202E14B400FDF0B5 /* u2f.test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = u2f.test.js; sourceTree = "<group>"; };
 		224BD0F3202D0B97008E60AA /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		22814ADA1E4790160020473B /* U2FError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FError.swift; sourceTree = "<group>"; };
 		22814ADC1E4790300020473B /* U2FDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FDevice.swift; sourceTree = "<group>"; };
@@ -246,10 +247,11 @@
 				22814ADC1E4790300020473B /* U2FDevice.swift */,
 				22814ADA1E4790160020473B /* U2FError.swift */,
 				DA07338C1DAF851400088DAF /* Info.plist */,
-				DA07338D1DAF851400088DAF /* bridge.js */,
 				DA0733841DAF851400088DAF /* Safari_FIDO_U2F_Extension.entitlements */,
 				DA0733981DAFB99200088DAF /* Safari FIDO U2F Extension-Bridging-Header.h */,
+				DA07338D1DAF851400088DAF /* bridge.js */,
 				DA0733A51DB2197A00088DAF /* u2f.js */,
+				224B9865202E14B400FDF0B5 /* u2f.test.js */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
