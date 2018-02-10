@@ -64,7 +64,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 debug("\(messageName)\n\(origin)\n\(userInfo!)")
                 
                 // parse and execute the request
-                let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, url: )
+                let request = try U2FRequest.parse(type: messageName, requestDictionary: requestDictionary, url: origin)
                 let device = try U2FDevice()
                 let response = try device.perform(request: request)
                 
