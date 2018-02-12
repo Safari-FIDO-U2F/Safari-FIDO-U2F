@@ -3,6 +3,9 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+brew update
+brew install python3
+
 VIRTUALENVS_HOME=$HOME/virtualenvs
 VENV=$VIRTUALENVS_HOME/django-u2f
 
@@ -17,3 +20,4 @@ python manage.py migrate
 ./mkcert.sh
 python manage.py createsuperuser
 python manage.py runserver_plus --cert localhost
+open https://127.0.0.1:8000/u2f/keys/
