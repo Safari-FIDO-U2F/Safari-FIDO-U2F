@@ -75,7 +75,6 @@ class U2FDevice {
     }
     
     private func decodeResponse(json: String) throws -> U2FResponse.Dictionary {
-        NSLog(json)
         guard let data = json.data(using: String.Encoding.ascii) else {
             throw U2FError.unknown(in: "response couldn't be decoded")
         }
