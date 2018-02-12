@@ -69,7 +69,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 let response = try device.perform(request: request)
                 
                 // send the response back to the page for processing on the javascript side
-                debug("response \(response)")
+                debug("response \(response.info)")
                 page.dispatchMessageToScript(withName: response.type, userInfo: response.info)
                 
             } catch let error as U2FError {
