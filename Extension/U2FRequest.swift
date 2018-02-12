@@ -73,7 +73,7 @@ class U2FRequest {
         return nil
     }
     
-    func run(device : U2FDevice) throws -> U2FResponse.Data {
+    func run(device : U2FDevice) throws -> U2FResponse.Dictionary {
         throw U2FError.unknown(in: "abstract method should have been implemented")
     }
 }
