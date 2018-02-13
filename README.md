@@ -66,8 +66,8 @@ As mentioned in [problems](#problems) above, the fact that we have to wait for t
 ## To Build With Xcode
 
 - Clone this project
-- Open Xcode workspace and select the scheme `Safari FIDO U2F`
-- Extensions must be code signed. To build locally, you will need to adjust the `Development Team` setting of both targets to a team that you have Mac Developer certificates for
+- Open Xcode workspace and select the scheme `application`
+- Extensions must be code signed. To build locally, you will need to adjust the `Development Team` setting of the project to a team that you have Mac Developer certificates for
 - Choose `Run` from the `Product` menu.
 - Xcode should build & launch the small app. You can then enable the extension from within Safari.
 
@@ -84,6 +84,30 @@ For the sake of simplicity, compiled binaries for all three are committed to thi
 The source for all three is available in the github repos above.
 
 If you wish to build the libraries locally instead, you can do so using Homebrew, with `brew install hidapi json-c libu2f-host`.
+
+## Testing
+
+There are two sets of unit tests.
+
+- The Swift tests can be run by choosing `Test` from the `Product` menu. These primarily test the code which formats incoming request dictionaries from the javascript side, and parses outgoing responses from the hardware side. We don't currently test the hardware itself, and therefore the tests can be run without hardware being present.
+- The javascript tests use Jest. You can install the dependencies for this from the command line with `npm install`. The tests can then be run with `npm test`.  
+
+## Continuous Integration
+
+CI is set up using [Travis](http://travis-ci.com). 
+
+Committing branches or making pull requests in this repository will trigger builds of the tests. If you fork the repo, you will probably need to tweak `.travis.yml` if you want to run the tests with your own instance.
+
+
+## Still To Do
+
+There are a few things still to do. See the [issues](https://github.com/Safari-FIDO-U2F/Safari-FIDO-U2F/issues) for more details.
+
+If you find sites that don't work, or features that are missing feel free to make an issue to report them.
+
+If you have the urge to contribute, that would be welcome. The code does not all follow a consistent standard yet but we're slowly cleaning it up. 
+
+By all means just hack on the code and make a pull request, but it might be best to check your plan first by making an issue and discussing it. 
 
 ## Disclaimer
 
