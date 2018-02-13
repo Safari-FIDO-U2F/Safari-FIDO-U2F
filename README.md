@@ -94,7 +94,7 @@ There are two sets of unit tests.
 
 ## Continuous Integration
 
-CI is set up using [Travis](http://travis-ci.com). 
+CI is set up using [Travis](https://travis-ci.org/Safari-FIDO-U2F/Safari-FIDO-U2F). 
 
 Committing branches or making pull requests in this repository will trigger builds of the tests. If you fork the repo, you will probably need to tweak `.travis.yml` if you want to run the tests with your own instance.
 
