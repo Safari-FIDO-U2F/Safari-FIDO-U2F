@@ -55,9 +55,9 @@ This performs three tasks:
 
 The `u2f.js` script implements the high-level JavaScript API described in the [FIDO U2F Javascript API Specification](https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-javascript-api.html). 
 
-It does this by setting `window.u2f` to an object which provides implementations of `u2f.register`,  `u2f.sign` and `u2f.getApiVersion`. Both the API 1.1 and API 1.0 variants of `register` and `sign` are supported. If the page had already set `window.u2f`, we attempt to merge our implementation into it, rather than completely replacing it. If we get there first, we try to lock down the `window.u2f` property so that other scripts can't replace it with a different object (they can still set custom properties on it though).
+It does this by setting `window.u2f` to an object which provides implementations of `u2f.register`,  `u2f.sign` and `u2f.getApiVersion`. Both the API 1.1 and API 1.0 variants of `register` and `sign` are supported. If the page had already set `window.u2f`, we attempt to merge our implementation into it, rather than completely replacing it. If we get there first, we try to lock down the `window.u2f` property so that other scripts can't replace it with a different object (they can still set custom properties on it though). We also provide a non-standard `u2f.isSafari` function which can be used to detect whether this particular implementation is present.
  
-The high-level implementation converts the supplied parameters into a dictionary and sends this through for processing by the native extension. The native extension effectively implements the low-level API described in the specification.
+The high-level implementation converts the supplied parameters into a dictionary and sends this through for processing by the native code. The native code effectively implements the low-level API also described in the specification. In theory a site is free to talk directly to the native code by posting messages to it using the low-level API. 
 
 The high-level API is asynchronous, and returns its results via callbacks. A `requestId` parameter is used to track requests sent to the extension. When replies come back from the extension, the same `requestId` is used to associate the reply with the correct callback, which is then called.  
 
