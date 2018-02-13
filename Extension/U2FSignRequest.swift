@@ -26,7 +26,7 @@ class U2FSignRequest : U2FRequest {
         }
     }
 
-    override func run(device : U2FDevice) throws -> U2FResponse.Data {
+    override func run(device : U2FDevice) throws -> U2FResponse.Dictionary {
         for key in self.registeredKeys {
             do {
                 var request = key

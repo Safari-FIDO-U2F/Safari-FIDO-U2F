@@ -26,10 +26,12 @@ class U2FRegisterRequest : U2FRequest {
         super.init(requestDictionary: requestDictionary, origin: origin)
     }
 
-    override func run(device : U2FDevice) throws -> U2FResponse.Data {
+    override func run(device : U2FDevice) throws -> U2FResponse.Dictionary {
         var request = registerRequest
         request["appId"] = self.appId
-        return try device.register(request: request, origin: self.origin)
+        var response = try device.register(request: request, origin: self.origin)
+        response["version"] = U2FDevice.VERSION
+        return response
     }
 }
 

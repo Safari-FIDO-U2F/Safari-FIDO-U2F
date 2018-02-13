@@ -74,12 +74,15 @@ class U2FDevice {
         return json
     }
     
-    private func decodeResponse(json: String) throws -> U2FResponse.Data {
+    private func decodeResponse(json: String) throws -> U2FResponse.Dictionary {
         guard let data = json.data(using: String.Encoding.ascii) else {
             throw U2FError.unknown(in: "response couldn't be decoded")
         }
         
-        let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments)
+        guard let parsed = try JSONSerialization.jsonObject(with:data, options: .allowFragments) as? U2FResponse.Dictionary else {
+            throw U2FError.unknown(in: "response wasn't a dictionary")
+        }
+
         return parsed
     }
 
@@ -100,7 +103,7 @@ class U2FDevice {
         return U2FResponse(type: request.responseType, requestId : request.requestId, responseData : responseData)
     }
     
-    func register(request : U2FRequest.Dictionary, origin : String) throws -> U2FResponse.Data {
+    func register(request : U2FRequest.Dictionary, origin : String) throws -> U2FResponse.Dictionary {
         print("register: \(request) \(origin)")
 
         let jsonRequest = try encodeRequest(request: request)
@@ -108,7 +111,7 @@ class U2FDevice {
         return try decodeResponse(json: jsonResponse)
     }
 
-    public func sign(request : U2FRequest.Dictionary, origin : String) throws -> U2FResponse.Data {
+    public func sign(request : U2FRequest.Dictionary, origin : String) throws -> U2FResponse.Dictionary {
         print("sign: \(request) \(origin)")
 
         let jsonRequest = try encodeRequest(request: request)

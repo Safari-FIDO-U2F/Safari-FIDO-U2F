@@ -99,6 +99,7 @@
 		22814ADA1E4790160020473B /* U2FError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FError.swift; sourceTree = "<group>"; };
 		22814ADC1E4790300020473B /* U2FDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FDevice.swift; sourceTree = "<group>"; };
 		22814ADE1E47908D0020473B /* U2FRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = U2FRequest.swift; sourceTree = "<group>"; };
+		228972FF203219AE00A2570D /* django-u2f-test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "django-u2f-test.sh"; sourceTree = "<group>"; };
 		228DC2011FE541470060B6B5 /* libhidapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libhidapi.a; sourceTree = "<group>"; };
 		228DC2021FE541470060B6B5 /* libjson-c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libjson-c.a"; sourceTree = "<group>"; };
 		228DC2031FE541470060B6B5 /* libu2f-host.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libu2f-host.a"; sourceTree = "<group>"; };
@@ -180,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				224BD0F3202D0B97008E60AA /* TestData.swift */,
+				228972FF203219AE00A2570D /* django-u2f-test.sh */,
 				22EF78DB202C792400009C38 /* U2FRequestTests.swift */,
 				22EF78EA202CB2B900009C38 /* U2FDeviceTests.swift */,
 				22EF78DD202C792400009C38 /* Info.plist */,
