@@ -57,7 +57,7 @@ class U2FDeviceTests: XCTestCase {
             XCTAssertEqual(response.type, U2FRegisterRequest.ResponseType)
             XCTAssertEqual(response.requestId, request.requestId)
             
-            let responseData = response.responseData as! [String:Any]
+            let responseData = response.responseData 
 
             guard let registrationData = responseData["registrationData"] as? String else {
                 XCTFail()
@@ -100,7 +100,7 @@ class U2FDeviceTests: XCTestCase {
             XCTAssertEqual(response.type, U2FSignRequest.ResponseType)
             XCTAssertEqual(response.requestId, request.requestId)
             
-            let responseData = response.responseData as! [String:Any]
+            let responseData = response.responseData 
             
             guard let keyHandle = responseData["keyHandle"] as? String else {
                 XCTFail()

@@ -13,8 +13,8 @@
 
 
 U2F_NAME = Safari FIDO U2F
-U2F_COPYRIGHT = Copyright © 2016-2018 Yikai Zhao, Sam Deane, et al. All rights reserved.
-U2F_VERSION = 2.0b3
+U2F_COPYRIGHT = Copyright © 2016-2018 Sam Deane, Yikai Zhao, et al. All rights reserved.
+U2F_VERSION = 2.0b5
 
 
 SDKROOT = macosx
@@ -25,5 +25,5 @@ INFOPLIST_PREFIX_HEADER = $(CONFIGURATION_BUILD_DIR)/InfoPlist.h
 INFOPLIST_PREPROCESS = YES
 
 
-SWIFT_VERSION = 4.0
+SWIFT_VERSION = 4.2
 

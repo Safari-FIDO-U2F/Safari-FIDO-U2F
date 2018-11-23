@@ -24,10 +24,10 @@ class ViewController: NSViewController {
         
         let link = NSMutableAttributedString.init(string: HOMEPAGE)
         let range = NSRange.init(location: 0, length: link.length)
-        link.addAttribute(NSAttributedStringKey.link, value: HOMEPAGE, range: range)
+        link.addAttribute(NSAttributedString.Key.link, value: HOMEPAGE, range: range)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.center
-        link.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
+        link.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
         self.hyperlinkField.attributedStringValue = link;
         self.updateExtensionStatus(self.extensionUpdateBtn)
         // Do any additional setup after loading the view.
