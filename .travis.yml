@@ -9,11 +9,13 @@ cache:
   directories:
   - node_modules
 
-install: npm install
+install:
+- npm install
+- sudo gem install xcpretty-travis-formatter
 
 script:
 - npm test -- --coverage
-- xcodebuild -workspace "Safari FIDO U2F.xcworkspace" -scheme application clean test -hideShellScriptEnvironment
+- set -o pipefail && xcodebuild -workspace "Safari FIDO U2F.xcworkspace" -scheme application clean test -hideShellScriptEnvironment | xcpretty -f `xcpretty-travis-formatter`
 
 notifications:
   slack:
